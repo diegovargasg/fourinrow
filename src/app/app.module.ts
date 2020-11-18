@@ -4,8 +4,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BoardComponent } from './board/board.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BoardComponent } from './board/board.component';
 import { HeaderComponent } from './header/header.component';
 import { JoinComponent } from './join/join.component';
 import { ResultComponent } from './result/result.component';
