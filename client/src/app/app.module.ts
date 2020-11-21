@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { ResultComponent } from './result/result.component';
 import { CreateComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
 import { WaitingComponent } from './waiting/waiting.component';
+import { SocketioService } from './socketio.service';
 
 @NgModule({
   declarations: [
@@ -22,15 +23,15 @@ import { WaitingComponent } from './waiting/waiting.component';
     ResultComponent,
     CreateComponent,
     HomeComponent,
-    WaitingComponent
+    WaitingComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatGridListModule
+    MatGridListModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [SocketioService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
