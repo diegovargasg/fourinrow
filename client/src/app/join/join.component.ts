@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConnectionService } from '../connection/connection.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Player } from '../models/player';
-import { Game } from '../models/game';
+import { GameService } from '../game/game.service';
+import { PlayerService } from '../player/player.service';
 
 @Component({
   selector: 'app-join',
@@ -12,13 +12,13 @@ import { Game } from '../models/game';
 })
 export class JoinComponent implements OnInit {
   joinForm: FormGroup;
-  player = new Player();
-  game = new Game();
 
   constructor(
     private connectionService: ConnectionService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private game: GameService,
+    private player: PlayerService
   ) {
     this.joinForm = formBuilder.group({
       name: ['', Validators.required],

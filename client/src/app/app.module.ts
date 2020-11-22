@@ -13,6 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { WaitingComponent } from './waiting/waiting.component';
 import { ConnectionService } from './connection/connection.service';
 import { ConnectionSocketioService } from './connection/connection.socketio.service';
+import { GameService } from './game/game.service';
+import { PlayerService } from './player/player.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -35,6 +37,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     { provide: ConnectionService, useClass: ConnectionSocketioService },
+    GameService,
+    PlayerService,
   ],
   bootstrap: [AppComponent],
 })
