@@ -12,7 +12,8 @@ import { ResultComponent } from './result/result.component';
 import { CreateComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
 import { WaitingComponent } from './waiting/waiting.component';
-import { SocketioService } from './socketio.service';
+import { ConnectionService } from './connection/connection.service';
+import { ConnectionSocketioService } from './connection/connection.socketio.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { SocketioService } from './socketio.service';
     BrowserAnimationsModule,
     MatGridListModule,
   ],
-  providers: [SocketioService],
+  providers: [
+    { provide: ConnectionService, useClass: ConnectionSocketioService },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SocketioService } from './socketio.service';
+import { ConnectionService } from './connection/connection.service';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +7,9 @@ import { SocketioService } from './socketio.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'fourinrow';
-
-  constructor(private socketService: SocketioService) {}
+  constructor(private connectionService: ConnectionService) {}
 
   ngOnInit() {
-    this.socketService.setupSocketConnection();
+    this.connectionService.connect();
   }
 }

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  SOCKET_ENDPOINT: 'http://localhost:5000',
+  socket_host: 'http://localhost',
+  socket_port: ':5000',
 };
 
 /*

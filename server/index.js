@@ -1,19 +1,13 @@
-const express = require("express");
-const _ = require("lodash");
-const cors = require("cors");
+const app = require("express")();
+const server = require("http").createServer(app);
 const port = process.env.PORT || "5000";
-const http = require("http");
-const socketIo = require("socket.io");
-
-const app = express();
-app.use(cors());
-const server = http.createServer(app);
-const io = socketIo(server, {
+const options = {
   cors: {
     origin: "http://localhost:4200",
     methods: ["GET", "POST"],
   },
-});
+};
+const io = require("socket.io")(server, options);
 
 //Run when client connects
 io.on("connection", (socket) => {
