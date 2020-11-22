@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConnectionService } from '../connection/connection.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Game } from '../models/game';
@@ -16,7 +17,8 @@ export class CreateComponent implements OnInit {
 
   constructor(
     private connectionService: ConnectionService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.createForm = formBuilder.group({
       name: ['', Validators.required],
@@ -32,6 +34,7 @@ export class CreateComponent implements OnInit {
       this.player.id = connection.id;
       this.player.name = this.createForm.value.name;
       await this.connectionService.createGame(this.game, this.player);
+      this.router.navigate(['/waiting']);
     } catch (e) {}
   }
 }
