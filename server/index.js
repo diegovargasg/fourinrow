@@ -17,6 +17,10 @@ io.on("connection", (socket) => {
     console.log("Game Created", data);
   });
 
+  socket.on("joinGame", async (data) => {
+    console.log("Game Created", data);
+  });
+
   socket.on("disconnect", async () => {
     console.log("User disconnected", socket.id);
   });

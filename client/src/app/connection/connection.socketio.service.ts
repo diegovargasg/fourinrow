@@ -22,5 +22,10 @@ export class ConnectionSocketioService implements ConnectionService {
     return true;
   }
 
+  joinGame(game: Game, player: Player) {
+    this.socket.emit('joinGame', { game, player });
+    return true;
+  }
+
   constructor() {}
 }

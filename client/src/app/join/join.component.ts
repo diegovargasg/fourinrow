@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnectionService } from '../connection/connection.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Player } from '../models/player';
 import { Game } from '../models/game';
 
@@ -11,14 +11,16 @@ import { Game } from '../models/game';
 })
 export class JoinComponent implements OnInit {
   joinForm: FormGroup;
+  player = new Player();
+  game = new Game();
 
   constructor(
     private connectionService: ConnectionService,
     private formBuilder: FormBuilder
   ) {
     this.joinForm = formBuilder.group({
-      player: formBuilder.group(new Player()),
-      game: formBuilder.group(new Game()),
+      name: ['', Validators.required],
+      gameId: ['', Validators.required],
     });
   }
 
@@ -26,9 +28,14 @@ export class JoinComponent implements OnInit {
     this.connectionService.connect();
   }
 
-  onSubmit() {
-    const formValues: {} = Object.assign({}, this.joinForm.value);
-    console.log(formValues);
+  async onSubmit() {
+    try {
+      const connection = await this.connectionService.connect();
+      this.game.id = this.joinForm.value.gameId;
+      this.player.name = this.joinForm.value.name;
+      this.player.id = connection.id;
+      await this.connectionService.createGame(this.game, this.player);
+    } catch (e) {}
   }
 
   ngOnInit(): void {}

@@ -7,6 +7,7 @@ import { Player } from '../models/player';
 export abstract class ConnectionService implements Connection {
   abstract connect(): any;
   abstract createGame(game: Game, player: Player): boolean;
+  abstract joinGame(game: Game, player: Player): boolean;
   abstract port: string;
   abstract host: string;
   abstract options: object;
