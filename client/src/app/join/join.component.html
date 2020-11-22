@@ -1,4 +1,18 @@
-<label>Game id:</label>
-<input type="text" name="id" />
-<button routerLink="/waiting">Join</button>
-<button routerLink="/">Back</button>
+<form [formGroup]="joinForm" (ngSubmit)="onSubmit()">
+  <div formGroupName="game">
+    <label>GameId:</label>
+    <input formControlName="id" />
+  </div>
+  <div formGroupName="player">
+    <div>
+      <label>Name:</label>
+      <input formControlName="name" />
+    </div>
+    <div>
+      <label>playerId:</label>
+      <input formControlName="id" />
+    </div>
+  </div>
+  <button type="submit">Join</button>
+  <button routerLink="/">Back</button>
+</form>

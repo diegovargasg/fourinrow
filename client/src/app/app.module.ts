@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { WaitingComponent } from './waiting/waiting.component';
 import { ConnectionService } from './connection/connection.service';
 import { ConnectionSocketioService } from './connection/connection.socketio.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,6 +31,7 @@ import { ConnectionSocketioService } from './connection/connection.socketio.serv
     AppRoutingModule,
     BrowserAnimationsModule,
     MatGridListModule,
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: ConnectionService, useClass: ConnectionSocketioService },

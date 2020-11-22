@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ConnectionService } from './connection/connection.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +6,7 @@ import { ConnectionService } from './connection/connection.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private connectionService: ConnectionService) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.connectionService.connect();
-  }
+  ngOnInit() {}
 }

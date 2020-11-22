@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnectionService } from '../connection/connection.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Game } from '../models/game';
+import { Player } from '../models/player';
 
 @Component({
   selector: 'app-create',
@@ -9,6 +11,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class CreateComponent implements OnInit {
   createForm: FormGroup;
+  player = new Player();
+  game = new Game();
 
   constructor(
     private connectionService: ConnectionService,
@@ -21,13 +25,13 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  connect() {
-    this.connectionService.connect();
-  }
-
-  onSubmit() {
-    const formValues: {} = Object.assign({}, this.createForm.value);
-    this.connect();
-    console.log(formValues);
+  async onSubmit() {
+    try {
+      const connection = await this.connectionService.connect();
+      this.game.id = Math.random().toString(36).substr(2, 6);
+      this.player.id = connection.id;
+      this.player.name = this.createForm.value.name;
+      await this.connectionService.createGame(this.game, this.player);
+    } catch (e) {}
   }
 }
