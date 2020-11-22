@@ -1,4 +1,14 @@
-<label>Name</label>
-<input type="text" name="name" />
-<button routerLink="/waiting">Create</button>
-<button routerLink="/">Back</button>
+<form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Name:</label>
+    <input type="text" formControlName="name" />
+    <b
+      *ngIf="
+        createForm.controls.name.touched && createForm.controls.name.invalid
+      "
+      >Name Required</b
+    >
+  </div>
+  <button type="submit" [disabled]="createForm.invalid">Create</button>
+  <button routerLink="/">Back</button>
+</form>
