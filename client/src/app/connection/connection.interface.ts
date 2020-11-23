@@ -2,6 +2,6 @@ export interface Connection {
   host: string;
   port: string;
   options: object;
-  id: string;
-  connect: () => object;
+  connect: () => any;
+  disconnect: () => void;
 }

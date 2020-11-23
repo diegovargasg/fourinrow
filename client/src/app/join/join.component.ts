@@ -30,15 +30,12 @@ export class JoinComponent implements OnInit {
     this.connectionService.connect();
   }
 
-  async onSubmit() {
-    try {
-      const connection = await this.connectionService.connect();
-      this.game.id = this.joinForm.value.gameId;
-      this.player.name = this.joinForm.value.name;
-      this.player.id = connection.id;
-      await this.connectionService.createGame(this.game, this.player);
-      this.router.navigate(['/waiting']);
-    } catch (e) {}
+  onSubmit() {
+    this.connectionService.connect();
+    this.game.id = this.joinForm.value.gameId;
+    this.player.name = this.joinForm.value.name;
+    this.connectionService.createGame(this.game, this.player);
+    this.router.navigate(['/waiting']);
   }
 
   ngOnInit(): void {}

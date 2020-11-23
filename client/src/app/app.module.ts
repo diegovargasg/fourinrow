@@ -12,7 +12,7 @@ import { CreateComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
 import { WaitingComponent } from './waiting/waiting.component';
 import { ConnectionService } from './connection/connection.service';
-import { ConnectionSocketioService } from './connection/connection.socketio.service';
+import { ConnectionSocketService } from './connection/connection.socket.service';
 import { GameService } from './game/game.service';
 import { PlayerService } from './player/player.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -36,7 +36,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   providers: [
-    { provide: ConnectionService, useClass: ConnectionSocketioService },
+    { provide: ConnectionService, useClass: ConnectionSocketService },
     GameService,
     PlayerService,
   ],

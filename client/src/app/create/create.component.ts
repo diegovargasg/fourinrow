@@ -25,15 +25,14 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
-  async onSubmit() {
-    try {
-      await this.connectionService.connect();
-      this.game.id = Math.random().toString(36).substr(2, 6);
-      this.player.name = this.createForm.value.name;
-      await this.connectionService.createGame(this.game, this.player);
-      this.router.navigate(['/waiting']);
-    } catch (e) {}
+  onSubmit() {
+    this.connectionService.connect();
+    this.game.id = Math.random().toString(36).substr(2, 6);
+    this.player.name = this.createForm.value.name;
+    this.connectionService.createGame(this.game, this.player);
+    this.connectionService.createGame();
+    this.router.navigate(['/waiting']);
   }
+
+  ngOnInit(): void {}
 }
