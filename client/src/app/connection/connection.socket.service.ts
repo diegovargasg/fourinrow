@@ -25,12 +25,10 @@ export class ConnectionSocketService implements ConnectionSocket {
   createGame(game: Game, player: Player) {
     console.log('creates Game');
     this.socket.emit('createGame', { game, player });
-    this.listenerAllPlayers();
   }
 
   joinGame(game: Game, player: Player) {
     this.socket.emit('joinGame', { game, player });
-    this.listenerAllPlayers();
     return true;
   }
 

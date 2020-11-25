@@ -1,3 +1,16 @@
+require("dotenv").config();
+
+const redis = require("redis");
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  retry_strategy: () => 1000,
+});
+
+redisClient.on("error", function (err) {
+  console.log("Error " + err);
+});
+
 const app = require("express")();
 const server = require("http").createServer(app);
 const port = process.env.PORT || "5000";
@@ -14,11 +27,13 @@ io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
   socket.on("createGame", async (data) => {
-    console.log("Game Created", data);
+    const { game, player } = data;
+    console.log("Game Created", game);
+    redisClient.set("gameId", "{'id':1234}");
   });
 
   socket.on("joinGame", async (data) => {
-    console.log("Game Created", data);
+    console.log("user joined", data);
   });
 
   socket.on("disconnect", async () => {
