@@ -1,3 +1,6 @@
+import express from "express";
+import http from "http";
+
 require("dotenv").config();
 
 const redis = require("redis");
@@ -7,12 +10,12 @@ const redisClient = redis.createClient({
   retry_strategy: () => 1000,
 });
 
-redisClient.on("error", function (err) {
-  console.log("Error " + err);
+redisClient.on("errors", function (err: any) {
+  console.log("Error + err");
 });
 
-const app = require("express")();
-const server = require("http").createServer(app);
+const app = express();
+const server = http.createServer(app);
 const port = process.env.PORT || "5000";
 const options = {
   cors: {
@@ -23,16 +26,16 @@ const options = {
 const io = require("socket.io")(server, options);
 
 //Run when client connects
-io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
+io.on("connection", (socket: any) => {
+  console.log("User connected: ", socket.id);
 
-  socket.on("createGame", async (data) => {
+  socket.on("create_Game", async (data: any) => {
     const { game, player } = data;
     console.log("Game Created", game);
-    redisClient.set("gameId", "{'id':1234}");
+    redisClient.set("gameId", "{'id':1234s5}");
   });
 
-  socket.on("joinGame", async (data) => {
+  socket.on("joinGame", async (data: any) => {
     console.log("user joined", data);
   });
 
@@ -44,7 +47,7 @@ io.on("connection", (socket) => {
 //Runs server
 server.listen(port, async () => {
   try {
-    console.log(`Server running in ${port}`);
+    console.log(`Servers running in   ${port}`);
   } catch (error) {
     console.log(error);
   }
