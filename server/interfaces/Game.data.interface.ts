@@ -1,5 +1,5 @@
 export interface GameDataInterface {
-  players: [];
+  players: Array<string>;
   started: boolean;
   config: {};
 }
