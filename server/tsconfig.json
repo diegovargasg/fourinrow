@@ -6,7 +6,10 @@
       "outDir": "./build",
       "esModuleInterop": true,
       "sourceMap": true,
-      "strict": true
+      "strict": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
     },
+    "include": ["src", "services"],
     "exclude": ["node_modules",".vscode"]
   }
