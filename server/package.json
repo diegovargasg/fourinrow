@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc --project ./",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ts-node node_modules/jasmine/bin/jasmine",
     "dev": "nodemon ./src/index.ts"
   },
   "author": "",
@@ -23,6 +23,10 @@
     "tsyringe": "^4.4.0"
   },
   "devDependencies": {
+    "@types/jasmine": "^3.6.2",
+    "jasmine": "^3.6.3",
+    "jasmine-core": "^3.6.0",
+    "jasmine-ts": "^0.3.0",
     "nodemon": "^2.0.6",
     "ts-node": "^9.0.0",
     "typescript": "^4.1.2"
