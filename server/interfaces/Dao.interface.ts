@@ -6,8 +6,8 @@ export interface DAOInterface {
   createGame(game: Game): void;
   createPlayer(player: Player): void;
   joinGame(gameId: string, playerId: string): void;
-  deleteGame(game: Game): void;
-  deletePlayer(player: Player): void;
+  deleteGame(gameId: string): void;
+  deletePlayer(playerId: string): void;
   updateGame(game: Game): void;
   updatePlayer(player: Player): void;
   getAllGames(): Game[];
