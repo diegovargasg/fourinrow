@@ -26,15 +26,12 @@ export class JoinComponent implements OnInit {
     });
   }
 
-  onJoin() {
-    this.connectionService.connect();
-  }
-
   onSubmit() {
     this.connectionService.connect();
-    this.game.id = this.joinForm.value.gameId;
-    this.player.name = this.joinForm.value.name;
-    this.connectionService.createGame(this.game, this.player);
+    const gameId = this.joinForm.value.gameId;
+    const playerName = this.joinForm.value.name;
+    this.connectionService.createPlayer(playerName, gameId);
+    this.connectionService.joinGame(gameId);
     this.router.navigate(['/waiting']);
   }
 
