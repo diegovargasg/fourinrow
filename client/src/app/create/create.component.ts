@@ -27,10 +27,10 @@ export class CreateComponent implements OnInit {
 
   onSubmit() {
     this.connectionService.connect();
-    this.game.id = Math.random().toString(36).substr(2, 6);
-    this.player.name = this.createForm.value.name;
-    this.connectionService.createGame(this.game, this.player);
-    this.connectionService.createGame();
+    const gameId = Math.random().toString(36).substr(2, 6);
+    const playerName = this.createForm.value.name;
+    this.connectionService.createGame(gameId);
+    this.connectionService.createPlayer(playerName, gameId);
     this.router.navigate(['/waiting']);
   }
 
