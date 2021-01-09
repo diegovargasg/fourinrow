@@ -43,7 +43,10 @@ export class ConnectionSocketService implements ConnectionSocket {
   }
 
   listenerAllPlayers() {
-    this.socket.on('getAllPlayers');
+    this.socket.on('getAllPlayers', (allPlayers: []) => {
+      console.log('received all players');
+      console.log(allPlayers);
+    });
   }
 
   getAllPlayers(game: Game) {

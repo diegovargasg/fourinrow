@@ -17,10 +17,10 @@ export class DAORedis implements DAOInterface {
 
   init() {
     this.redisClient = redis.createClient({
-      //host: process.env.DAO_HOST,
-      host: "localhost",
-      //port: parseInt(process.env.DAO_PORT || "6379", 10),
-      port: 6379,
+      host: process.env.DAO_HOST,
+      //host: "localhost",
+      port: parseInt(process.env.DAO_PORT || "6379", 10),
+      //port: 6379,
       retry_strategy: () => 1000,
     });
 
@@ -55,7 +55,7 @@ export class DAORedis implements DAOInterface {
   }
 
   async createGame(game: Game) {
-    console.log(`Game saved ${game.id}`);
+    console.log(`Game saved ${JSON.stringify(game)}`);
     const gameData = JSON.stringify(game.data);
     return await this.redisAsyncSet(game.id, gameData);
   }
@@ -109,7 +109,7 @@ export class DAORedis implements DAOInterface {
   }
 
   async createPlayer(player: Player) {
-    console.log(`Player ${player._id} Saved`);
+    console.log(`Player ${JSON.stringify(player)} Saved`);
     return await this.redisAsyncSet(player._id, JSON.stringify(player.data));
   }
 

@@ -54,16 +54,17 @@ export class ServerWebsockets {
           const player = new Player(playerId, playerName);
           player._data.gameId = gameId;
           this.dao.createPlayer(player);
+          socket.join(gameId);
         }
       );
 
       socket.on("joinGame", async (data: { gameId: string }) => {
         const playerId: string = socket.id;
         const { gameId } = data;
-        this.dao.joinGame(gameId, playerId);
-        const players = await this.dao.getAllPlayersByGameId(gameId);
-        console.log(`All players for gameId ${gameId}`);
-        console.log(players);
+        await this.dao.joinGame(gameId, playerId);
+        const allPlayers = await this.dao.getAllPlayersByGameId(gameId);
+        console.log(`All players for gameId ${gameId} ${allPlayers}`);
+        this.io.to(gameId).emit("getAllPlayers", allPlayers);
       });
 
       socket.on("disconnect", async () => {
