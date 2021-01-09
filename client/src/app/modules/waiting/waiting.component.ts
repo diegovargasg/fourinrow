@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConnectionService } from '../core/connection/connection.service';
-import { GameService } from '../core/services/game.service';
-import { PlayerService } from '../core/services/player.service';
+import { ConnectionService } from '../../core/connection/connection.service';
+import { GameService } from '../../core/services/game.service';
+import { PlayerService } from '../../core/services/player.service';
 
 @Component({
   selector: 'app-waiting',

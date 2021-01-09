@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BoardComponent } from './board/board.component';
-import { HeaderComponent } from './header/header.component';
-import { JoinComponent } from './join/join.component';
-import { ResultComponent } from './result/result.component';
-import { CreateComponent } from './create/create.component';
-import { HomeComponent } from './home/home.component';
-import { WaitingComponent } from './waiting/waiting.component';
+import { BoardComponent } from './modules/board/board.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { JoinComponent } from './modules/join/join.component';
+import { ResultComponent } from './modules/result/result.component';
+import { CreateComponent } from './modules/create/create.component';
+import { HomeComponent } from './modules/home/home.component';
+import { WaitingComponent } from './modules/waiting/waiting.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
