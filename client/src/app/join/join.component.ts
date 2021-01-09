@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConnectionService } from '../connection/connection.service';
+import { ConnectionService } from '../core/connection/connection.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GameService } from '../game/game.service';
-import { PlayerService } from '../player/player.service';
+import { GameService } from '../core/services/game.service';
+import { PlayerService } from '../core/services/player.service';
 
 @Component({
   selector: 'app-join',

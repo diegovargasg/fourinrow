@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { io } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 import { ConnectionSocket } from './connection.socket.interface';
-import { Game } from '../game/game.model';
-import { Player } from '../player/player.model';
+import { Game } from '../models/game.model';
+import { Player } from '../models/player.model';
 
 @Injectable({
   providedIn: 'root',

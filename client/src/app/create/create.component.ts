@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConnectionService } from '../connection/connection.service';
-import { GameService } from '../game/game.service';
-import { PlayerService } from '../player/player.service';
+import { ConnectionService } from '../core/connection/connection.service';
+import { GameService } from '../core/services/game.service';
+import { PlayerService } from '../core/services/player.service';
 
 @Component({
   selector: 'app-create',
@@ -29,6 +29,7 @@ export class CreateComponent implements OnInit {
     this.connectionService.connect();
     const gameId = Math.random().toString(36).substr(2, 6);
     const playerName = this.createForm.value.name;
+
     this.connectionService.createGame(gameId);
     this.connectionService.createPlayer(playerName, gameId);
     this.router.navigate(['/waiting']);

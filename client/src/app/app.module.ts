@@ -11,10 +11,10 @@ import { ResultComponent } from './result/result.component';
 import { CreateComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
 import { WaitingComponent } from './waiting/waiting.component';
-import { ConnectionService } from './connection/connection.service';
-import { ConnectionSocketService } from './connection/connection.socket.service';
-import { GameService } from './game/game.service';
-import { PlayerService } from './player/player.service';
+import { ConnectionService } from './core/connection/connection.service';
+import { ConnectionSocketService } from './core/connection/connection.socket.service';
+import { GameService } from './core/services/game.service';
+import { PlayerService } from './core/services/player.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
