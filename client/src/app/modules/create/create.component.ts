@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConnectionService } from '../../core/connection/connection.service';
 import { GameService } from '../../core/services/game.service';
 import { PlayerService } from '../../core/services/player.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-create',
