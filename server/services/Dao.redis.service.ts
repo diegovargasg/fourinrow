@@ -5,6 +5,7 @@ import { Game } from "../models/Game";
 import { Player } from "../models/Player";
 import { promisify } from "util";
 import { GameDataInterface } from "../interfaces/Game.data.interface";
+import { PlayerDataInterface } from "../interfaces/Player.data.interface";
 
 @singleton()
 export class DAORedis implements DAOInterface {
@@ -16,8 +17,10 @@ export class DAORedis implements DAOInterface {
 
   init() {
     this.redisClient = redis.createClient({
-      host: process.env.DAO_HOST,
-      port: parseInt(process.env.DAO_PORT || "6379", 10),
+      //host: process.env.DAO_HOST,
+      host: "localhost",
+      //port: parseInt(process.env.DAO_PORT || "6379", 10),
+      port: 6379,
       retry_strategy: () => 1000,
     });
 
@@ -27,6 +30,7 @@ export class DAORedis implements DAOInterface {
 
     this.redisAsyncGet = promisify(this.redisClient.get).bind(this.redisClient);
     this.redisAsyncSet = promisify(this.redisClient.set).bind(this.redisClient);
+    return this.redisClient;
   }
 
   deleteGame(gameId: string): void {
@@ -50,10 +54,10 @@ export class DAORedis implements DAOInterface {
     throw new Error("Method not implemented.");
   }
 
-  createGame(game: Game) {
+  async createGame(game: Game) {
     console.log(`Game saved ${game.id}`);
     const gameData = JSON.stringify(game.data);
-    this.redisClient.set(game.id, gameData);
+    return await this.redisAsyncSet(game.id, gameData);
   }
 
   async joinGame(gameId: string, playerId: string) {
@@ -68,7 +72,24 @@ export class DAORedis implements DAOInterface {
     }
     gameData.players = currentPlayers;
     console.log(`Game final data ${JSON.stringify(gameData)}`);
-    this.redisClient.set(gameId, JSON.stringify(gameData));
+
+    let playerData: PlayerDataInterface = JSON.parse(
+      await this.redisAsyncGet(playerId)
+    );
+    playerData.gameId = gameId;
+    console.log(`Player final data ${JSON.stringify(playerData)}`);
+
+    const resultPlayerUpdate = await this.redisAsyncSet(
+      playerId,
+      JSON.stringify(playerData)
+    );
+    const resultGameUpdate = await this.redisAsyncSet(
+      gameId,
+      JSON.stringify(gameData)
+    );
+    return resultGameUpdate === "OK" && resultPlayerUpdate === "OK"
+      ? "OK"
+      : false;
   }
 
   async getGameById(gameId: string): Promise<Game> {
@@ -79,12 +100,35 @@ export class DAORedis implements DAOInterface {
     return game;
   }
 
-  getPlayerById(playerId: string): Player {
-    throw new Error("Method not implemented.");
+  async getPlayerById(playerId: string): Promise<Player> {
+    const playerData: PlayerDataInterface = JSON.parse(
+      await this.redisAsyncGet(playerId)
+    );
+    const player = new Player(playerId, playerData.name, playerData);
+    return player;
   }
 
-  createPlayer(player: Player) {
+  async createPlayer(player: Player) {
     console.log(`Player ${player._id} Saved`);
-    this.redisClient.set(player._id, JSON.stringify(player.data));
+    return await this.redisAsyncSet(player._id, JSON.stringify(player.data));
   }
+
+  getAllPlayersByGameId(gameId: string): Player[] | Promise<Player>[] {
+    throw new Error("Method not implemented.");
+  }
+  /*async getAllPlayersByGameId(gameId: string): Promise<Player>[] {
+    console.log(`Get all players from Game ${gameId}`);
+    const game = await this.getGameById(gameId);
+    const gamePlayers = game._data.players;
+    console.log(gamePlayers);
+    const allPlayers: Promise<Player>[] = [];
+
+    gamePlayers.forEach(async (playerId) => {
+      console.log(playerId);
+      const player = await this.getPlayerById(playerId);
+      //allPlayers.push(player);
+    });
+
+    return allPlayers;
+  }*/
 }
