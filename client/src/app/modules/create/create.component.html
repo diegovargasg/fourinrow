@@ -1,13 +1,15 @@
 <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
   <div>
-    <label>Name:</label>
-    <input type="text" formControlName="name" />
-    <b
-      *ngIf="
-        createForm.controls.name.touched && createForm.controls.name.invalid
-      "
-      >Name Required</b
-    >
+    <mat-form-field class="example-full-width">
+      <mat-label>Name:</mat-label>
+      <input matInput type="text" formControlName="name" />
+      <b
+        *ngIf="
+          createForm.controls.name.touched && createForm.controls.name.invalid
+        "
+        >Name Required</b
+      >
+    </mat-form-field>
   </div>
   <button mat-raised-button color="primary" [disabled]="createForm.invalid">
     Create
