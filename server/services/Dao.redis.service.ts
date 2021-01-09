@@ -113,22 +113,16 @@ export class DAORedis implements DAOInterface {
     return await this.redisAsyncSet(player._id, JSON.stringify(player.data));
   }
 
-  getAllPlayersByGameId(gameId: string): Player[] | Promise<Player>[] {
-    throw new Error("Method not implemented.");
-  }
-  /*async getAllPlayersByGameId(gameId: string): Promise<Player>[] {
-    console.log(`Get all players from Game ${gameId}`);
+  async getAllPlayersByGameId(gameId: string): Promise<Player[]> {
     const game = await this.getGameById(gameId);
     const gamePlayers = game._data.players;
-    console.log(gamePlayers);
-    const allPlayers: Promise<Player>[] = [];
+    let allPlayers: Player[] = [];
 
-    gamePlayers.forEach(async (playerId) => {
-      console.log(playerId);
-      const player = await this.getPlayerById(playerId);
-      //allPlayers.push(player);
-    });
+    for (const playerId of gamePlayers) {
+      const player: Player = await this.getPlayerById(playerId);
+      allPlayers.push(player);
+    }
 
     return allPlayers;
-  }*/
+  }
 }

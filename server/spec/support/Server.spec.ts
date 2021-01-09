@@ -54,6 +54,14 @@ it("joins a game", async function () {
   expect(player._data.gameId).toEqual("game123");
 }, 5000);
 
+it("get all players of a game", async function () {
+  const allPlayers = await dao.getAllPlayersByGameId("game123");
+  for (const player of allPlayers) {
+    const savedPlayer = await dao.getPlayerById(player._id);
+    expect(player).toEqual(savedPlayer);
+  }
+}, 5000);
+
 /*it("set a player ready", async function () {
   await playerReady(gameId, playerId);
   gameObject = await getGame(gameId);

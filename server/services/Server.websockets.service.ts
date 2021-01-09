@@ -57,14 +57,14 @@ export class ServerWebsockets {
         }
       );
 
-      socket.on(
-        "joinGame",
-        async (data: { gameId: string; playerId: string }) => {
-          console.log("user joined", data);
-          const { gameId, playerId } = data;
-          this.dao.joinGame(gameId, playerId);
-        }
-      );
+      socket.on("joinGame", async (data: { gameId: string }) => {
+        const playerId: string = socket.id;
+        const { gameId } = data;
+        this.dao.joinGame(gameId, playerId);
+        const players = await this.dao.getAllPlayersByGameId(gameId);
+        console.log(`All players for gameId ${gameId}`);
+        console.log(players);
+      });
 
       socket.on("disconnect", async () => {
         console.log(`Player disconnected ${playerId}`);

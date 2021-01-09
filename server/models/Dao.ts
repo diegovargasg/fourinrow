@@ -4,6 +4,9 @@ import { Player } from "./Player";
 
 export class DAO implements DAOInterface {
   constructor() {}
+  getAllPlayersByGameId(gameId: string): Player[] | Promise<Player[]> {
+    throw new Error("Method not implemented.");
+  }
   joinGame(gameId: string, playerId: string): void {
     throw new Error("Method not implemented.");
   }
@@ -28,9 +31,10 @@ export class DAO implements DAOInterface {
   getGameById(gameId: string): Game | Promise<Game> {
     throw new Error("Method not implemented.");
   }
-  getPlayerById(playerId: string): Player {
+  getPlayerById(playerId: string): Player | Promise<Player> {
     throw new Error("Method not implemented.");
   }
+
   init(): void {}
   createGame(game: Game) {
     throw new Error("Method not implemented.");
