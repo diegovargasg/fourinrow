@@ -47,5 +47,6 @@ export class GameService {
 
   destroyGame() {
     this.id = '';
+    this.connectionService.disconnect();
   }
 }

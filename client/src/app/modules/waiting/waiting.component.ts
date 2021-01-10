@@ -23,8 +23,6 @@ export class WaitingComponent implements OnInit {
     console.log(this.playerService.id);
     if (this.gameService.id == '' || this.playerService.id == '') {
       console.log('should enter here');
-      this.gameService.destroyGame();
-      this.playerService.destroyPlayer();
       this.router.navigate(['/']);
     }
 
@@ -42,6 +40,7 @@ export class WaitingComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    console.log('ondestroy waiting');
     this.gameService.destroyGame();
     this.playerService.destroyPlayer();
     this.subscription.unsubscribe();

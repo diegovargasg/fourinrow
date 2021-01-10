@@ -60,5 +60,7 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.socket.emit('getAllPlayersByGameId', { gameId });
   }
 
-  disconnect() {}
+  disconnect() {
+    this.socket.disconnect();
+  }
 }
