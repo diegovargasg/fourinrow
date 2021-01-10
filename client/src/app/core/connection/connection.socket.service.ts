@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { io } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 import { ConnectionSocket } from './connection.socket.interface';
-import { Game } from '../models/game.model';
+import { Subject } from 'rxjs';
 import { Player } from '../models/player.model';
 
 @Injectable({
@@ -14,6 +14,13 @@ export class ConnectionSocketService implements ConnectionSocket {
   socket: any = {};
   options = {};
   id: string = '';
+
+  allPlayersByGameIdSubject = new Subject<Player[]>();
+  allPlayersByGameId = this.allPlayersByGameIdSubject.asObservable();
+
+  constructor() {
+    this.connect();
+  }
 
   connect() {
     this.socket = io(environment.socket_host + environment.socket_port);
@@ -27,6 +34,7 @@ export class ConnectionSocketService implements ConnectionSocket {
   }
 
   createPlayer(playerName: string, gameId: string) {
+    console.log('createPlayer', { playerName, gameId });
     this.socket.emit('createPlayer', { playerName, gameId });
   }
 
@@ -42,19 +50,15 @@ export class ConnectionSocketService implements ConnectionSocket {
   }
 
   listenerAllPlayers() {
-    this.socket.on('getAllPlayers', (allPlayers: []) => {
-      console.log('received all players');
-      console.log(allPlayers);
+    this.socket.on('getAllPlayersByGameId', (allPlayers: Player[]) => {
+      this.allPlayersByGameIdSubject.next(allPlayers);
     });
   }
 
-  getAllPlayers(game: Game) {
-    this.socket.emit('getAllPlayers', { game });
+  getAllPlayersByGameId(gameId: string) {
+    console.log('getAllPlayersByGameId', gameId);
+    this.socket.emit('getAllPlayersByGameId', { gameId });
   }
 
   disconnect() {}
-
-  constructor() {
-    this.connect();
-  }
 }

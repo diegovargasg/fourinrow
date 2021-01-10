@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
 import { ConnectionService } from '../connection/connection.service';
-import { Player } from '../models/player.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PlayerService implements Player {
+export class PlayerService {
   id: string = '';
-  data = {
-    name: '',
-    ready: false,
-    gameId: '',
-  };
 
-  constructor(private connectionService: ConnectionService) {
-    //this.connectionService.connect();
-  }
+  constructor(private connectionService: ConnectionService) {}
 
   createPlayer(playerName: string, gameId: string) {
+    this.id = this.connectionService.id;
     this.connectionService.createPlayer(playerName, gameId);
+  }
+
+  destroyPlayer() {
+    this.id = '';
   }
 }

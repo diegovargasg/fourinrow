@@ -1,11 +1,11 @@
 import { PlayerDataInterface } from "../interfaces/Player.data.interface";
 import { PlayerInterface } from "../interfaces/Player.interface";
 
-const dataFactory: PlayerDataInterface = {
+const dataFactory = (): PlayerDataInterface => ({
   name: "",
   ready: false,
   gameId: "",
-};
+});
 
 export class Player implements PlayerInterface {
   readonly _id: string;
@@ -14,7 +14,7 @@ export class Player implements PlayerInterface {
   constructor(
     id: string,
     name: string,
-    data: PlayerDataInterface = dataFactory
+    data: PlayerDataInterface = dataFactory()
   ) {
     this._id = id;
     this._data = data;

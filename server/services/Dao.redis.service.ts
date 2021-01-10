@@ -17,10 +17,8 @@ export class DAORedis implements DAOInterface {
 
   init() {
     this.redisClient = redis.createClient({
-      host: process.env.DAO_HOST,
-      //host: "localhost",
+      host: process.env.DAO_HOST || "localhost",
       port: parseInt(process.env.DAO_PORT || "6379", 10),
-      //port: 6379,
       retry_strategy: () => 1000,
     });
 
@@ -97,6 +95,7 @@ export class DAORedis implements DAOInterface {
       await this.redisAsyncGet(gameId)
     );
     const game = new Game(gameId, gameData);
+    console.log(`getGameById ${JSON.stringify(game)}`);
     return game;
   }
 

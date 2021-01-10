@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConnectionService } from '../../core/connection/connection.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Player } from 'src/app/core/models/player.model';
 import { GameService } from '../../core/services/game.service';
 import { PlayerService } from '../../core/services/player.service';
 
@@ -9,14 +11,39 @@ import { PlayerService } from '../../core/services/player.service';
   styleUrls: ['./waiting.component.scss'],
 })
 export class WaitingComponent implements OnInit {
+  subscription: Subscription;
+  allPlayers: Player[] = [];
+
   constructor(
-    private connectionService: ConnectionService,
-    private game: GameService,
-    private player: PlayerService
-  ) {}
+    private router: Router,
+    private gameService: GameService,
+    private playerService: PlayerService
+  ) {
+    console.log(this.gameService.id);
+    console.log(this.playerService.id);
+    if (this.gameService.id == '' || this.playerService.id == '') {
+      console.log('should enter here');
+      this.gameService.destroyGame();
+      this.playerService.destroyPlayer();
+      this.router.navigate(['/']);
+    }
+
+    this.subscription = this.gameService.allPlayersByGameId.subscribe(
+      (allPlayers) => {
+        console.log('AllPlayers in Waiting Component');
+        console.log(allPlayers);
+        this.allPlayers = allPlayers;
+      }
+    );
+  }
 
   ngOnInit(): void {
-    //this.player.id = this.connectionService.id;
-    //this.connectionService.getAllPlayers();
+    this.gameService.getAllPlayersByGameId(this.gameService.id);
+  }
+
+  ngOnDestroy() {
+    this.gameService.destroyGame();
+    this.playerService.destroyPlayer();
+    this.subscription.unsubscribe();
   }
 }

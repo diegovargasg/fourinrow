@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Connection } from './connection.interface';
 import { environment } from 'src/environments/environment';
 import { Player } from '../models/player.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
