@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConnectionService } from '../../core/connection/connection.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GameService } from '../../core/services/game.service';
 import { PlayerService } from '../../core/services/player.service';
@@ -14,11 +13,10 @@ export class JoinComponent implements OnInit {
   joinForm: FormGroup;
 
   constructor(
-    private connectionService: ConnectionService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private game: GameService,
-    private player: PlayerService
+    private gameService: GameService,
+    private playerService: PlayerService
   ) {
     this.joinForm = formBuilder.group({
       name: ['', Validators.required],
@@ -27,11 +25,10 @@ export class JoinComponent implements OnInit {
   }
 
   onSubmit() {
-    this.connectionService.connect();
     const gameId = this.joinForm.value.gameId;
     const playerName = this.joinForm.value.name;
-    this.connectionService.createPlayer(playerName, gameId);
-    this.connectionService.joinGame(gameId);
+    this.playerService.createPlayer(playerName, gameId);
+    this.gameService.joinGame(gameId);
     this.router.navigate(['/waiting']);
   }
 

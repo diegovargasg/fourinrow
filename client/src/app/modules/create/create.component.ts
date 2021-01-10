@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConnectionService } from '../../core/connection/connection.service';
 import { GameService } from '../../core/services/game.service';
 import { PlayerService } from '../../core/services/player.service';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-create',
@@ -15,11 +13,10 @@ export class CreateComponent implements OnInit {
   createForm: FormGroup;
 
   constructor(
-    private connectionService: ConnectionService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private game: GameService,
-    private player: PlayerService
+    private gameService: GameService,
+    private playerService: PlayerService
   ) {
     this.createForm = formBuilder.group({
       name: ['', Validators.required],
@@ -27,12 +24,10 @@ export class CreateComponent implements OnInit {
   }
 
   onSubmit() {
-    this.connectionService.connect();
     const gameId = Math.random().toString(36).substr(2, 6);
     const playerName = this.createForm.value.name;
-
-    this.connectionService.createGame(gameId);
-    this.connectionService.createPlayer(playerName, gameId);
+    this.gameService.createGame(gameId);
+    this.playerService.createPlayer(playerName, gameId);
     this.router.navigate(['/waiting']);
   }
 

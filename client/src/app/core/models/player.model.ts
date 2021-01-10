@@ -1,4 +1,8 @@
 export interface Player {
   id: string;
-  name: string;
+  data: {
+    name: string;
+    ready: boolean;
+    gameId: string;
+  };
 }

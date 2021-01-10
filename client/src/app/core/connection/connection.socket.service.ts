@@ -19,7 +19,6 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.socket = io(environment.socket_host + environment.socket_port);
     this.listenerConnected();
     this.listenerAllPlayers();
-    return this.socket;
   }
 
   createGame(gameId: string) {
@@ -55,5 +54,7 @@ export class ConnectionSocketService implements ConnectionSocket {
 
   disconnect() {}
 
-  constructor() {}
+  constructor() {
+    this.connect();
+  }
 }
