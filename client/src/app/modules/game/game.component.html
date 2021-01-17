@@ -1,0 +1,6 @@
+<p>game works!</p>
+<ng-template [ngIf]="!isGameStarted">
+  <app-waiting [allPlayers]="allPlayers"></app-waiting>
+  <button (click)="onReady()">Ready</button>
+  <button routerLink="/">Back</button>
+</ng-template>
