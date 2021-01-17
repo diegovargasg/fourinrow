@@ -1,6 +1,6 @@
 export interface Player {
-  id: string;
-  data: {
+  _id: string;
+  _data: {
     name: string;
     ready: boolean;
     gameId: string;
