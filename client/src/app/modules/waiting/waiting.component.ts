@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Player } from 'src/app/core/models/player.model';
@@ -11,38 +11,31 @@ import { PlayerService } from '../../core/services/player.service';
   styleUrls: ['./waiting.component.scss'],
 })
 export class WaitingComponent implements OnInit {
-  subscription: Subscription;
-  allPlayers: Player[] = [];
+  private _allPlayers: Player[] = [];
+
+  @Input()
+  get allPlayers(): Player[] {
+    return this._allPlayers;
+  }
+  set allPlayers(allPlayers: Player[]) {
+    console.log('setter all players', allPlayers);
+    this._allPlayers = allPlayers;
+  }
 
   constructor(
     private router: Router,
     private gameService: GameService,
     private playerService: PlayerService
-  ) {
-    console.log(this.gameService.id);
-    console.log(this.playerService.id);
-    if (this.gameService.id == '' || this.playerService.id == '') {
-      console.log('should enter here');
-      this.router.navigate(['/']);
-    }
-
-    this.subscription = this.gameService.allPlayersByGameId.subscribe(
-      (allPlayers) => {
-        console.log('AllPlayers in Waiting Component');
-        console.log(allPlayers);
-        this.allPlayers = allPlayers;
-      }
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.gameService.getAllPlayersByGameId(this.gameService.id);
+    //this.gameService.getAllPlayersByGameId(this.gameService.id);
   }
 
-  ngOnDestroy() {
-    console.log('ondestroy waiting');
-    this.gameService.destroyGame();
-    this.playerService.destroyPlayer();
-    this.subscription.unsubscribe();
-  }
+  /*ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    //this.doSomething(changes.categoryId.currentValue);
+    // You can also use categoryId.previousValue and
+    // categoryId.firstChange for comparing old and new values
+  }*/
 }

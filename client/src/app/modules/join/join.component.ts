@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GameService } from '../../core/services/game.service';
-import { PlayerService } from '../../core/services/player.service';
+import { NewGameService } from 'src/app/core/services/new-game.service';
 
 @Component({
   selector: 'app-join',
@@ -15,8 +14,7 @@ export class JoinComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private gameService: GameService,
-    private playerService: PlayerService
+    private newGameService: NewGameService
   ) {
     this.joinForm = formBuilder.group({
       name: ['', Validators.required],
@@ -27,9 +25,11 @@ export class JoinComponent implements OnInit {
   onSubmit() {
     const gameId = this.joinForm.value.gameId;
     const playerName = this.joinForm.value.name;
-    this.playerService.createPlayer(playerName, gameId);
-    this.gameService.joinGame(gameId);
-    this.router.navigate(['/waiting']);
+    this.newGameService.gameId = gameId;
+    this.newGameService.playerName = playerName;
+    //this.playerService.createPlayer(playerName, gameId);
+    // this.gameService.joinGame(gameId);
+    this.router.navigate(['/game/join']);
   }
 
   ngOnInit(): void {}

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GameService } from '../../core/services/game.service';
-import { PlayerService } from '../../core/services/player.service';
+import { NewGameService } from 'src/app/core/services/new-game.service';
 
 @Component({
   selector: 'app-create',
@@ -15,8 +14,7 @@ export class CreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private gameService: GameService,
-    private playerService: PlayerService
+    private newGameService: NewGameService
   ) {
     this.createForm = formBuilder.group({
       name: ['', Validators.required],
@@ -26,9 +24,10 @@ export class CreateComponent implements OnInit {
   onSubmit() {
     const gameId = Math.random().toString(36).substr(2, 6);
     const playerName = this.createForm.value.name;
-    this.gameService.createGame(gameId);
-    this.playerService.createPlayer(playerName, gameId);
-    this.router.navigate(['/waiting']);
+
+    this.newGameService.gameId = gameId;
+    this.newGameService.playerName = playerName;
+    this.router.navigate(['/game/create']);
   }
 
   ngOnInit(): void {}

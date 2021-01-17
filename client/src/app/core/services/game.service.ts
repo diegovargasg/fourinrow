@@ -4,9 +4,7 @@ import { ConnectionService } from '../connection/connection.service';
 import { Game } from '../models/game.model';
 import { Player } from '../models/player.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class GameService {
   id: string = '';
   subscription: Subscription;
@@ -42,11 +40,8 @@ export class GameService {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  destroyGame() {
-    this.id = '';
+    console.log('destroy Game Service');
     this.connectionService.disconnect();
+    this.subscription.unsubscribe();
   }
 }

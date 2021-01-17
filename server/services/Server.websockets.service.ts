@@ -40,6 +40,14 @@ export class ServerWebsockets {
       const playerId: string = socket.id;
       console.log(`Player connected ${playerId}`);
 
+      const emitAllPlayers = async (gameId: string) => {
+        const allPlayers = await this.dao.getAllPlayersByGameId(gameId);
+        console.log(
+          `All players by gameId ${gameId} ${JSON.stringify(allPlayers)}`
+        );
+        this.io.to(gameId).emit("getAllPlayersByGameId", allPlayers);
+      };
+
       socket.on("createGame", async (data: { gameId: string }) => {
         const { gameId } = data;
         const newGame = new Game(gameId);
@@ -67,19 +75,21 @@ export class ServerWebsockets {
         const playerId: string = socket.id;
         const { gameId } = data;
         await this.dao.joinGame(gameId, playerId);
+        emitAllPlayers(gameId);
       });
 
       socket.on("getAllPlayersByGameId", async (data: { gameId: string }) => {
         const { gameId } = data;
-        console.log(`All players by gameId ${gameId}`);
-        const allPlayers = await this.dao.getAllPlayersByGameId(gameId);
-        console.log(`All players by gameId ${gameId} ${allPlayers}`);
-        this.io.to(gameId).emit("getAllPlayersByGameId", allPlayers);
+        emitAllPlayers(gameId);
       });
 
       socket.on("disconnect", async () => {
         console.log(`Player disconnected ${playerId}`);
-        this.dao.deletePlayer(playerId);
+        const player = await this.dao.getPlayerById(playerId);
+        const gameId = player._data.gameId;
+        const result = await this.dao.deletePlayer(playerId);
+        console.log(`result deleting player ${result}`);
+        emitAllPlayers(gameId);
       });
     });
 

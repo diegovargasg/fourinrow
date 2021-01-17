@@ -12,6 +12,7 @@ export class DAORedis implements DAOInterface {
   private redisClient = <redis.RedisClient>{};
   private redisAsyncGet: any;
   private redisAsyncSet: any;
+  private redisAsyncDel: any;
 
   constructor(@inject("DAOService") private DAO: DAOInterface) {}
 
@@ -28,6 +29,7 @@ export class DAORedis implements DAOInterface {
 
     this.redisAsyncGet = promisify(this.redisClient.get).bind(this.redisClient);
     this.redisAsyncSet = promisify(this.redisClient.set).bind(this.redisClient);
+    this.redisAsyncDel = promisify(this.redisClient.del).bind(this.redisClient);
     return this.redisClient;
   }
 
@@ -35,13 +37,29 @@ export class DAORedis implements DAOInterface {
     console.log(`Deleted Game: ${gameId}`);
     this.redisClient.del(gameId);
   }
-  deletePlayer(playerId: string): void {
-    console.log(`Deleted player: ${playerId}`);
-    this.redisClient.del(playerId);
+  async deletePlayer(playerId: string) {
+    const player = await this.getPlayerById(playerId);
+    const gameId = player._data.gameId;
+    const game = await this.getGameById(gameId);
+    console.log(`Game before deleting player ${JSON.stringify(game)}`);
+    let gameData = game._data;
+
+    const indexPlayer: number = gameData.players.indexOf(playerId, 0);
+    if (indexPlayer > -1) {
+      gameData.players.splice(indexPlayer, 1);
+    }
+
+    const updatedGame = new Game(gameId, gameData);
+
+    await this.updateGame(updatedGame);
+    await this.redisAsyncDel(playerId);
   }
-  updateGame(game: Game): void {
-    throw new Error("Method not implemented.");
+
+  async updateGame(game: Game) {
+    console.log(`Game after deleting player ${JSON.stringify(game)}`);
+    return await this.redisAsyncSet(game._id, JSON.stringify(game._data));
   }
+
   updatePlayer(player: Player): void {
     throw new Error("Method not implemented.");
   }
@@ -63,6 +81,9 @@ export class DAORedis implements DAOInterface {
     let gameData: GameDataInterface = JSON.parse(
       await this.redisAsyncGet(gameId)
     );
+
+    console.log(`Game initial data ${JSON.stringify(gameData)}`);
+
     const currentPlayers = gameData.players;
 
     if (!currentPlayers.includes(playerId)) {

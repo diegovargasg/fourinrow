@@ -18,7 +18,7 @@ import { PlayerService } from 'src/app/core/services/player.service';
     PlayerService,
   ],
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
   isGameStarted = false;
   isGameInProgress = false;
   isGameEnded = false;
@@ -42,12 +42,20 @@ export class GameComponent implements OnInit {
     }
 
     const action = this.activatedRoute.snapshot.paramMap.get('action');
-    console.log('action!!!', action);
     if (action === 'create') {
-      console.log('CREATE!');
       this.gameService.createGame(this.newGameService.gameId);
+      const selfPlayer: Player = {
+        _id: 'TemporalId',
+        _data: {
+          name: this.newGameService.playerName,
+          ready: false,
+          gameId: this.newGameService.gameId,
+        },
+      };
+      //We do not emit allPlayersByGameId when the user is creating the game.
+      //Is not necessary as the only player is the creator and we waste one message
+      this.allPlayers.push(selfPlayer);
     } else if (action === 'join') {
-      console.log('JOIN!');
       this.gameService.joinGame(this.newGameService.gameId);
     }
 
@@ -69,12 +77,7 @@ export class GameComponent implements OnInit {
     this.isGameStarted = !this.isGameStarted;
   }
 
-  ngOnInit(): void {
-    console.log('oninit Game');
-    setTimeout(() => {
-      this.gameService.getAllPlayersByGameId(this.gameService.id);
-    }, 1000);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy() {
     console.log('ondestroy Game');

@@ -17,6 +17,7 @@ import { GameService } from './core/services/game.service';
 import { PlayerService } from './core/services/player.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/material/material.module';
+import { GameComponent } from './modules/game/game.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MaterialModule } from './shared/material/material.module';
     CreateComponent,
     HomeComponent,
     WaitingComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,11 +39,7 @@ import { MaterialModule } from './shared/material/material.module';
     ReactiveFormsModule,
     MaterialModule,
   ],
-  providers: [
-    { provide: ConnectionService, useClass: ConnectionSocketService },
-    GameService,
-    PlayerService,
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

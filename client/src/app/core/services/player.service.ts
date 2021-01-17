@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ConnectionService } from '../connection/connection.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PlayerService {
   id: string = '';
 
@@ -14,7 +12,7 @@ export class PlayerService {
     this.connectionService.createPlayer(playerName, gameId);
   }
 
-  destroyPlayer() {
-    this.id = '';
+  ngOnDestroy() {
+    console.log('destroy Player Service');
   }
 }
