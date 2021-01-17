@@ -2,7 +2,7 @@
   <div>
     <mat-form-field class="example-full-width">
       <mat-label>Name:</mat-label>
-      <input matInput type="text" formControlName="name" />
+      <input matInput type="text" formControlName="name" autocomplete="off" />
       <b
         *ngIf="
           createForm.controls.name.touched && createForm.controls.name.invalid

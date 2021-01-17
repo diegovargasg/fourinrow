@@ -1,11 +1,11 @@
 <form [formGroup]="joinForm" (ngSubmit)="onSubmit()">
   <div>
     <label>Name:</label>
-    <input formControlName="name" />
+    <input formControlName="name" autocomplete="off" />
   </div>
   <div>
     <label>GameId:</label>
-    <input formControlName="gameId" />
+    <input formControlName="gameId" autocomplete="off" />
   </div>
   <button type="submit">Join</button>
   <button routerLink="/">Back</button>
