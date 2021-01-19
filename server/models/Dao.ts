@@ -4,6 +4,9 @@ import { Player } from "./Player";
 
 export class DAO implements DAOInterface {
   constructor() {}
+  flush(): void {
+    throw new Error("Method not implemented.");
+  }
   getAllPlayersByGameId(gameId: string): Player[] | Promise<Player[]> {
     throw new Error("Method not implemented.");
   }

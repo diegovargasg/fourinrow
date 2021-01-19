@@ -91,6 +91,17 @@ export class ServerWebsockets {
         console.log(`result deleting player ${result}`);
         emitAllPlayers(gameId);
       });
+
+      socket.on(
+        "setPlayerReady",
+        async (data: {
+          playerId: boolean;
+          gameId: boolean;
+          ready: boolean;
+        }) => {
+          const { playerId, gameId, ready } = data;
+        }
+      );
     });
 
     this.httpServer.listen(serverPort, async () => {

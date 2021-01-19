@@ -15,4 +15,5 @@ export interface DAOInterface {
   getGameById(gameId: string): Game | Promise<Game>;
   getPlayerById(playerId: string): Player | Promise<Player>;
   getAllPlayersByGameId(gameId: string): Player[] | Promise<Player[]>;
+  flush(): void;
 }

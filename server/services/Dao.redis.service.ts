@@ -13,6 +13,7 @@ export class DAORedis implements DAOInterface {
   private redisAsyncGet: any;
   private redisAsyncSet: any;
   private redisAsyncDel: any;
+  private redisAsyncFlush: any;
 
   constructor(@inject("DAOService") private DAO: DAOInterface) {}
 
@@ -30,6 +31,9 @@ export class DAORedis implements DAOInterface {
     this.redisAsyncGet = promisify(this.redisClient.get).bind(this.redisClient);
     this.redisAsyncSet = promisify(this.redisClient.set).bind(this.redisClient);
     this.redisAsyncDel = promisify(this.redisClient.del).bind(this.redisClient);
+    this.redisAsyncFlush = promisify(this.redisClient.flushall).bind(
+      this.redisClient
+    );
     return this.redisClient;
   }
 
@@ -68,6 +72,10 @@ export class DAORedis implements DAOInterface {
   }
   getAllPlayers(): Player[] {
     throw new Error("Method not implemented.");
+  }
+
+  private async getPlayer(playerId: string): Promise<PlayerDataInterface> {
+    return JSON.parse(await this.redisAsyncGet(playerId));
   }
 
   async createGame(game: Game) {
@@ -144,5 +152,15 @@ export class DAORedis implements DAOInterface {
     }
 
     return allPlayers;
+  }
+
+  async setPlayerReady(playerId: string, gameId: string, ready: boolean) {
+    const playerData: PlayerDataInterface = await this.getPlayer(playerId);
+    playerData.ready = ready;
+    await this.redisAsyncSet(playerId, JSON.stringify(playerData));
+  }
+
+  async flush() {
+    await this.redisAsyncFlush("ASYNC");
   }
 }
