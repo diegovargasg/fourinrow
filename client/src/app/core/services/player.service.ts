@@ -19,7 +19,11 @@ export class PlayerService {
 
   setPlayerReady() {
     this.ready = !this.ready;
-    this.connectionService.setPlayerReady(this.id, this.gameId, this.ready);
+    this.connectionService.setPlayerReady(
+      this.connectionService.id,
+      this.gameId,
+      this.ready
+    );
   }
 
   ngOnDestroy() {

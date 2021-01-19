@@ -102,6 +102,7 @@ export class ServerWebsockets {
           console.log(
             `Player ${playerId} data ${JSON.stringify(player._data)}`
           );
+          emitAllPlayers(gameId);
         }
       );
     });

@@ -45,7 +45,7 @@ export class GameComponent {
     if (action === 'create') {
       this.gameService.createGame(this.newGameService.gameId);
       const selfPlayer: Player = {
-        _id: 'TemporalId',
+        _id: '',
         _data: {
           name: this.newGameService.playerName,
           ready: false,
