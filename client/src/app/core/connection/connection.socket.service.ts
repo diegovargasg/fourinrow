@@ -60,6 +60,11 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.socket.emit('getAllPlayersByGameId', { gameId });
   }
 
+  setPlayerReady(playerId: string, gameId: string, ready: boolean) {
+    console.log(`player ${playerId} set to ${ready}`);
+    this.socket.emit('setPlayerReady', { playerId, gameId, ready });
+  }
+
   disconnect() {
     this.socket.disconnect();
   }

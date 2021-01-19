@@ -15,6 +15,7 @@ export class ConnectionService implements Connection {
   options: object = {};
   createGame(gameId: string): void {}
   createPlayer(playerName: string, gameId: string): void {}
+  setPlayerReady(playerId: string, gameId: string, ready: boolean): void {}
   joinGame(gameId: string): void {}
   getAllPlayersByGameId(gameId: string): void {}
   allPlayersByGameId: any;

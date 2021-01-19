@@ -74,7 +74,7 @@ export class GameComponent {
   }
 
   onReady() {
-    this.isGameStarted = !this.isGameStarted;
+    this.playerService.setPlayerReady();
   }
 
   ngOnInit(): void {}

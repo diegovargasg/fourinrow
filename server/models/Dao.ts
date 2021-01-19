@@ -4,6 +4,9 @@ import { Player } from "./Player";
 
 export class DAO implements DAOInterface {
   constructor() {}
+  setPlayerReady(playerId: string, gameId: string, ready: boolean): void {
+    throw new Error("Method not implemented.");
+  }
   flush(): void {
     throw new Error("Method not implemented.");
   }

@@ -94,12 +94,14 @@ export class ServerWebsockets {
 
       socket.on(
         "setPlayerReady",
-        async (data: {
-          playerId: boolean;
-          gameId: boolean;
-          ready: boolean;
-        }) => {
+        async (data: { playerId: string; gameId: string; ready: boolean }) => {
           const { playerId, gameId, ready } = data;
+          console.log(`set player ${playerId} ready as ${ready}`);
+          await this.dao.setPlayerReady(playerId, gameId, ready);
+          const player = await this.dao.getPlayerById(playerId);
+          console.log(
+            `Player ${playerId} data ${JSON.stringify(player._data)}`
+          );
         }
       );
     });
