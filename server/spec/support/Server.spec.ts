@@ -83,3 +83,19 @@ it("sets a game as in progress", async function () {
   const game = await dao.getGameById("game123");
   expect(game._data.started).toBe(true);
 });
+
+it("check if all players of a game are ready", async function () {
+  await dao.createGame(new Game("game123"));
+
+  await dao.createPlayer(new Player("player123", "Diego"));
+  await dao.joinGame("game123", "player123");
+  await dao.setPlayerReady("player123", "game123", true);
+
+  await dao.createPlayer(new Player("player456", "Camilo"));
+  await dao.joinGame("game123", "player456");
+  await dao.setPlayerReady("player456", "game123", true);
+
+  const areAllPlayerReady = await dao.areAllPlayersReady("game123");
+
+  expect(areAllPlayerReady).toBe(true);
+});

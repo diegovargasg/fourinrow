@@ -162,6 +162,21 @@ export class DAORedis implements DAOInterface {
     await this.redisAsyncSet(gameId, JSON.stringify(gameData));
   }
 
+  async areAllPlayersReady(gameId: string): Promise<boolean> {
+    const gameData: GameDataInterface = await this.getGame(gameId);
+    const sizePlayers = gameData.players.length;
+
+    let playersReady = 0;
+    for (const index in gameData.players) {
+      const playerId = gameData.players[index];
+      const playerData = await this.getPlayer(playerId);
+      if (playerData.ready === true) {
+        playersReady++;
+      }
+    }
+    return sizePlayers === playersReady ? true : false;
+  }
+
   async flush() {
     await this.redisAsyncFlush("ASYNC");
   }
