@@ -75,3 +75,11 @@ it("set a player as ready", async function () {
   console.log(`Player with ready as true == ${player._data.ready}`);
   expect(player._data.ready).toBe(true);
 });
+
+it("sets a game as in progress", async function () {
+  await dao.createGame(new Game("game123"));
+  await dao.setGameInProgress("game123", true);
+
+  const game = await dao.getGameById("game123");
+  expect(game._data.started).toBe(true);
+});

@@ -156,7 +156,11 @@ export class DAORedis implements DAOInterface {
     await this.redisAsyncSet(playerId, JSON.stringify(playerData));
   }
 
-  async setGameInProgress(gameId: string, inProgress: boolean) {}
+  async setGameInProgress(gameId: string, inProgress: boolean) {
+    const gameData: GameDataInterface = await this.getGame(gameId);
+    gameData.started = inProgress;
+    await this.redisAsyncSet(gameId, JSON.stringify(gameData));
+  }
 
   async flush() {
     await this.redisAsyncFlush("ASYNC");
