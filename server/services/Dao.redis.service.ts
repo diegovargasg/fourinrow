@@ -78,6 +78,10 @@ export class DAORedis implements DAOInterface {
     return JSON.parse(await this.redisAsyncGet(playerId));
   }
 
+  private async getGame(gameId: string): Promise<GameDataInterface> {
+    return JSON.parse(await this.redisAsyncGet(gameId));
+  }
+
   async createGame(game: Game) {
     console.log(`Game saved ${JSON.stringify(game)}`);
     const gameData = JSON.stringify(game.data);
@@ -86,9 +90,7 @@ export class DAORedis implements DAOInterface {
 
   async joinGame(gameId: string, playerId: string) {
     console.log(`Player ${playerId} joined Game ${gameId}`);
-    let gameData: GameDataInterface = JSON.parse(
-      await this.redisAsyncGet(gameId)
-    );
+    const gameData: GameDataInterface = await this.getGame(gameId);
 
     console.log(`Game initial data ${JSON.stringify(gameData)}`);
 
@@ -100,9 +102,7 @@ export class DAORedis implements DAOInterface {
     gameData.players = currentPlayers;
     console.log(`Game final data ${JSON.stringify(gameData)}`);
 
-    let playerData: PlayerDataInterface = JSON.parse(
-      await this.redisAsyncGet(playerId)
-    );
+    const playerData: PlayerDataInterface = await this.getPlayer(playerId);
     playerData.gameId = gameId;
     console.log(`Player final data ${JSON.stringify(playerData)}`);
 
@@ -120,18 +120,14 @@ export class DAORedis implements DAOInterface {
   }
 
   async getGameById(gameId: string): Promise<Game> {
-    const gameData: GameDataInterface = JSON.parse(
-      await this.redisAsyncGet(gameId)
-    );
+    const gameData: GameDataInterface = await this.getGame(gameId);
     const game = new Game(gameId, gameData);
     console.log(`getGameById ${JSON.stringify(game)}`);
     return game;
   }
 
   async getPlayerById(playerId: string): Promise<Player> {
-    const playerData: PlayerDataInterface = JSON.parse(
-      await this.redisAsyncGet(playerId)
-    );
+    const playerData: PlayerDataInterface = await this.getPlayer(playerId);
     const player = new Player(playerId, playerData.name, playerData);
     return player;
   }
@@ -159,6 +155,8 @@ export class DAORedis implements DAOInterface {
     playerData.ready = ready;
     await this.redisAsyncSet(playerId, JSON.stringify(playerData));
   }
+
+  async setGameInProgress(gameId: string, inProgress: boolean) {}
 
   async flush() {
     await this.redisAsyncFlush("ASYNC");
