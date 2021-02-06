@@ -37,10 +37,10 @@ export class DAO implements DAOInterface {
   getAllPlayers(): Player[] {
     throw new Error("Method not implemented.");
   }
-  getGameById(gameId: string): Game | Promise<Game> {
+  getGameById(gameId: string): Game | null | Promise<Game | null> {
     throw new Error("Method not implemented.");
   }
-  getPlayerById(playerId: string): Player | Promise<Player> {
+  getPlayerById(playerId: string): Player | null | Promise<Player | null> {
     throw new Error("Method not implemented.");
   }
   areAllPlayersReady(gameId: string): boolean {

@@ -83,7 +83,7 @@ export class DAORedis implements DAOInterface {
     return JSON.parse(await this.redisAsyncGet(playerId));
   }
 
-  private async getGame(gameId: string): Promise<GameDataInterface> {
+  private async getGame(gameId: string): Promise<GameDataInterface | null> {
     return JSON.parse(await this.redisAsyncGet(gameId));
   }
 
@@ -95,7 +95,10 @@ export class DAORedis implements DAOInterface {
 
   async joinGame(gameId: string, playerId: string) {
     console.log(`Player ${playerId} joined Game ${gameId}`);
-    const gameData: GameDataInterface = await this.getGame(gameId);
+    const gameData: GameDataInterface | null = await this.getGame(gameId);
+    if (gameData === null) {
+      throw "Game does not exist";
+    }
 
     console.log(`Game initial data ${JSON.stringify(gameData)}`);
 
@@ -132,7 +135,10 @@ export class DAORedis implements DAOInterface {
   }
 
   async getGameById(gameId: string): Promise<Game> {
-    const gameData: GameDataInterface = await this.getGame(gameId);
+    const gameData: GameDataInterface | null = await this.getGame(gameId);
+    if (gameData === null) {
+      throw "Game does not exist";
+    }
     const game = new Game(gameId, gameData);
     console.log(`getGameById ${JSON.stringify(game)}`);
     return game;
@@ -182,13 +188,19 @@ export class DAORedis implements DAOInterface {
   }
 
   async setGameInProgress(gameId: string, inProgress: boolean) {
-    const gameData: GameDataInterface = await this.getGame(gameId);
+    const gameData: GameDataInterface | null = await this.getGame(gameId);
+    if (gameData === null) {
+      throw "Game does not exist";
+    }
     gameData.started = inProgress;
     await this.redisAsyncSet(gameId, JSON.stringify(gameData));
   }
 
   async areAllPlayersReady(gameId: string): Promise<boolean> {
-    const gameData: GameDataInterface = await this.getGame(gameId);
+    const gameData: GameDataInterface | null = await this.getGame(gameId);
+    if (gameData === null) {
+      throw "Game does not exist";
+    }
     const sizePlayers = gameData.players.length;
 
     let playersReady = 0;
