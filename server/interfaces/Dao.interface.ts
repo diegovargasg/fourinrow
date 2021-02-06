@@ -13,7 +13,7 @@ export interface DAOInterface {
   getAllGames(): Game[];
   getAllPlayers(): Player[];
   getGameById(gameId: string): Game | Promise<Game>;
-  getPlayerById(playerId: string): Player | Promise<Player>;
+  getPlayerById(playerId: string): Player | Promise<Player | null>;
   getAllPlayersByGameId(gameId: string): Player[] | Promise<Player[]>;
   setPlayerReady(playerId: string, gameId: string, ready: boolean): void;
   flush(): void;

@@ -43,6 +43,9 @@ export class DAORedis implements DAOInterface {
   }
   async deletePlayer(playerId: string) {
     const player = await this.getPlayerById(playerId);
+    if (player === null) {
+      throw "Player does not exist";
+    }
     const gameId = player._data.gameId;
     const game = await this.getGameById(gameId);
     console.log(`Game before deleting player ${JSON.stringify(game)}`);
@@ -74,7 +77,9 @@ export class DAORedis implements DAOInterface {
     throw new Error("Method not implemented.");
   }
 
-  private async getPlayer(playerId: string): Promise<PlayerDataInterface> {
+  private async getPlayer(
+    playerId: string
+  ): Promise<PlayerDataInterface | null> {
     return JSON.parse(await this.redisAsyncGet(playerId));
   }
 
@@ -102,7 +107,14 @@ export class DAORedis implements DAOInterface {
     gameData.players = currentPlayers;
     console.log(`Game final data ${JSON.stringify(gameData)}`);
 
-    const playerData: PlayerDataInterface = await this.getPlayer(playerId);
+    const playerData: PlayerDataInterface | null = await this.getPlayer(
+      playerId
+    );
+
+    if (playerData === null) {
+      throw "Player does not exist";
+    }
+
     playerData.gameId = gameId;
     console.log(`Player final data ${JSON.stringify(playerData)}`);
 
@@ -126,8 +138,13 @@ export class DAORedis implements DAOInterface {
     return game;
   }
 
-  async getPlayerById(playerId: string): Promise<Player> {
-    const playerData: PlayerDataInterface = await this.getPlayer(playerId);
+  async getPlayerById(playerId: string): Promise<Player | null> {
+    const playerData: PlayerDataInterface | null = await this.getPlayer(
+      playerId
+    );
+    if (playerData === null) {
+      return null;
+    }
     const player = new Player(playerId, playerData.name, playerData);
     return player;
   }
@@ -143,7 +160,10 @@ export class DAORedis implements DAOInterface {
     let allPlayers: Player[] = [];
 
     for (const playerId of gamePlayers) {
-      const player: Player = await this.getPlayerById(playerId);
+      const player: Player | null = await this.getPlayerById(playerId);
+      if (player === null) {
+        throw "Player does not exist";
+      }
       allPlayers.push(player);
     }
 
@@ -151,7 +171,12 @@ export class DAORedis implements DAOInterface {
   }
 
   async setPlayerReady(playerId: string, gameId: string, ready: boolean) {
-    const playerData: PlayerDataInterface = await this.getPlayer(playerId);
+    const playerData: PlayerDataInterface | null = await this.getPlayer(
+      playerId
+    );
+    if (playerData === null) {
+      throw "Player does not exist";
+    }
     playerData.ready = ready;
     await this.redisAsyncSet(playerId, JSON.stringify(playerData));
   }
@@ -170,6 +195,9 @@ export class DAORedis implements DAOInterface {
     for (const index in gameData.players) {
       const playerId = gameData.players[index];
       const playerData = await this.getPlayer(playerId);
+      if (playerData === null) {
+        throw "Player does not exist";
+      }
       if (playerData.ready === true) {
         playersReady++;
       }

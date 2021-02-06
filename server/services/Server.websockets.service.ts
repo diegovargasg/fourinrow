@@ -86,6 +86,9 @@ export class ServerWebsockets {
       socket.on("disconnect", async () => {
         console.log(`Player disconnected ${playerId}`);
         const player = await this.dao.getPlayerById(playerId);
+        if (player === null) {
+          throw "Player does not exist";
+        }
         const gameId = player._data.gameId;
         const result = await this.dao.deletePlayer(playerId);
         console.log(`result deleting player ${result}`);
@@ -99,6 +102,9 @@ export class ServerWebsockets {
           console.log(`set player ${playerId} ready as ${ready}`);
           await this.dao.setPlayerReady(playerId, gameId, ready);
           const player = await this.dao.getPlayerById(playerId);
+          if (player === null) {
+            throw "Player does not exist";
+          }
           console.log(
             `Player ${playerId} data ${JSON.stringify(player._data)}`
           );
