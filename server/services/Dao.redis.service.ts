@@ -37,10 +37,11 @@ export class DAORedis implements DAOInterface {
     return this.redisClient;
   }
 
-  deleteGame(gameId: string): void {
+  async deleteGame(gameId: string) {
     console.log(`Deleted Game: ${gameId}`);
-    this.redisClient.del(gameId);
+    await this.redisAsyncDel(gameId);
   }
+
   async deletePlayer(playerId: string) {
     const player = await this.getPlayerById(playerId);
     if (player === null) {

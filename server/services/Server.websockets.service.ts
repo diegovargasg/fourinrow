@@ -92,7 +92,25 @@ export class ServerWebsockets {
         const gameId = player._data.gameId;
         const result = await this.dao.deletePlayer(playerId);
         console.log(`result deleting player ${result}`);
-        emitAllPlayers(gameId);
+
+        const game = await this.dao.getGameById(gameId);
+        if (game === null) {
+          throw "Game does not exist";
+        }
+
+        //If a player leaves a started game
+        //delete all players from such game and game itself
+        if (game._data.started) {
+          const gamePlayers = await this.dao.getAllPlayersByGameId(gameId);
+          for (const key in gamePlayers) {
+            const player = gamePlayers[key];
+            await this.dao.deletePlayer(player._id);
+          }
+          await this.dao.deleteGame(gameId);
+          //TODO: Emit go back to home
+        } else {
+          emitAllPlayers(gameId);
+        }
       });
 
       socket.on(
