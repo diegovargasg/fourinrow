@@ -150,7 +150,6 @@ it("checks a game is started", async function () {
   }
 
   const game = await dao.getGameById("game123");
-  console.log(`is game started ${JSON.stringify(game)}`);
   if (game === null) {
     throw "Game does not exist";
   }
