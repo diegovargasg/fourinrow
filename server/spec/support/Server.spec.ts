@@ -130,3 +130,41 @@ it("checks if all players of a game are ready", async function () {
 
   expect(areAllPlayerReady).toBe(true);
 });
+
+it("checks a game is started", async function () {
+  await dao.createGame(new Game("game123"));
+
+  await dao.createPlayer(new Player("player123", "Diego"));
+  await dao.joinGame("game123", "player123");
+  await dao.setPlayerReady("player123", "game123", true);
+
+  await dao.createPlayer(new Player("player456", "Camilo"));
+  await dao.joinGame("game123", "player456");
+  await dao.setPlayerReady("player456", "game123", true);
+
+  const areAllPlayersReady = dao.areAllPlayersReady("game123");
+  if (areAllPlayersReady) {
+    const game = await dao.getGameById("game123");
+    game._data.started = true;
+    await dao.updateGame(game);
+  }
+
+  const game = await dao.getGameById("game123");
+  console.log(`is game started ${JSON.stringify(game)}`);
+  if (game === null) {
+    throw "Game does not exist";
+  }
+  expect(game._data.started).toBe(true);
+});
+
+/*it("checks if game and player were deleted after player leaves started game", async function () {
+  await dao.createGame(new Game("game123"));
+
+  await dao.createPlayer(new Player("player123", "Diego"));
+  await dao.joinGame("game123", "player123");
+  await dao.setPlayerReady("player123", "game123", true);
+
+  await dao.createPlayer(new Player("player456", "Camilo"));
+  await dao.joinGame("game123", "player456");
+  await dao.setPlayerReady("player456", "game123", true);
+});*/
