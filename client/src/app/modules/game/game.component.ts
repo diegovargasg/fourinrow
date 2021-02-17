@@ -41,6 +41,11 @@ export class GameComponent {
       this.router.navigate(['/']);
     }
 
+    this.playerService.createPlayer(
+      this.newGameService.playerName,
+      this.newGameService.gameId
+    );
+
     const action = this.activatedRoute.snapshot.paramMap.get('action');
     if (action === 'create') {
       this.gameService.createGame(this.newGameService.gameId);
@@ -58,11 +63,6 @@ export class GameComponent {
     } else if (action === 'join') {
       this.gameService.joinGame(this.newGameService.gameId);
     }
-
-    this.playerService.createPlayer(
-      this.newGameService.playerName,
-      this.newGameService.gameId
-    );
 
     this.subscription = this.gameService.allPlayersByGameId.subscribe(
       (allPlayers) => {
