@@ -18,6 +18,9 @@ export class ConnectionSocketService implements ConnectionSocket {
   allPlayersByGameIdSubject = new Subject<Player[]>();
   allPlayersByGameId = this.allPlayersByGameIdSubject.asObservable();
 
+  isGameStartedSubject = new Subject<boolean>();
+  isGameStarted = this.isGameStartedSubject.asObservable();
+
   constructor() {
     this.connect();
   }
@@ -26,6 +29,7 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.socket = io(environment.socket_host + environment.socket_port);
     this.listenerConnected();
     this.listenerAllPlayers();
+    this.listenerStartGame();
   }
 
   createGame(gameId: string) {
@@ -52,6 +56,12 @@ export class ConnectionSocketService implements ConnectionSocket {
   listenerAllPlayers() {
     this.socket.on('getAllPlayersByGameId', (allPlayers: Player[]) => {
       this.allPlayersByGameIdSubject.next(allPlayers);
+    });
+  }
+
+  listenerStartGame() {
+    this.socket.on('startGame', (isStarted: boolean) => {
+      this.isGameStartedSubject.next(isStarted);
     });
   }
 

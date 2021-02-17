@@ -48,6 +48,13 @@ export class ServerWebsockets {
         this.io.to(gameId).emit("getAllPlayersByGameId", allPlayers);
       };
 
+      const emitStartGame = async (gameId: string) => {
+        console.log(
+          `To all players from gameId ${gameId} emit that game should start`
+        );
+        this.io.to(gameId).emit("startGame", true);
+      };
+
       socket.on("createGame", async (data: { gameId: string }) => {
         const { gameId } = data;
         const newGame = new Game(gameId);
@@ -127,6 +134,11 @@ export class ServerWebsockets {
             `Player ${playerId} data ${JSON.stringify(player._data)}`
           );
           emitAllPlayers(gameId);
+          const areAllPlayersReady = await dao.areAllPlayersReady(gameId);
+
+          if (areAllPlayersReady) {
+            emitStartGame(gameId);
+          }
         }
       );
     });

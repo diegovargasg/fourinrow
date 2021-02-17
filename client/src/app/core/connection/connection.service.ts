@@ -19,5 +19,6 @@ export class ConnectionService implements Connection {
   joinGame(gameId: string): void {}
   getAllPlayersByGameId(gameId: string): void {}
   allPlayersByGameId: any;
+  isGameStarted: any;
   id: string = '';
 }

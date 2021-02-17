@@ -10,6 +10,8 @@ export class GameService {
   subscription: Subscription;
   allPlayersByGameIdSubject = new Subject<Player[]>();
   allPlayersByGameId = this.allPlayersByGameIdSubject.asObservable();
+  isGameStartedSubject = new Subject<boolean>();
+  isGameStarted = this.isGameStartedSubject.asObservable();
 
   constructor(private connectionService: ConnectionService) {
     this.subscription = connectionService.allPlayersByGameId.subscribe(
@@ -17,6 +19,12 @@ export class GameService {
         console.log('from name subscription');
         console.log(allPlayers);
         this.allPlayersByGameIdSubject.next(allPlayers);
+      }
+    );
+
+    this.subscription = connectionService.isGameStarted.subscribe(
+      (isStarted: boolean) => {
+        this.isGameStartedSubject.next(isStarted);
       }
     );
   }

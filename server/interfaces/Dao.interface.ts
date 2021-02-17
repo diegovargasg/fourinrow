@@ -16,5 +16,6 @@ export interface DAOInterface {
   getPlayerById(playerId: string): Player | null | Promise<Player | null>;
   getAllPlayersByGameId(gameId: string): Player[] | Promise<Player[]>;
   setPlayerReady(playerId: string, gameId: string, ready: boolean): void;
+  areAllPlayersReady(gameId: string): boolean | Promise<boolean>;
   flush(): void;
 }

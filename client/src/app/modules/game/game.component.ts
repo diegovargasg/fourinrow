@@ -71,6 +71,13 @@ export class GameComponent {
         this.allPlayers = allPlayers;
       }
     );
+
+    this.subscription = this.gameService.isGameStarted.subscribe(
+      (isStarted) => {
+        console.log('game is started');
+        this.isGameStarted = isStarted;
+      }
+    );
   }
 
   onReady() {

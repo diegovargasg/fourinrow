@@ -1,2 +1,5 @@
 <h1>Waiting</h1>
-<li *ngFor="let player of allPlayers">{{ player._id }}</li>
+<li *ngFor="let player of allPlayers">
+  {{ player._id }} {{ player._data.ready }}
+</li>
+<p>Is game started: {{ isGameStarted }}</p>
