@@ -126,9 +126,9 @@ it("checks if all players of a game are ready", async function () {
   await dao.joinGame("game123", "player456");
   await dao.setPlayerReady("player456", "game123", true);
 
-  const areAllPlayerReady = await dao.areAllPlayersReady("game123");
+  const areAllPlayersReady = await dao.areAllPlayersReady("game123");
 
-  expect(areAllPlayerReady).toBe(true);
+  expect(areAllPlayersReady).toBe(true);
 });
 
 it("checks a game is started", async function () {
