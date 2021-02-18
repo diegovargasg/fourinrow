@@ -76,6 +76,7 @@ export class GameComponent {
       (isStarted) => {
         console.log('game is started');
         this.isGameStarted = isStarted;
+        this.router.navigate(['/board']);
       }
     );
   }
