@@ -1,5 +1,5 @@
 # Specify base image
-FROM node:alpine
+FROM node:12.20.2-alpine
 WORKDIR "/app"
 
 # Install dependencies
