@@ -1,6 +1,8 @@
 <p>game works!</p>
 <ng-template [ngIf]="!isGameStarted">
   <app-waiting [allPlayers]="allPlayers"></app-waiting>
-  <button (click)="onReady()">Ready</button>
-  <button routerLink="/">Back</button>
+  <button mat-raised-button color="primary" class="mr-2" (click)="onReady()">
+    Ready
+  </button>
+  <button mat-raised-button color="secondary" routerLink="/">Back</button>
 </ng-template>

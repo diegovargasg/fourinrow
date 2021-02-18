@@ -1,12 +1,18 @@
 <form [formGroup]="joinForm" (ngSubmit)="onSubmit()">
   <div>
-    <label>Name:</label>
-    <input formControlName="name" autocomplete="off" />
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" autocomplete="off" />
+    </mat-form-field>
   </div>
   <div>
-    <label>GameId:</label>
-    <input formControlName="gameId" autocomplete="off" />
+    <mat-form-field appearance="fill">
+      <mat-label>GameId</mat-label>
+      <input matInput formControlName="gameId" autocomplete="off" />
+    </mat-form-field>
   </div>
-  <button type="submit">Join</button>
-  <button routerLink="/">Back</button>
+  <button mat-raised-button color="primary" class="mr-2" type="submit">
+    Join
+  </button>
+  <button mat-raised-button color="secondary" routerLink="/">Back</button>
 </form>
