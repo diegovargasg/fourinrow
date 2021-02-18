@@ -1,4 +1,16 @@
-<h1>Waiting</h1>
-<li *ngFor="let player of allPlayers">
-  {{ player._id }} {{ player._data.ready }}
-</li>
+<mat-list role="list">
+  <mat-list-item
+    class="player"
+    role="listitem"
+    *ngFor="let player of allPlayers"
+    ><span
+      [ngClass]="[
+        player._data.ready === true
+          ? 'player__name player__name--ready mr-2'
+          : 'player__name player__name--notready'
+      ]"
+      class=""
+      >{{ player._data.name }}</span
+    ></mat-list-item
+  >
+</mat-list>

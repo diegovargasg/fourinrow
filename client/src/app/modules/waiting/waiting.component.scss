@@ -1,0 +1,14 @@
+.player__name {
+  border-radius: 5px;
+  padding: 3px 6px;
+}
+.player__name--ready {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+.player__name--notready {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
