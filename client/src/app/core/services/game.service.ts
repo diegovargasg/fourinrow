@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { of, Subject, Subscription } from 'rxjs';
 import { ConnectionService } from '../connection/connection.service';
 import { Game } from '../models/game.model';
 import { Player } from '../models/player.model';
@@ -12,6 +12,8 @@ export class GameService {
   allPlayersByGameId = this.allPlayersByGameIdSubject.asObservable();
   isGameStartedSubject = new Subject<boolean>();
   isGameStarted = this.isGameStartedSubject.asObservable();
+  isGameEnded = false;
+  levels = 5;
 
   constructor(private connectionService: ConnectionService) {
     this.subscription = connectionService.allPlayersByGameId.subscribe(
@@ -45,6 +47,18 @@ export class GameService {
 
   getAllPlayersByGameId(id: string) {
     this.connectionService.getAllPlayersByGameId(id);
+  }
+
+  gameFinished() {
+    console.log('game Finished');
+    this.isGameEnded = true;
+  }
+
+  levelFinished() {
+    this.levels = this.levels - 1;
+    if (this.levels === 0) {
+      this.gameFinished();
+    }
   }
 
   ngOnDestroy() {
