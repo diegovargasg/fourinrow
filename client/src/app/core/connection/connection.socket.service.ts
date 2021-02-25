@@ -30,6 +30,7 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.listenerConnected();
     this.listenerAllPlayers();
     this.listenerStartGame();
+    this.listenerGameData();
   }
 
   createGame(gameId: string, gameConfig: Array<{}>) {
@@ -62,6 +63,12 @@ export class ConnectionSocketService implements ConnectionSocket {
   listenerStartGame() {
     this.socket.on('startGame', (isStarted: boolean) => {
       this.isGameStartedSubject.next(isStarted);
+    });
+  }
+
+  listenerGameData() {
+    this.socket.on('gameData', (gameData: Array<{}>) => {
+      console.log('GameData: ', gameData);
     });
   }
 

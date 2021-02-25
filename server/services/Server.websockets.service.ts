@@ -86,6 +86,8 @@ export class ServerWebsockets {
         const playerId: string = socket.id;
         const { gameId } = data;
         await this.dao.joinGame(gameId, playerId);
+        const game = await this.dao.getGameById(gameId);
+        socket.emit("gameData", game?._data);
         emitAllPlayers(gameId);
       });
 

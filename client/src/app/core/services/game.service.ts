@@ -33,7 +33,6 @@ export class GameService {
 
   createGame(id: string, gameConfig: Array<{}>) {
     this.id = id;
-    console.log('gameConfig', gameConfig);
     this.connectionService.createGame(id, gameConfig);
   }
 
