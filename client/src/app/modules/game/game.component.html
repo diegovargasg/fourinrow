@@ -1,10 +1,25 @@
-<ng-template [ngIf]="!isGameStarted">
-  <app-waiting [allPlayers]="allPlayers"></app-waiting>
-  <button mat-raised-button color="primary" class="mr-2" (click)="onReady()">
-    Ready
-  </button>
-  <button mat-raised-button color="secondary" routerLink="/">Back</button>
-</ng-template>
-<ng-template [ngIf]="isGameStarted">
-  <app-board [gameData]="gameData"></app-board>
-</ng-template>
+<div class="container">
+  <ng-template [ngIf]="!isGameStarted">
+    <div class="row">
+      <div class="col">
+        <app-waiting [allPlayers]="allPlayers"></app-waiting>
+        <button
+          mat-raised-button
+          color="primary"
+          class="mr-2"
+          (click)="onReady()"
+        >
+          Ready
+        </button>
+        <button mat-raised-button color="secondary" routerLink="/">Back</button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="isGameStarted">
+    <div class="row">
+      <div class="col">
+        <app-board [gameData]="gameData"></app-board>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,5 +1,19 @@
 <h2>Round: {{ rounds }}</h2>
-<p>board works!{{ progressBarValue }}</p>
+<p>{{ progressBarValue }}</p>
 <mat-progress-bar color="primary" [value]="progressBarValue">
 </mat-progress-bar>
 <p></p>
+<div>
+  <mat-form-field class="example-full-width">
+    <mat-label>Result:</mat-label>
+    <input matInput type="number" #result autocomplete="off" />
+  </mat-form-field>
+</div>
+<button
+  mat-raised-button
+  class="mr-2"
+  color="primary"
+  (click)="sendResult(result)"
+>
+  OK
+</button>

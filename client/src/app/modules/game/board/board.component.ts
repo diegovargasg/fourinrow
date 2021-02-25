@@ -18,7 +18,7 @@ export class BoardComponent implements OnInit {
   progressBarValue = 100;
   challenge = '';
   private _gameData: GameDataModel = gameDataModelFactory();
-  private rounds = 1;
+  rounds = 1;
 
   @Input()
   get gameData(): GameDataModel {
@@ -51,5 +51,9 @@ export class BoardComponent implements OnInit {
         }
       }
     }, 100);
+  }
+
+  sendResult(result: HTMLInputElement) {
+    console.log('result', result.value);
   }
 }
