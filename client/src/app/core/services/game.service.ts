@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of, Subject, Subscription } from 'rxjs';
 import { ConnectionService } from '../connection/connection.service';
-import { Game } from '../models/game.model';
 import { GameDataModel } from '../models/gameData.model';
 import { Player } from '../models/player.model';
 
@@ -15,7 +14,7 @@ export class GameService {
   isGameStartedSubject = new Subject<boolean>();
   isGameStarted = this.isGameStartedSubject.asObservable();
 
-  gameDataSubject = new Subject<{}>();
+  gameDataSubject = new Subject<GameDataModel>();
   gameData = this.gameDataSubject.asObservable();
 
   isGameEnded = false;
@@ -36,9 +35,11 @@ export class GameService {
       }
     );
 
-    this.subscription = connectionService.gameData.subscribe((gameData: {}) => {
-      this.gameDataSubject.next(gameData);
-    });
+    this.subscription = connectionService.gameData.subscribe(
+      (gameData: GameDataModel) => {
+        this.gameDataSubject.next(gameData);
+      }
+    );
   }
 
   createGame(id: string, gameData: GameDataModel) {

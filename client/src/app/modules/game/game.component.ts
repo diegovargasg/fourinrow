@@ -7,6 +7,8 @@ import { Player } from 'src/app/core/models/player.model';
 import { GameService } from 'src/app/core/services/game.service';
 import { NewGameService } from 'src/app/core/services/new-game.service';
 import { PlayerService } from 'src/app/core/services/player.service';
+import { GameDataModel } from '../../core/models/gameData.model';
+import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 
 @Component({
   selector: 'app-game',
@@ -26,7 +28,7 @@ export class GameComponent {
 
   subscription: Subscription;
   allPlayers: Player[] = [];
-  gameData: {} = {};
+  gameData: GameDataModel = gameDataModelFactory();
 
   constructor(
     private router: Router,
@@ -81,10 +83,12 @@ export class GameComponent {
       }
     );
 
-    this.subscription = this.gameService.gameData.subscribe((gameData) => {
-      console.log('gameData reveiced from server', gameData);
-      this.gameData = gameData;
-    });
+    this.subscription = this.gameService.gameData.subscribe(
+      (gameData: GameDataModel) => {
+        console.log('gameData reveiced from server', gameData);
+        this.gameData = gameData;
+      }
+    );
   }
 
   onReady() {
