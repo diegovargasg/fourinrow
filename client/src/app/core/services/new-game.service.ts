@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class NewGameService {
   private _gameId = '';
+  private _gameConfig: Array<{}> = [];
   private _playerId = '';
   private _playerName = '';
 
@@ -32,5 +33,13 @@ export class NewGameService {
 
   set playerId(playerId: string) {
     this._playerId = playerId;
+  }
+
+  set gameConfig(gameConfig) {
+    this._gameConfig = gameConfig;
+  }
+
+  get gameConfig() {
+    return this._gameConfig;
   }
 }

@@ -31,9 +31,10 @@ export class GameService {
     );
   }
 
-  createGame(id: string) {
+  createGame(id: string, gameConfig: Array<{}>) {
     this.id = id;
-    this.connectionService.createGame(id);
+    console.log('gameConfig', gameConfig);
+    this.connectionService.createGame(id, gameConfig);
   }
 
   joinGame(id: string) {

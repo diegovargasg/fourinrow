@@ -5,6 +5,6 @@ export interface Game {
   _data: {
     started: boolean;
     players: Player[];
-    config: {};
+    config: [];
   };
 }

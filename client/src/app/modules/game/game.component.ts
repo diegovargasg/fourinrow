@@ -48,7 +48,10 @@ export class GameComponent {
 
     const action = this.activatedRoute.snapshot.paramMap.get('action');
     if (action === 'create') {
-      this.gameService.createGame(this.newGameService.gameId);
+      this.gameService.createGame(
+        this.newGameService.gameId,
+        this.newGameService.gameConfig
+      );
       const selfPlayer: Player = {
         _id: '',
         _data: {

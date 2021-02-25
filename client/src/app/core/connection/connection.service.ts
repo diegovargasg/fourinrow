@@ -13,7 +13,7 @@ export class ConnectionService implements Connection {
   port: string = environment.socket_port;
   host: string = environment.socket_host;
   options: object = {};
-  createGame(gameId: string): void {}
+  createGame(gameId: string, gameConfig: Array<{}>): void {}
   createPlayer(playerName: string, gameId: string): void {}
   setPlayerReady(playerId: string, gameId: string, ready: boolean): void {}
   joinGame(gameId: string): void {}

@@ -32,9 +32,9 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.listenerStartGame();
   }
 
-  createGame(gameId: string) {
+  createGame(gameId: string, gameConfig: Array<{}>) {
     console.log('creates Game');
-    this.socket.emit('createGame', { gameId });
+    this.socket.emit('createGame', { gameId, gameConfig });
   }
 
   createPlayer(playerName: string, gameId: string) {

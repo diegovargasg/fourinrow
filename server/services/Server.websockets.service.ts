@@ -55,15 +55,19 @@ export class ServerWebsockets {
         this.io.to(gameId).emit("startGame", true);
       };
 
-      socket.on("createGame", async (data: { gameId: string }) => {
-        const { gameId } = data;
-        const newGame = new Game(gameId);
-        newGame.data.players = [];
-        console.log(`Game before player Pushed ${JSON.stringify(newGame)}`);
-        newGame.data.players.push(playerId);
-        console.log(`Game before saved ${JSON.stringify(newGame)}`);
-        this.dao.createGame(newGame);
-      });
+      socket.on(
+        "createGame",
+        async (data: { gameId: string; gameConfig: Array<{}> }) => {
+          const { gameId, gameConfig } = data;
+          const newGame = new Game(gameId);
+          newGame.data.players = [];
+          newGame.data.config = gameConfig;
+          console.log(`Game before player Pushed ${JSON.stringify(newGame)}`);
+          newGame.data.players.push(playerId);
+          console.log(`Game before saved ${JSON.stringify(newGame)}`);
+          this.dao.createGame(newGame);
+        }
+      );
 
       socket.on(
         "createPlayer",
