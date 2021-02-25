@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { GameService } from 'src/app/core/services/game.service';
 import { ConnectionService } from 'src/app/core/connection/connection.service';
 import { ConnectionSocketService } from 'src/app/core/connection/connection.socket.service';
-import { Player } from 'src/app/core/models/player.model';
 
 @Component({
   selector: 'app-board',
