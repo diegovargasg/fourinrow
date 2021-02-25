@@ -4,7 +4,7 @@ import { GameInterface } from "../interfaces/Game.interface";
 const dataFactory = (): GameDataInterface => ({
   players: new Array(),
   started: false,
-  config: {},
+  config: [],
 });
 
 export class Game implements GameInterface {
