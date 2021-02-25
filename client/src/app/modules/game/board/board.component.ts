@@ -4,6 +4,7 @@ import { ConnectionService } from 'src/app/core/connection/connection.service';
 import { ConnectionSocketService } from 'src/app/core/connection/connection.socket.service';
 import { GameDataModel } from '../../../../app/core/models/gameData.model';
 import { gameDataModelFactory } from 'src/app/core/models/gameDataFactory.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-board',
@@ -17,8 +18,10 @@ import { gameDataModelFactory } from 'src/app/core/models/gameDataFactory.model'
 export class BoardComponent implements OnInit {
   progressBarValue = 100;
   challenge = '';
+  challengeResult: any;
   private _gameData: GameDataModel = gameDataModelFactory();
   rounds = 1;
+  roundsIndex = 0;
 
   @Input()
   get gameData(): GameDataModel {
@@ -28,10 +31,21 @@ export class BoardComponent implements OnInit {
     this._gameData = gameData;
   }
 
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService,
+    private snackBar: MatSnackBar
+  ) {}
+
+  getChallengeInfo() {
+    const challengeObj = this.gameData.config[this.roundsIndex];
+    const keys = Object.keys(challengeObj);
+    const values = Object.values(challengeObj);
+    this.challenge = keys[0];
+    this.challengeResult = values[0];
+  }
 
   ngOnInit(): void {
-    console.log(this.gameData.config[0]);
+    this.getChallengeInfo();
     this.progressBarTimer();
     console.log('Game Data in Board', this.gameData);
   }
@@ -42,18 +56,33 @@ export class BoardComponent implements OnInit {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
         this.rounds = this.rounds + 1;
+        this.roundsIndex = this.roundsIndex + 1;
+        this.getChallengeInfo();
         this.gameService.levelFinished();
         if (this.gameService.isGameEnded) {
           clearInterval(progressBarInterval);
         } else {
           this.progressBarValue = 100;
-          //Generate next level
         }
       }
-    }, 100);
+    }, 200);
   }
 
   sendResult(result: HTMLInputElement) {
-    console.log('result', result.value);
+    let resultMessage = '';
+    let panelClass = null;
+
+    if (result.value == this.challengeResult) {
+      resultMessage = 'Good job!';
+      panelClass = ['mat-toolbar', 'mat-primary'];
+    } else {
+      resultMessage = 'Wrong!';
+      panelClass = ['mat-toolbar', 'mat-warn'];
+    }
+
+    this.snackBar.open(resultMessage, '', {
+      duration: 500,
+      panelClass: panelClass,
+    });
   }
 }
