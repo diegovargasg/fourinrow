@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { of, Subject, Subscription } from 'rxjs';
 import { ConnectionService } from '../connection/connection.service';
 import { Game } from '../models/game.model';
+import { GameDataModel } from '../models/gameData.model';
 import { Player } from '../models/player.model';
 
 @Injectable()
@@ -10,8 +11,13 @@ export class GameService {
   subscription: Subscription;
   allPlayersByGameIdSubject = new Subject<Player[]>();
   allPlayersByGameId = this.allPlayersByGameIdSubject.asObservable();
+
   isGameStartedSubject = new Subject<boolean>();
   isGameStarted = this.isGameStartedSubject.asObservable();
+
+  gameDataSubject = new Subject<{}>();
+  gameData = this.gameDataSubject.asObservable();
+
   isGameEnded = false;
   levels = 5;
 
@@ -29,11 +35,15 @@ export class GameService {
         this.isGameStartedSubject.next(isStarted);
       }
     );
+
+    this.subscription = connectionService.gameData.subscribe((gameData: {}) => {
+      this.gameDataSubject.next(gameData);
+    });
   }
 
-  createGame(id: string, gameConfig: Array<{}>) {
+  createGame(id: string, gameData: GameDataModel) {
     this.id = id;
-    this.connectionService.createGame(id, gameConfig);
+    this.connectionService.createGame(id, gameData);
   }
 
   joinGame(id: string) {

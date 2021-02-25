@@ -34,7 +34,6 @@ export class MathChallengeService {
         [`${firstDigit} ${this.operators[operator]} ${secondDigit}`]: result,
       };
     }
-    console.log(this.config);
   }
 
   private getRandomInt(max: number) {

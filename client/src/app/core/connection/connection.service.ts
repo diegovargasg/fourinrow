@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Connection } from './connection.interface';
 import { environment } from 'src/environments/environment';
+import { GameDataModel } from '../models/gameData.model';
 import { Player } from '../models/player.model';
 import { Observable } from 'rxjs';
 
@@ -13,12 +14,13 @@ export class ConnectionService implements Connection {
   port: string = environment.socket_port;
   host: string = environment.socket_host;
   options: object = {};
-  createGame(gameId: string, gameConfig: Array<{}>): void {}
+  createGame(gameId: string, gameData: GameDataModel): void {}
   createPlayer(playerName: string, gameId: string): void {}
   setPlayerReady(playerId: string, gameId: string, ready: boolean): void {}
   joinGame(gameId: string): void {}
   getAllPlayersByGameId(gameId: string): void {}
   allPlayersByGameId: any;
   isGameStarted: any;
+  gameData: any;
   id: string = '';
 }

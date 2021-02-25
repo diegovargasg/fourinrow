@@ -57,11 +57,10 @@ export class ServerWebsockets {
 
       socket.on(
         "createGame",
-        async (data: { gameId: string; gameConfig: Array<{}> }) => {
-          const { gameId, gameConfig } = data;
+        async (data: { gameId: string; gameData: GameDataInterface }) => {
+          const { gameId, gameData } = data;
           const newGame = new Game(gameId);
-          newGame.data.players = [];
-          newGame.data.config = gameConfig;
+          newGame.data = gameData;
           console.log(`Game before player Pushed ${JSON.stringify(newGame)}`);
           newGame.data.players.push(playerId);
           console.log(`Game before saved ${JSON.stringify(newGame)}`);

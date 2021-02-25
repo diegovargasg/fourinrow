@@ -26,6 +26,7 @@ export class GameComponent {
 
   subscription: Subscription;
   allPlayers: Player[] = [];
+  gameData: {} = {};
 
   constructor(
     private router: Router,
@@ -34,37 +35,35 @@ export class GameComponent {
     private gameService: GameService,
     private playerService: PlayerService
   ) {
-    if (
-      this.newGameService.playerName == '' ||
-      this.newGameService.gameId == ''
-    ) {
+    if (this.newGameService.playerName == '' || this.newGameService.id == '') {
       this.router.navigate(['/']);
     }
 
     this.playerService.createPlayer(
       this.newGameService.playerName,
-      this.newGameService.gameId
+      this.newGameService.id
     );
 
     const action = this.activatedRoute.snapshot.paramMap.get('action');
     if (action === 'create') {
+      console.log('creates the game');
       this.gameService.createGame(
-        this.newGameService.gameId,
-        this.newGameService.gameConfig
+        this.newGameService.id,
+        this.newGameService.data
       );
       const selfPlayer: Player = {
         _id: '',
         _data: {
           name: this.newGameService.playerName,
           ready: false,
-          gameId: this.newGameService.gameId,
+          gameId: this.newGameService.id,
         },
       };
       //We do not emit allPlayersByGameId when the user is creating the game.
       //Is not necessary as the only player is the creator and we waste one message
       this.allPlayers.push(selfPlayer);
     } else if (action === 'join') {
-      this.gameService.joinGame(this.newGameService.gameId);
+      this.gameService.joinGame(this.newGameService.id);
     }
 
     this.subscription = this.gameService.allPlayersByGameId.subscribe(
@@ -79,9 +78,13 @@ export class GameComponent {
       (isStarted) => {
         console.log('game is started');
         this.isGameStarted = isStarted;
-        this.router.navigate(['/board']);
       }
     );
+
+    this.subscription = this.gameService.gameData.subscribe((gameData) => {
+      console.log('gameData reveiced from server', gameData);
+      this.gameData = gameData;
+    });
   }
 
   onReady() {

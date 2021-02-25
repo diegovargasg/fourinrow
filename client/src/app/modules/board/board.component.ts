@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { GameService } from 'src/app/core/services/game.service';
 import { ConnectionService } from 'src/app/core/connection/connection.service';
 import { ConnectionSocketService } from 'src/app/core/connection/connection.socket.service';
+import { Player } from 'src/app/core/models/player.model';
 
 @Component({
   selector: 'app-board',
@@ -14,11 +15,19 @@ import { ConnectionSocketService } from 'src/app/core/connection/connection.sock
 })
 export class BoardComponent implements OnInit {
   progressBarValue = 100;
+  challenge = '';
+  private _gameData: {} = [];
+
+  @Input()
+  get gameData(): {} {
+    return this._gameData;
+  }
 
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
     this.progressBarTimer();
+    console.log(this.gameData);
   }
 
   progressBarTimer() {

@@ -25,7 +25,7 @@ export class JoinComponent implements OnInit {
   onSubmit() {
     const gameId = this.joinForm.value.gameId;
     const playerName = this.joinForm.value.name;
-    this.newGameService.gameId = gameId;
+    this.newGameService.id = gameId;
     this.newGameService.playerName = playerName;
     this.router.navigate(['/game/join']);
   }

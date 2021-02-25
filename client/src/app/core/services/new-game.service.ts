@@ -1,24 +1,37 @@
 import { Injectable } from '@angular/core';
+import { Game } from '../models/game.model';
+import { GameDataModel } from '../models/gameData.model';
+import { gameDataModelFactory } from '../models/gameDataFactory.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NewGameService {
-  private _gameId = '';
-  private _gameConfig: Array<{}> = [];
+export class NewGameService implements Game {
   private _playerId = '';
   private _playerName = '';
 
+  _id: string = '';
+  _data = gameDataModelFactory();
+
   constructor() {}
 
-  get gameId() {
-    return this._gameId;
+  get id() {
+    return this._id;
   }
 
-  set gameId(gameId: string) {
-    this._gameId = gameId;
+  set id(id: string) {
+    this._id = id;
   }
 
+  get data() {
+    return this._data;
+  }
+
+  set data(data: GameDataModel) {
+    this._data = data;
+  }
+
+  //TODO: move this attributes to it's own new player service
   get playerName() {
     return this._playerName;
   }
@@ -33,13 +46,5 @@ export class NewGameService {
 
   set playerId(playerId: string) {
     this._playerId = playerId;
-  }
-
-  set gameConfig(gameConfig) {
-    this._gameConfig = gameConfig;
-  }
-
-  get gameConfig() {
-    return this._gameConfig;
   }
 }

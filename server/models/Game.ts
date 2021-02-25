@@ -20,6 +20,10 @@ export class Game implements GameInterface {
     return this._data;
   }
 
+  set data(data: GameDataInterface) {
+    this._data = data;
+  }
+
   get id(): string {
     return this._id;
   }

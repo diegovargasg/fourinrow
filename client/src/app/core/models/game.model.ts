@@ -1,10 +1,6 @@
-import { Player } from './player.model';
+import { GameDataModel } from './gameData.model';
 
 export interface Game {
   _id: string;
-  _data: {
-    started: boolean;
-    players: Player[];
-    config: [];
-  };
+  _data: GameDataModel;
 }

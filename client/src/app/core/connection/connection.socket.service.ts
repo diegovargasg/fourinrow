@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { ConnectionSocket } from './connection.socket.interface';
 import { Subject } from 'rxjs';
 import { Player } from '../models/player.model';
+import { Game } from '../models/game.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,9 @@ export class ConnectionSocketService implements ConnectionSocket {
   isGameStartedSubject = new Subject<boolean>();
   isGameStarted = this.isGameStartedSubject.asObservable();
 
+  gameDataSubject = new Subject<{}>();
+  gameData = this.gameDataSubject.asObservable();
+
   constructor() {
     this.connect();
   }
@@ -33,9 +37,9 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.listenerGameData();
   }
 
-  createGame(gameId: string, gameConfig: Array<{}>) {
+  createGame(gameId: string, gameData: {}) {
     console.log('creates Game');
-    this.socket.emit('createGame', { gameId, gameConfig });
+    this.socket.emit('createGame', { gameId, gameData });
   }
 
   createPlayer(playerName: string, gameId: string) {
@@ -67,8 +71,8 @@ export class ConnectionSocketService implements ConnectionSocket {
   }
 
   listenerGameData() {
-    this.socket.on('gameData', (gameData: Array<{}>) => {
-      console.log('GameData: ', gameData);
+    this.socket.on('gameData', (gameData: {}) => {
+      this.gameDataSubject.next(gameData);
     });
   }
 

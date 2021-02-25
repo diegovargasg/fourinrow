@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NewGameService } from 'src/app/core/services/new-game.service';
 import { MathChallengeService } from 'src/app/core/services/math-challenge.service';
+import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 
 @Component({
   selector: 'app-create',
@@ -27,9 +28,14 @@ export class CreateComponent implements OnInit {
     const playerName = this.createForm.value.name;
     const gameConfig = new MathChallengeService().config;
 
-    this.newGameService.gameId = gameId;
+    //created from factory pattern a gameDataModel
+    const gameData = gameDataModelFactory();
+    gameData.config = gameConfig;
+
+    this.newGameService.id = gameId;
+    this.newGameService.data = gameData;
+
     this.newGameService.playerName = playerName;
-    this.newGameService.gameConfig = gameConfig;
     this.router.navigate(['/game/create']);
   }
 
