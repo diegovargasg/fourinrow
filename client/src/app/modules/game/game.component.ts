@@ -53,6 +53,7 @@ export class GameComponent {
         this.newGameService.id,
         this.newGameService.data
       );
+      this.gameData = this.newGameService.data;
       const selfPlayer: Player = {
         _id: '',
         _data: {
