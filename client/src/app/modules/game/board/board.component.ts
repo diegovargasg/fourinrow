@@ -18,6 +18,7 @@ export class BoardComponent implements OnInit {
   progressBarValue = 100;
   challenge = '';
   private _gameData: GameDataModel = gameDataModelFactory();
+  private rounds = 1;
 
   @Input()
   get gameData(): GameDataModel {
@@ -30,6 +31,7 @@ export class BoardComponent implements OnInit {
   constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
+    console.log(this.gameData.config[0]);
     this.progressBarTimer();
     console.log('Game Data in Board', this.gameData);
   }
@@ -39,6 +41,7 @@ export class BoardComponent implements OnInit {
       if (this.progressBarValue > 0) {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
+        this.rounds = this.rounds + 1;
         this.gameService.levelFinished();
         if (this.gameService.isGameEnded) {
           clearInterval(progressBarInterval);

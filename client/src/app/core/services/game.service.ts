@@ -18,7 +18,7 @@ export class GameService {
   gameData = this.gameDataSubject.asObservable();
 
   isGameEnded = false;
-  levels = 5;
+  rounds = 5;
 
   constructor(private connectionService: ConnectionService) {
     this.subscription = connectionService.allPlayersByGameId.subscribe(
