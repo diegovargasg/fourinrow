@@ -6,7 +6,13 @@
 <div>
   <mat-form-field class="example-full-width">
     <mat-label>Result</mat-label>
-    <input matInput type="number" #result autocomplete="off" />
+    <input
+      matInput
+      type="number"
+      #result
+      autocomplete="off"
+      [disabled]="isInputDisabled"
+    />
   </mat-form-field>
 </div>
 <button
@@ -14,7 +20,7 @@
   class="mr-2"
   color="primary"
   (click)="sendResult(result)"
-  [disabled]="isSendResultDisabled"
+  [disabled]="isInputDisabled"
 >
   OK
 </button>

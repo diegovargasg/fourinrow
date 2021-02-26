@@ -16,13 +16,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class BoardComponent implements OnInit {
+  private _gameData: GameDataModel = gameDataModelFactory();
   progressBarValue = 100;
   challenge = '';
   challengeResult: any;
-  private _gameData: GameDataModel = gameDataModelFactory();
   rounds = 1;
   roundsIndex = 0;
-  isSendResultDisabled = false;
+  isInputDisabled = false;
+  progressBarInterval: any = null;
 
   @Input()
   get gameData(): GameDataModel {
@@ -37,7 +38,7 @@ export class BoardComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  getChallengeInfo() {
+  getRoundInfo() {
     const challengeObj = this.gameData.config[this.roundsIndex];
     const keys = Object.keys(challengeObj);
     const values = Object.values(challengeObj);
@@ -46,38 +47,53 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getChallengeInfo();
-    this.progressBarTimer();
+    this.getRoundInfo();
+    this.startProgressBarTimer();
     console.log('Game Data in Board', this.gameData);
   }
 
-  progressBarTimer() {
-    const progressBarInterval = setInterval(() => {
+  stopProgressBarTimer() {
+    clearInterval(this.progressBarInterval);
+  }
+
+  resetProgressBarTimer() {
+    this.progressBarValue = 100;
+  }
+
+  loadNewRound() {
+    this.gameService.rounds = this.gameService.rounds - 1;
+
+    if (this.gameService.rounds > 0) {
+      this.isInputDisabled = false;
+      this.rounds = this.rounds + 1;
+      this.roundsIndex = this.roundsIndex + 1;
+      this.getRoundInfo();
+      this.resetProgressBarTimer();
+    } else {
+      this.gameService.isGameEnded = true;
+      this.stopProgressBarTimer();
+    }
+  }
+
+  startProgressBarTimer() {
+    this.progressBarInterval = setInterval(() => {
       if (this.progressBarValue > 0) {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
-        this.isSendResultDisabled = false;
-        this.rounds = this.rounds + 1;
-        this.roundsIndex = this.roundsIndex + 1;
-        this.getChallengeInfo();
-        this.gameService.levelFinished();
-        if (this.gameService.isGameEnded) {
-          clearInterval(progressBarInterval);
-        } else {
-          this.progressBarValue = 100;
-        }
+        this.loadNewRound();
       }
     }, 200);
   }
 
   sendResult(result: HTMLInputElement) {
-    this.isSendResultDisabled = true;
+    this.isInputDisabled = true;
     let resultMessage = '';
     let panelClass = null;
 
     if (result.value == this.challengeResult) {
       resultMessage = 'Good job!';
       panelClass = ['mat-toolbar', 'mat-primary'];
+      this.loadNewRound();
     } else {
       resultMessage = 'Wrong!';
       panelClass = ['mat-toolbar', 'mat-warn'];
@@ -86,7 +102,7 @@ export class BoardComponent implements OnInit {
     result.value = '';
 
     this.snackBar.open(resultMessage, '', {
-      duration: 500,
+      duration: 600,
       panelClass: panelClass,
     });
   }

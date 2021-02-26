@@ -65,7 +65,7 @@ export class GameService {
     this.isGameEnded = true;
   }
 
-  levelFinished() {
+  roundFinished() {
     this.rounds = this.rounds - 1;
     if (this.rounds === 0) {
       this.gameFinished();
