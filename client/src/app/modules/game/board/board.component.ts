@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GameService } from 'src/app/core/services/game.service';
-import { ConnectionService } from 'src/app/core/connection/connection.service';
-import { ConnectionSocketService } from 'src/app/core/connection/connection.socket.service';
 import { GameDataModel } from '../../../../app/core/models/gameData.model';
 import { gameDataModelFactory } from 'src/app/core/models/gameDataFactory.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,10 +8,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
-  providers: [
-    { provide: ConnectionService, useClass: ConnectionSocketService },
-    GameService,
-  ],
 })
 export class BoardComponent implements OnInit {
   private _gameData: GameDataModel = gameDataModelFactory();
@@ -75,7 +69,10 @@ export class BoardComponent implements OnInit {
 
   startProgressBarTimer() {
     this.progressBarInterval = setInterval(() => {
-      if (this.progressBarValue > 0) {
+      if (
+        this.progressBarValue > 0 &&
+        !this.gameService.shouldStopActualRound
+      ) {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
         this.updateResults(false);
@@ -98,6 +95,8 @@ export class BoardComponent implements OnInit {
     let panelClass = null;
 
     if (result.value == this.challengeResult) {
+      console.log(this.gameService.id);
+      this.gameService.forceOtherPlayersToNextRound();
       resultMessage = 'Good job!';
       panelClass = ['mat-toolbar', 'mat-primary'];
       this.updateResults(true);

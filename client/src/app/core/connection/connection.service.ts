@@ -19,7 +19,9 @@ export class ConnectionService implements Connection {
   setPlayerReady(playerId: string, gameId: string, ready: boolean): void {}
   joinGame(gameId: string): void {}
   getAllPlayersByGameId(gameId: string): void {}
+  goToNextRound(gameId: string): void {}
   allPlayersByGameId: any;
+  stopActualRound: any;
   isGameStarted: any;
   gameData: any;
   id: string = '';

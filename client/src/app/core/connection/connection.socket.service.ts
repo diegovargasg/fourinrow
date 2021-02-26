@@ -4,7 +4,6 @@ import { environment } from 'src/environments/environment';
 import { ConnectionSocket } from './connection.socket.interface';
 import { Subject } from 'rxjs';
 import { Player } from '../models/player.model';
-import { Game } from '../models/game.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +24,9 @@ export class ConnectionSocketService implements ConnectionSocket {
   gameDataSubject = new Subject<{}>();
   gameData = this.gameDataSubject.asObservable();
 
+  stopActualRoundSubject = new Subject<boolean>();
+  stopActualRound = this.stopActualRoundSubject.asObservable();
+
   constructor() {
     this.connect();
   }
@@ -35,6 +37,7 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.listenerAllPlayers();
     this.listenerStartGame();
     this.listenerGameData();
+    this.listenerGoToNextRound();
   }
 
   createGame(gameId: string, gameData: {}) {
@@ -50,6 +53,11 @@ export class ConnectionSocketService implements ConnectionSocket {
   joinGame(gameId: string) {
     this.socket.emit('joinGame', { gameId });
     return true;
+  }
+
+  goToNextRound(gameId: string) {
+    console.log('emits goToNextRound');
+    this.socket.emit('goToNextRound', { gameId });
   }
 
   listenerConnected() {
@@ -73,6 +81,13 @@ export class ConnectionSocketService implements ConnectionSocket {
   listenerGameData() {
     this.socket.on('gameData', (gameData: {}) => {
       this.gameDataSubject.next(gameData);
+    });
+  }
+
+  listenerGoToNextRound() {
+    this.socket.on('goToNextRound', (goToNextRound: boolean) => {
+      console.log('someone went to the next round');
+      this.stopActualRoundSubject.next(goToNextRound);
     });
   }
 

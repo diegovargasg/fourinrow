@@ -125,6 +125,12 @@ export class ServerWebsockets {
         }
       });
 
+      socket.on("goToNextRound", async (data: { gameId: string }) => {
+        const { gameId } = data;
+        console.log("someone went to next round " + gameId);
+        socket.to(gameId).emit("goToNextRound", true);
+      });
+
       socket.on(
         "setPlayerReady",
         async (data: { playerId: string; gameId: string; ready: boolean }) => {
