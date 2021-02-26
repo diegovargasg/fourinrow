@@ -70,11 +70,11 @@ export class BoardComponent implements OnInit {
 
   startProgressBarTimer() {
     this.progressBarInterval = setInterval(() => {
-      console.log(this.gameService.stopActualRound);
       if (this.progressBarValue > 0 && !this.gameService.stopActualRound) {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
         this.updateResults(false);
+        this.showResulMessage('Too slow!', ['mat-toolbar', 'mat-warn']);
         this.loadNewRound();
       }
     }, 200);
@@ -88,13 +88,19 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  showResulMessage(resultMessage: string, panelClass: string[]) {
+    this.snackBar.open(resultMessage, '', {
+      duration: 600,
+      panelClass: panelClass,
+    });
+  }
+
   sendResult(result: HTMLInputElement) {
     this.isInputDisabled = true;
     let resultMessage = '';
     let panelClass = null;
 
     if (result.value == this.challengeResult) {
-      console.log(this.gameService.id);
       this.gameService.forceOtherPlayersToNextRound();
       resultMessage = 'Good job!';
       panelClass = ['mat-toolbar', 'mat-primary'];
@@ -107,10 +113,6 @@ export class BoardComponent implements OnInit {
     }
 
     result.value = '';
-
-    this.snackBar.open(resultMessage, '', {
-      duration: 600,
-      panelClass: panelClass,
-    });
+    this.showResulMessage(resultMessage, panelClass);
   }
 }
