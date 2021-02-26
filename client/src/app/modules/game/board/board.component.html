@@ -1,4 +1,9 @@
 <h2>Round: {{ roundsIndex + 1 }}</h2>
+<ul>
+  <li *ngFor="let roundResult of roundsResults">
+    <span>{{ roundResult }}</span>
+  </li>
+</ul>
 <p>{{ progressBarValue }}</p>
 <mat-progress-bar color="primary" [value]="progressBarValue">
 </mat-progress-bar>

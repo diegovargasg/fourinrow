@@ -23,6 +23,7 @@ export class BoardComponent implements OnInit {
   roundsIndex = 0;
   isInputDisabled = false;
   progressBarInterval: any = null;
+  roundsResults = new Array(this.gameService.maxRounds);
 
   @Input()
   get gameData(): GameDataModel {
@@ -48,7 +49,6 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.getRoundInfo();
     this.startProgressBarTimer();
-    console.log('Game Data in Board', this.gameData);
   }
 
   stopProgressBarTimer() {
@@ -78,9 +78,18 @@ export class BoardComponent implements OnInit {
       if (this.progressBarValue > 0) {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
+        this.updateResults(false);
         this.loadNewRound();
       }
     }, 200);
+  }
+
+  updateResults(correct: boolean) {
+    if (correct) {
+      this.roundsResults[this.roundsIndex] = 'Y';
+    } else {
+      this.roundsResults[this.roundsIndex] = 'X';
+    }
   }
 
   sendResult(result: HTMLInputElement) {
@@ -91,10 +100,12 @@ export class BoardComponent implements OnInit {
     if (result.value == this.challengeResult) {
       resultMessage = 'Good job!';
       panelClass = ['mat-toolbar', 'mat-primary'];
+      this.updateResults(true);
       this.loadNewRound();
     } else {
       resultMessage = 'Wrong!';
       panelClass = ['mat-toolbar', 'mat-warn'];
+      this.updateResults(false);
     }
 
     result.value = '';
