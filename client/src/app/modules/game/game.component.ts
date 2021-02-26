@@ -51,7 +51,8 @@ export class GameComponent {
       console.log('creates the game');
       this.gameService.createGame(
         this.newGameService.id,
-        this.newGameService.data
+        this.newGameService.data,
+        this.newGameService.rounds
       );
       this.gameData = this.newGameService.data;
       const selfPlayer: Player = {

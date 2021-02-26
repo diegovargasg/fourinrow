@@ -1,16 +1,10 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class MathChallengeService {
-  levels: number = 5;
+export class MathChallenge {
   config: Array<{}> = [];
   operators = ['+', '-', '*', '/'];
   operatorsMax = [200, 100, 20, 50];
 
-  constructor() {
-    for (let index = 0; index < this.levels; index++) {
+  constructor(rounds: number) {
+    for (let index = 0; index < rounds; index++) {
       const operator = this.getRandomInt(4);
       let firstDigit = 0;
       let secondDigit = 0;

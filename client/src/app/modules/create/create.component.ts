@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NewGameService } from 'src/app/core/services/new-game.service';
-import { MathChallengeService } from 'src/app/core/services/math-challenge.service';
+import { MathChallenge } from 'src/app/core/utils/MathChallenge';
+//import { MathChallengeService } from 'src/app/core/services/math-challenge.service';
 import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 
 @Component({
@@ -20,13 +21,15 @@ export class CreateComponent implements OnInit {
   ) {
     this.createForm = formBuilder.group({
       name: ['', Validators.required],
+      rounds: [5],
     });
   }
 
   onSubmit() {
     const gameId = Math.random().toString(36).substr(2, 6);
     const playerName = this.createForm.value.name;
-    const gameConfig = new MathChallengeService().config;
+    const rounds = this.createForm.value.rounds;
+    const gameConfig = new MathChallenge(rounds).config;
 
     //created from factory pattern a gameDataModel
     const gameData = gameDataModelFactory();
@@ -34,7 +37,7 @@ export class CreateComponent implements OnInit {
 
     this.newGameService.id = gameId;
     this.newGameService.data = gameData;
-
+    this.newGameService.rounds = rounds;
     this.newGameService.playerName = playerName;
     this.router.navigate(['/game/create']);
   }

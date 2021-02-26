@@ -19,7 +19,7 @@ export class GameService {
 
   stopActualRound = false;
 
-  readonly maxRounds = 5;
+  maxRounds = 5;
   actualRound = 1;
 
   constructor(private connectionService: ConnectionService) {
@@ -50,8 +50,9 @@ export class GameService {
     );
   }
 
-  createGame(id: string, gameData: GameDataModel) {
+  createGame(id: string, gameData: GameDataModel, rounds: number) {
     this.id = id;
+    this.maxRounds = rounds;
     this.connectionService.createGame(id, gameData);
   }
 

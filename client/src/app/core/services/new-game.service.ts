@@ -12,6 +12,7 @@ export class NewGameService implements Game {
 
   _id: string = '';
   _data = gameDataModelFactory();
+  _rounds = 5;
 
   constructor() {}
 
@@ -29,6 +30,14 @@ export class NewGameService implements Game {
 
   set data(data: GameDataModel) {
     this._data = data;
+  }
+
+  get rounds() {
+    return this._rounds;
+  }
+
+  set rounds(rounds: number) {
+    this._rounds = rounds;
   }
 
   //TODO: move this attributes to it's own new player service
