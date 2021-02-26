@@ -17,8 +17,8 @@ export class GameService {
   gameDataSubject = new Subject<GameDataModel>();
   gameData = this.gameDataSubject.asObservable();
 
-  isGameEnded = false;
-  rounds = 5;
+  readonly maxRounds = 5;
+  actualRound = 1;
 
   constructor(private connectionService: ConnectionService) {
     this.subscription = connectionService.allPlayersByGameId.subscribe(
@@ -60,16 +60,12 @@ export class GameService {
     this.connectionService.getAllPlayersByGameId(id);
   }
 
-  gameFinished() {
-    console.log('game Finished');
-    this.isGameEnded = true;
+  isGameEnded(): boolean {
+    return this.actualRound > this.maxRounds ? true : false;
   }
 
-  roundFinished() {
-    this.rounds = this.rounds - 1;
-    if (this.rounds === 0) {
-      this.gameFinished();
-    }
+  goToNextRound() {
+    this.actualRound = this.actualRound + 1;
   }
 
   ngOnDestroy() {

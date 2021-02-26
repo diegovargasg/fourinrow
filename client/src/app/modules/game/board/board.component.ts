@@ -20,7 +20,6 @@ export class BoardComponent implements OnInit {
   progressBarValue = 100;
   challenge = '';
   challengeResult: any;
-  rounds = 1;
   roundsIndex = 0;
   isInputDisabled = false;
   progressBarInterval: any = null;
@@ -61,17 +60,16 @@ export class BoardComponent implements OnInit {
   }
 
   loadNewRound() {
-    this.gameService.rounds = this.gameService.rounds - 1;
+    this.gameService.goToNextRound();
 
-    if (this.gameService.rounds > 0) {
+    if (this.gameService.isGameEnded()) {
+      this.isInputDisabled = true;
+      this.stopProgressBarTimer();
+    } else {
       this.isInputDisabled = false;
-      this.rounds = this.rounds + 1;
       this.roundsIndex = this.roundsIndex + 1;
       this.getRoundInfo();
       this.resetProgressBarTimer();
-    } else {
-      this.gameService.isGameEnded = true;
-      this.stopProgressBarTimer();
     }
   }
 
