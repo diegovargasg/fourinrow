@@ -17,10 +17,7 @@ export class GameService {
   gameDataSubject = new Subject<GameDataModel>();
   gameData = this.gameDataSubject.asObservable();
 
-  stopActualRoundSubject = new Subject<boolean>();
-  stopActualRound = this.stopActualRoundSubject.asObservable();
-
-  shouldStopActualRound = false;
+  stopActualRound = false;
 
   readonly maxRounds = 5;
   actualRound = 1;
@@ -48,8 +45,7 @@ export class GameService {
 
     this.subscription = connectionService.stopActualRound.subscribe(
       (stop: boolean) => {
-        this.stopActualRoundSubject.next(stop);
-        this.shouldStopActualRound = stop;
+        this.stopActualRound = stop;
       }
     );
   }
@@ -83,7 +79,7 @@ export class GameService {
   forceOtherPlayersToNextRound() {
     console.log('ID sent to other players move to next round ', this.id);
     this.connectionService.goToNextRound(this.id);
-    this.shouldStopActualRound = false;
+    this.stopActualRound = false;
   }
 
   ngOnDestroy() {

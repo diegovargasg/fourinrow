@@ -55,7 +55,7 @@ export class BoardComponent implements OnInit {
 
   loadNewRound() {
     this.gameService.goToNextRound();
-    this.gameService.shouldStopActualRound = false;
+    this.gameService.stopActualRound = false;
 
     if (this.gameService.isGameEnded()) {
       this.isInputDisabled = true;
@@ -70,11 +70,8 @@ export class BoardComponent implements OnInit {
 
   startProgressBarTimer() {
     this.progressBarInterval = setInterval(() => {
-      console.log(this.gameService.shouldStopActualRound);
-      if (
-        this.progressBarValue > 0 &&
-        !this.gameService.shouldStopActualRound
-      ) {
+      console.log(this.gameService.stopActualRound);
+      if (this.progressBarValue > 0 && !this.gameService.stopActualRound) {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
         this.updateResults(false);
