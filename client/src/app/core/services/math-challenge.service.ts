@@ -7,31 +7,44 @@ export class MathChallengeService {
   levels: number = 5;
   config: Array<{}> = [];
   operators = ['+', '-', '*', '/'];
-  operatorsMax = [100, 100, 10, 50];
+  operatorsMax = [200, 100, 20, 50];
 
   constructor() {
     for (let index = 0; index < this.levels; index++) {
-      const operator = this.getRandomInt(3);
-      const firstDigit = this.getRandomInt(this.operatorsMax[operator]);
-      const secondDigit = this.getRandomInt(this.operatorsMax[operator]);
+      const operator = this.getRandomInt(4);
+      let firstDigit = 0;
+      let secondDigit = 0;
+      do {
+        firstDigit = this.getRandomInt(this.operatorsMax[operator]);
+      } while (firstDigit == 0);
+
       let result = 0;
+      let heading = '';
 
       switch (operator) {
         case 0:
+          secondDigit = this.getRandomInt(this.operatorsMax[operator]);
           result = firstDigit + secondDigit;
           break;
         case 1:
+          secondDigit = this.getRandomInt(firstDigit);
           result = firstDigit - secondDigit;
           break;
         case 2:
+          secondDigit = this.getRandomInt(this.operatorsMax[operator]);
           result = firstDigit * secondDigit;
           break;
         case 3:
-          result = Math.round((firstDigit / secondDigit) * 10) / 10;
+          do {
+            secondDigit = this.getRandomInt(firstDigit);
+          } while (firstDigit % secondDigit != 0);
+          result = firstDigit / secondDigit;
           break;
       }
+
+      heading = `${firstDigit} ${this.operators[operator]} ${secondDigit}`;
       this.config[index] = {
-        [`${firstDigit} ${this.operators[operator]} ${secondDigit}`]: result,
+        [heading]: result,
       };
     }
   }
