@@ -22,6 +22,7 @@ export class BoardComponent implements OnInit {
   private _gameData: GameDataModel = gameDataModelFactory();
   rounds = 1;
   roundsIndex = 0;
+  isSendResultDisabled = false;
 
   @Input()
   get gameData(): GameDataModel {
@@ -55,6 +56,7 @@ export class BoardComponent implements OnInit {
       if (this.progressBarValue > 0) {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
+        this.isSendResultDisabled = false;
         this.rounds = this.rounds + 1;
         this.roundsIndex = this.roundsIndex + 1;
         this.getChallengeInfo();
@@ -69,6 +71,7 @@ export class BoardComponent implements OnInit {
   }
 
   sendResult(result: HTMLInputElement) {
+    this.isSendResultDisabled = true;
     let resultMessage = '';
     let panelClass = null;
 
@@ -79,6 +82,8 @@ export class BoardComponent implements OnInit {
       resultMessage = 'Wrong!';
       panelClass = ['mat-toolbar', 'mat-warn'];
     }
+
+    result.value = '';
 
     this.snackBar.open(resultMessage, '', {
       duration: 500,

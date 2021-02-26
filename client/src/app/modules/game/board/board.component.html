@@ -5,7 +5,7 @@
 <p>{{ challenge }} .. {{ challengeResult }}</p>
 <div>
   <mat-form-field class="example-full-width">
-    <mat-label>Result:</mat-label>
+    <mat-label>Result</mat-label>
     <input matInput type="number" #result autocomplete="off" />
   </mat-form-field>
 </div>
@@ -14,6 +14,7 @@
   class="mr-2"
   color="primary"
   (click)="sendResult(result)"
+  [disabled]="isSendResultDisabled"
 >
   OK
 </button>
