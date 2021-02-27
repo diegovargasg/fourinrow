@@ -1,32 +1,44 @@
-<form [formGroup]="createForm" (ngSubmit)="onSubmit()">
-  <div>
-    <mat-form-field class="example-full-width">
-      <mat-label>Name:</mat-label>
-      <input matInput type="text" formControlName="name" autocomplete="off" />
-      <b
-        *ngIf="
-          createForm.controls.name.touched && createForm.controls.name.invalid
-        "
-        >Name Required</b
-      >
-    </mat-form-field>
-    <div>
-      {{ createForm.controls.rounds.value }}
+<div class="container">
+  <h2 class="mb-5">Create a new game</h2>
+  <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="row">
+    <div class="col-12 mb-3">
+      <mat-form-field class="name">
+        <mat-label>Your name:</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+          autocomplete="off"
+          maxlength="10"
+        />
+        <b
+          *ngIf="
+            createForm.controls.name.touched && createForm.controls.name.invalid
+          "
+          >Your name is required</b
+        >
+      </mat-form-field>
+    </div>
+    <div class="col-12 mb-3">
+      <label>Number of rounds: {{ createForm.controls.rounds.value }}</label>
       <mat-slider
+        class="slider"
         min="1"
         max="10"
         step="1"
         formControlName="rounds"
       ></mat-slider>
     </div>
-  </div>
-  <button
-    mat-raised-button
-    class="mr-2"
-    color="primary"
-    [disabled]="createForm.invalid"
-  >
-    Create
-  </button>
-  <button mat-raised-button color="secondary" routerLink="/">Back</button>
-</form>
+    <div class="col-12 actions">
+      <button
+        mat-raised-button
+        class="mr-2"
+        color="primary"
+        [disabled]="createForm.invalid"
+      >
+        Create
+      </button>
+      <button mat-raised-button color="secondary" routerLink="/">Back</button>
+    </div>
+  </form>
+</div>
