@@ -1,18 +1,23 @@
-<form [formGroup]="joinForm" (ngSubmit)="onSubmit()">
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" autocomplete="off" />
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>GameId</mat-label>
-      <input matInput formControlName="gameId" autocomplete="off" />
-    </mat-form-field>
-  </div>
-  <button mat-raised-button color="primary" class="mr-2" type="submit">
-    Join
-  </button>
-  <button mat-raised-button color="secondary" routerLink="/">Back</button>
-</form>
+<div class="container">
+  <h2 class="mb-5">Join an existing game:</h2>
+  <form [formGroup]="joinForm" (ngSubmit)="onSubmit()" class="row">
+    <div class="col-12 mb-3">
+      <mat-form-field appearance="fill" class="input">
+        <mat-label>Your name</mat-label>
+        <input matInput formControlName="name" autocomplete="off" />
+      </mat-form-field>
+    </div>
+    <div class="col-12 mb-3">
+      <mat-form-field appearance="fill" class="input">
+        <mat-label>Existing game ID</mat-label>
+        <input matInput formControlName="gameId" autocomplete="off" />
+      </mat-form-field>
+    </div>
+    <div class="col-12 actions">
+      <button mat-raised-button color="primary" class="mr-2" type="submit">
+        Join
+      </button>
+      <button mat-raised-button color="secondary" routerLink="/">Back</button>
+    </div>
+  </form>
+</div>
