@@ -1,8 +1,11 @@
 <div class="container">
   <ng-template [ngIf]="!isGameStarted">
+    <h2 class="mb-5">Waiting for other players to join...</h2>
     <div class="row">
-      <div class="col">
+      <div class="col-12">
         <app-waiting [allPlayers]="allPlayers"></app-waiting>
+      </div>
+      <div class="col-12 actions mt-4">
         <button
           mat-raised-button
           color="primary"

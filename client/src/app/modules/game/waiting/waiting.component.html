@@ -1,16 +1,11 @@
-<mat-list role="list">
-  <mat-list-item
-    class="player"
-    role="listitem"
-    *ngFor="let player of allPlayers"
-    ><span
-      [ngClass]="[
-        player._data.ready === true
-          ? 'player__name player__name--ready mr-2'
-          : 'player__name player__name--notready'
-      ]"
-      class=""
-      >{{ player._data.name }}</span
-    ></mat-list-item
-  >
-</mat-list>
+<ul class="listplayers">
+  <li *ngFor="let player of allPlayers" class="player mb-3">
+    <span class="player__name">{{ player._data.name }}</span>
+    <ng-template [ngIf]="player._data.ready">
+      <span class="player__status player__status--ready">Ready </span>
+    </ng-template>
+    <ng-template [ngIf]="!player._data.ready">
+      <span class="player__status player__status--notready">Not ready </span>
+    </ng-template>
+  </li>
+</ul>
