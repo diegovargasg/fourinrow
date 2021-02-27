@@ -25,6 +25,7 @@ export class GameComponent {
   isGameInProgress = false;
   isGameEnded = false;
   action: string = '';
+  isActualPlayerReady = false;
 
   subscription: Subscription;
   allPlayers: Player[] = [];
@@ -48,7 +49,6 @@ export class GameComponent {
 
     const action = this.activatedRoute.snapshot.paramMap.get('action');
     if (action === 'create') {
-      console.log('creates the game');
       this.gameService.createGame(
         this.newGameService.id,
         this.newGameService.data,
@@ -95,6 +95,7 @@ export class GameComponent {
 
   onReady() {
     this.playerService.setPlayerReady();
+    this.isActualPlayerReady = this.playerService.ready;
   }
 
   ngOnInit(): void {}
