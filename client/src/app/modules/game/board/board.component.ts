@@ -82,9 +82,9 @@ export class BoardComponent implements OnInit {
 
   updateResults(correct: boolean) {
     if (correct) {
-      this.roundsResults[this.roundsIndex] = 'Y';
+      this.roundsResults[this.roundsIndex] = true;
     } else {
-      this.roundsResults[this.roundsIndex] = 'X';
+      this.roundsResults[this.roundsIndex] = false;
     }
   }
 

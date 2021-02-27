@@ -1,31 +1,51 @@
-<h2>Round: {{ roundsIndex + 1 }}</h2>
-<ul>
-  <li *ngFor="let roundResult of roundsResults">
-    <span>{{ roundResult }}</span>
-  </li>
-</ul>
-<p>{{ progressBarValue }}</p>
-<mat-progress-bar color="primary" [value]="progressBarValue">
-</mat-progress-bar>
-<p>{{ challenge }} .. {{ challengeResult }}</p>
-<div>
-  <mat-form-field class="example-full-width">
-    <mat-label>Result</mat-label>
-    <input
-      matInput
-      type="number"
-      #result
-      autocomplete="off"
-      [disabled]="isInputDisabled"
-    />
-  </mat-form-field>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="">Rounds:</h2>
+      <div class="d-flex">
+        <div class="flex-fill result" *ngFor="let roundResult of roundsResults">
+          <ng-template [ngIf]="roundResult === true">
+            <mat-icon>check_circle_outline</mat-icon>
+          </ng-template>
+          <ng-template [ngIf]="roundResult === false">
+            <mat-icon>highlight_off</mat-icon>
+          </ng-template>
+          <ng-template [ngIf]="roundResult === undefined">
+            <mat-icon>schedule</mat-icon>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-5">
+      <mat-progress-bar color="primary" [value]="progressBarValue">
+      </mat-progress-bar>
+    </div>
+    <div class="col-12 mb-3">
+      <h3><b>Challenge:</b> {{ challenge }}</h3>
+    </div>
+    <div class="col-12 mb-5">
+      <mat-form-field class="input">
+        <mat-label>Result</mat-label>
+        <input
+          matInput
+          type="number"
+          #result
+          autocomplete="off"
+          maxlength="5"
+          [disabled]="isInputDisabled"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-12 actions">
+      <button
+        mat-raised-button
+        class="mr-2"
+        color="primary"
+        (click)="sendResult(result)"
+        [disabled]="isInputDisabled"
+      >
+        OK
+      </button>
+    </div>
+  </div>
 </div>
-<button
-  mat-raised-button
-  class="mr-2"
-  color="primary"
-  (click)="sendResult(result)"
-  [disabled]="isInputDisabled"
->
-  OK
-</button>
