@@ -4,13 +4,23 @@
     <div class="col-12 mb-3">
       <mat-form-field appearance="fill" class="input">
         <mat-label>Your name</mat-label>
-        <input matInput formControlName="name" autocomplete="off" />
+        <input
+          matInput
+          formControlName="name"
+          autocomplete="off"
+          maxlength="10"
+        />
       </mat-form-field>
     </div>
     <div class="col-12 mb-3">
       <mat-form-field appearance="fill" class="input">
         <mat-label>Existing game ID</mat-label>
-        <input matInput formControlName="gameId" autocomplete="off" />
+        <input
+          matInput
+          formControlName="gameId"
+          autocomplete="off"
+          maxlength="6"
+        />
       </mat-form-field>
     </div>
     <div class="col-12 actions">
