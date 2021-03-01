@@ -152,6 +152,22 @@ export class ServerWebsockets {
           }
         }
       );
+
+      socket.on(
+        "gameFinished",
+        async (data: { gameId: string; gameResults: Array<boolean> }) => {
+          const { gameId, gameResults } = data;
+          const playerId: string = socket.id;
+          console.log("PlayerId", playerId);
+          const player = await dao.getPlayerById(playerId);
+          if (player === null) {
+            throw "Player does not exist";
+          }
+          player._data.results = gameResults;
+          await dao.updatePlayer(player);
+          emitAllPlayers(gameId);
+        }
+      );
     });
 
     this.httpServer.listen(serverPort, async () => {

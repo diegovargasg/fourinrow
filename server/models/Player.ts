@@ -5,6 +5,7 @@ const dataFactory = (): PlayerDataInterface => ({
   name: "",
   ready: false,
   gameId: "",
+  results: new Array(),
 });
 
 export class Player implements PlayerInterface {

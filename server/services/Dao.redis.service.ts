@@ -68,8 +68,9 @@ export class DAORedis implements DAOInterface {
     return await this.redisAsyncSet(game._id, JSON.stringify(game._data));
   }
 
-  updatePlayer(player: Player): void {
-    throw new Error("Method not implemented.");
+  async updatePlayer(player: Player) {
+    console.log(`Player Info updated ${JSON.stringify(player)}`);
+    return await this.redisAsyncSet(player._id, JSON.stringify(player._data));
   }
   getAllGames(): Game[] {
     throw new Error("Method not implemented.");
