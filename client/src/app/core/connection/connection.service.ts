@@ -20,6 +20,7 @@ export class ConnectionService implements Connection {
   joinGame(gameId: string): void {}
   getAllPlayersByGameId(gameId: string): void {}
   goToNextRound(gameId: string): void {}
+  gameFinished(gameId: string, gameResults: Array<boolean>): void {}
   allPlayersByGameId: any;
   stopActualRound: any;
   isGameStarted: any;

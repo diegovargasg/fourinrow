@@ -83,6 +83,10 @@ export class GameService {
     this.stopActualRound = false;
   }
 
+  gameFinished(gameResults: Array<boolean>) {
+    this.connectionService.gameFinished(this.id, gameResults);
+  }
+
   ngOnDestroy() {
     console.log('destroy Game Service');
     this.connectionService.disconnect();

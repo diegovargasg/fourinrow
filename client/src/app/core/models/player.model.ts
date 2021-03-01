@@ -4,5 +4,6 @@ export interface Player {
     name: string;
     ready: boolean;
     gameId: string;
+    results: Array<boolean>;
   };
 }

@@ -101,6 +101,10 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.socket.emit('setPlayerReady', { playerId, gameId, ready });
   }
 
+  gameFinished(gameId: string, gameResults: Array<boolean>) {
+    this.socket.emit('gameFinished', { gameId, gameResults });
+  }
+
   disconnect() {
     this.socket.disconnect();
   }

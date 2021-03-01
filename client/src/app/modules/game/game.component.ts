@@ -23,7 +23,7 @@ import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 export class GameComponent {
   isGameStarted = false;
   isGameInProgress = false;
-  isGameEnded = false;
+  isGameFinished = false;
   action: string = '';
   isActualPlayerReady = false;
 
@@ -61,6 +61,7 @@ export class GameComponent {
           name: this.newGameService.playerName,
           ready: false,
           gameId: this.newGameService.id,
+          results: new Array(),
         },
       };
       //We do not emit allPlayersByGameId when the user is creating the game.

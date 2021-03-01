@@ -60,6 +60,7 @@ export class BoardComponent implements OnInit {
     if (this.gameService.isGameEnded()) {
       this.isInputDisabled = true;
       this.stopProgressBarTimer();
+      this.gameService.gameFinished(this.roundsResults);
     } else {
       this.isInputDisabled = false;
       this.roundsIndex = this.roundsIndex + 1;
