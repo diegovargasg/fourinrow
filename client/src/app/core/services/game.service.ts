@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { of, Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { ConnectionService } from '../connection/connection.service';
 import { GameDataModel } from '../models/gameData.model';
 import { Player } from '../models/player.model';
+import { ResultComponent } from '../../modules/game/result/result.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class GameService {
@@ -22,7 +24,10 @@ export class GameService {
   maxRounds = 5;
   actualRound = 1;
 
-  constructor(private connectionService: ConnectionService) {
+  constructor(
+    private connectionService: ConnectionService,
+    public resultsDialog: MatDialog
+  ) {
     this.subscription = connectionService.allPlayersByGameId.subscribe(
       (allPlayers: Player[]) => {
         console.log('from name subscription');
@@ -85,6 +90,9 @@ export class GameService {
 
   gameFinished(gameResults: Array<boolean>) {
     this.connectionService.gameFinished(this.id, gameResults);
+    this.resultsDialog.open(ResultComponent, {
+      restoreFocus: false,
+    });
   }
 
   ngOnDestroy() {

@@ -9,6 +9,7 @@ import { NewGameService } from 'src/app/core/services/new-game.service';
 import { PlayerService } from 'src/app/core/services/player.service';
 import { GameDataModel } from '../../core/models/gameData.model';
 import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-game',
