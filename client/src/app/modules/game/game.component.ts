@@ -108,6 +108,7 @@ export class GameComponent {
         this.resultsDialogRef = this.resultsDialog.open(ResultComponent, {
           disableClose: true,
           data: { allPlayers: this.allPlayers },
+          width: '500',
         });
       }
     );

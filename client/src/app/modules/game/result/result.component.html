@@ -1,22 +1,25 @@
 <h1 mat-dialog-title>Results</h1>
 <div mat-dialog-content>
-  <ul>
-    <li *ngFor="let player of data.allPlayers">
-      <div class="d-flex">
-        <div
-          class="flex-fill result"
-          *ngFor="let roundResult of player._data.results"
-        >
-          <span> {{ player._data.name }}:{{ player._data.gameId }} </span>
-          {{ roundResult }}
-          <ng-template [ngIf]="roundResult === true">
-            <mat-icon class="success">check_circle_outline</mat-icon>
-          </ng-template>
-          <ng-template [ngIf]="roundResult === false">
-            <mat-icon class="error">highlight_off</mat-icon>
-          </ng-template>
+  <div class="container">
+    <div *ngFor="let player of data.allPlayers" class="row">
+      <div class="col-2">
+        <span class="player"> {{ player._data.name }}:</span>
+      </div>
+      <div class="col-10">
+        <div class="d-flex">
+          <div
+            class="flex-fill result"
+            *ngFor="let roundResult of player._data.results"
+          >
+            <ng-template [ngIf]="roundResult === true">
+              <mat-icon class="success">check_circle_outline</mat-icon>
+            </ng-template>
+            <ng-template [ngIf]="roundResult === false">
+              <mat-icon class="error">highlight_off</mat-icon>
+            </ng-template>
+          </div>
         </div>
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
