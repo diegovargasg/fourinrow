@@ -77,8 +77,6 @@ export class GameComponent {
 
     this.subscription = this.gameService.allPlayersByGameId.subscribe(
       (allPlayers) => {
-        console.log('AllPlayers in Waiting Component');
-        console.log(allPlayers);
         this.allPlayers = allPlayers;
         if (this.isGameFinished && this.resultsDialogRef) {
           this.resultsDialogRef.componentInstance.data = {

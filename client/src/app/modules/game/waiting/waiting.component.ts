@@ -14,7 +14,6 @@ export class WaitingComponent implements OnInit {
     return this._allPlayers;
   }
   set allPlayers(allPlayers: Player[]) {
-    console.log('setter all players', allPlayers);
     this._allPlayers = allPlayers;
   }
 
