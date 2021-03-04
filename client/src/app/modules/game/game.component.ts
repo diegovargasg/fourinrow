@@ -9,7 +9,8 @@ import { NewGameService } from 'src/app/core/services/new-game.service';
 import { PlayerService } from 'src/app/core/services/player.service';
 import { GameDataModel } from '../../core/models/gameData.model';
 import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
-import { MatDialogModule } from '@angular/material/dialog';
+import { ResultComponent } from '../../modules/game/result/result.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-game',
@@ -37,7 +38,8 @@ export class GameComponent {
     private activatedRoute: ActivatedRoute,
     private newGameService: NewGameService,
     private gameService: GameService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    public resultsDialog: MatDialog
   ) {
     if (this.newGameService.playerName == '' || this.newGameService.id == '') {
       this.router.navigate(['/']);
@@ -91,6 +93,15 @@ export class GameComponent {
       (gameData: GameDataModel) => {
         console.log('gameData reveiced from server', gameData);
         this.gameData = gameData;
+      }
+    );
+
+    this.subscription = this.gameService.isGameFinished.subscribe(
+      (isGameFinished: boolean) => {
+        this.isGameFinished = isGameFinished;
+        this.resultsDialog.open(ResultComponent, {
+          disableClose: true,
+        });
       }
     );
   }
