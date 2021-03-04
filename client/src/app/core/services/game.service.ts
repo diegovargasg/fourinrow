@@ -53,9 +53,9 @@ export class GameService {
     );
   }
 
-  createGame(id: string, gameData: GameDataModel, rounds: number) {
+  createGame(id: string, gameData: GameDataModel) {
     this.id = id;
-    this.maxRounds = rounds;
+    this.maxRounds = gameData.rounds;
     this.connectionService.createGame(id, gameData);
   }
 

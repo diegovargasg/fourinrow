@@ -4,4 +4,5 @@ export const gameDataModelFactory = (): GameDataModel => ({
   players: new Array(),
   started: false,
   config: new Array(),
+  rounds: 5,
 });

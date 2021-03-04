@@ -5,6 +5,7 @@ const dataFactory = (): GameDataInterface => ({
   players: new Array(),
   started: false,
   config: new Array(),
+  rounds: 5,
 });
 
 export class Game implements GameInterface {

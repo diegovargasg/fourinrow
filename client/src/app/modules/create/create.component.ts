@@ -37,7 +37,7 @@ export class CreateComponent implements OnInit {
 
     this.newGameService.id = gameId;
     this.newGameService.data = gameData;
-    this.newGameService.rounds = rounds;
+    this.newGameService.data.rounds = rounds;
     this.newGameService.playerName = playerName;
     this.router.navigate(['/game/create']);
   }

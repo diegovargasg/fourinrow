@@ -55,8 +55,7 @@ export class GameComponent {
     if (action === 'create') {
       this.gameService.createGame(
         this.newGameService.id,
-        this.newGameService.data,
-        this.newGameService.rounds
+        this.newGameService.data
       );
       this.gameData = this.newGameService.data;
       const selfPlayer: Player = {
@@ -97,6 +96,7 @@ export class GameComponent {
       (gameData: GameDataModel) => {
         console.log('gameData reveiced from server', gameData);
         this.gameData = gameData;
+        this.gameService.maxRounds = this.gameData.rounds;
       }
     );
 
