@@ -1,6 +1,8 @@
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { Player } from '../../../core/models/player.model';
 
 @Component({
   selector: 'app-result',
@@ -8,7 +10,8 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  allPlayers: Player[] = [];
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Player[]) {}
 
   ngOnInit(): void {}
 }

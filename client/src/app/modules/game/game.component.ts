@@ -10,7 +10,7 @@ import { PlayerService } from 'src/app/core/services/player.service';
 import { GameDataModel } from '../../core/models/gameData.model';
 import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 import { ResultComponent } from '../../modules/game/result/result.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-game',
@@ -32,6 +32,7 @@ export class GameComponent {
   subscription: Subscription;
   allPlayers: Player[] = [];
   gameData: GameDataModel = gameDataModelFactory();
+  resultsDialogRef: any;
 
   constructor(
     private router: Router,
@@ -79,6 +80,11 @@ export class GameComponent {
         console.log('AllPlayers in Waiting Component');
         console.log(allPlayers);
         this.allPlayers = allPlayers;
+        if (this.isGameFinished && this.resultsDialogRef) {
+          this.resultsDialogRef.componentInstance.data = {
+            allPlayers: this.allPlayers,
+          };
+        }
       }
     );
 
@@ -99,11 +105,9 @@ export class GameComponent {
     this.subscription = this.gameService.isGameFinished.subscribe(
       (isGameFinished: boolean) => {
         this.isGameFinished = isGameFinished;
-        this.resultsDialog.open(ResultComponent, {
+        this.resultsDialogRef = this.resultsDialog.open(ResultComponent, {
           disableClose: true,
-          data: {
-            allPlayers: this.allPlayers,
-          },
+          data: { allPlayers: this.allPlayers },
         });
       }
     );
