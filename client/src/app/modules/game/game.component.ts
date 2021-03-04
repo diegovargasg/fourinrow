@@ -101,6 +101,9 @@ export class GameComponent {
         this.isGameFinished = isGameFinished;
         this.resultsDialog.open(ResultComponent, {
           disableClose: true,
+          data: {
+            allPlayers: this.allPlayers,
+          },
         });
       }
     );
