@@ -9,7 +9,10 @@ import { Player } from '../../../core/models/player.model';
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Player[]) {}
+  allPlayers: Player[];
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Player[]) {
+    this.allPlayers = data;
+  }
 
   ngOnInit(): void {}
 }

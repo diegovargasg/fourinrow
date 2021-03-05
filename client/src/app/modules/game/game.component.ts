@@ -87,14 +87,12 @@ export class GameComponent {
 
     this.subscription = this.gameService.isGameStarted.subscribe(
       (isStarted) => {
-        console.log('game is started');
         this.isGameStarted = isStarted;
       }
     );
 
     this.subscription = this.gameService.gameData.subscribe(
       (gameData: GameDataModel) => {
-        console.log('gameData reveiced from server', gameData);
         this.gameData = gameData;
         this.gameService.maxRounds = this.gameData.rounds;
       }
