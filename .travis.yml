@@ -2,9 +2,11 @@ language: node_js
 node_js:
   - '10'
 
-before_script: cd client
+before_script: 
+  - cd client
+  - npm install -g @angular/cli
 
-before_deploy:
+script:
   - ng build
 
 cache:
