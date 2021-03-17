@@ -2,14 +2,9 @@ language: node_js
 node_js:
   - '10'
 
-before_cache:
-  # awss3-deploy
-  - pip install --user awscli
-
 before_script: cd client
 
 before_deploy:
-  - export BUCKET=5mingames LOCAL_DIR=dist
   - ng build
 
 cache:
