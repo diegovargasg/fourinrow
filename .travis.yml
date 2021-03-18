@@ -4,6 +4,7 @@ node_js:
 
 before_script: 
   - cd client
+  - npm install --only=prod
   - npm install -g @angular/cli
 
 script:
