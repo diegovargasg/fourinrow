@@ -4,6 +4,7 @@
   "description": "Express Server",
   "main": "src/index.ts",
   "scripts": {
+    "start": "node index.js",
     "build": "tsc --project ./",
     "test": "ts-node node_modules/jasmine/bin/jasmine",
     "dev": "nodemon ./src/index.ts"
