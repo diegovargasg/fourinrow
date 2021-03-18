@@ -11,8 +11,9 @@ script:
   - ng build
 
 cache:
-  directories:
-     - ./node_modules
+  npm: false
+  #directories:
+   #  - ./node_modules
 
 deploy:
   provider: s3
