@@ -4,11 +4,11 @@ node_js:
 
 before_script: 
   - cd client
-  - npm install
+  #- npm install
   - npm install -g @angular/cli
 
 script:
-  - ng build
+  - ng build --prod
 
 cache:
   npm: false
