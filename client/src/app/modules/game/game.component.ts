@@ -12,6 +12,7 @@ import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 import { ResultComponent } from '../../modules/game/result/result.component';
 import { MatDialog } from '@angular/material/dialog';
 import copy from 'copy-text-to-clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-game',
@@ -41,7 +42,8 @@ export class GameComponent {
     private newGameService: NewGameService,
     private gameService: GameService,
     private playerService: PlayerService,
-    public resultsDialog: MatDialog
+    public resultsDialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     if (this.newGameService.playerName == '' || this.newGameService.id == '') {
       this.router.navigate(['/']);
@@ -118,7 +120,21 @@ export class GameComponent {
 
   onCopy() {
     const url = `${window.location.host}/join/${this.gameService.id}`;
-    copy(url);
+    let message = '';
+    let panelClass: Array<string> = [];
+
+    if (copy(url)) {
+      message = 'Invite link copied';
+      panelClass = ['mat-toolbar', 'mat-primary'];
+    } else {
+      message = 'Invite could not be copied';
+      panelClass = ['mat-toolbar', 'mat-warn'];
+    }
+
+    this.snackBar.open(message, '', {
+      duration: 2000,
+      panelClass: panelClass,
+    });
   }
 
   ngOnInit(): void {}

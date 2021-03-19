@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NewGameService } from 'src/app/core/services/new-game.service';
 
@@ -14,11 +14,14 @@ export class JoinComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private newGameService: NewGameService
   ) {
+    const gameIdUrl = this.activatedRoute.snapshot.paramMap.get('gameId');
+
     this.joinForm = formBuilder.group({
       name: ['', Validators.required],
-      gameId: ['', Validators.required],
+      gameId: [gameIdUrl, Validators.required],
     });
   }
 
