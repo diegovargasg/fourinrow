@@ -10,7 +10,7 @@ import { Game } from "../models/Game";
 
 const socketOptions = {
   cors: {
-    origin: process.env.SERVER_ALLOW_ORIGIN,
+    origin: process.env.WEB_HOST || "http://localhost:4200",
     methods: ["GET", "POST"],
   },
 };
