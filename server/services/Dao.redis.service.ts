@@ -21,7 +21,7 @@ export class DAORedis implements DAOInterface {
     this.redisClient = redis.createClient({
       host: process.env.DAO_HOST || "localhost",
       port: parseInt(process.env.DAO_PORT || "6379", 10),
-      password: process.env.DAO_PASSWORD,
+      password: process.env.DAO_PASSWORD || "",
       retry_strategy: () => 1000,
     });
 
