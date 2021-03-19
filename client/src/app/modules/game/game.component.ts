@@ -11,6 +11,7 @@ import { GameDataModel } from '../../core/models/gameData.model';
 import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 import { ResultComponent } from '../../modules/game/result/result.component';
 import { MatDialog } from '@angular/material/dialog';
+import copy from 'copy-text-to-clipboard';
 
 @Component({
   selector: 'app-game',
@@ -113,6 +114,11 @@ export class GameComponent {
   onReady() {
     this.playerService.setPlayerReady();
     this.isActualPlayerReady = this.playerService.ready;
+  }
+
+  onCopy() {
+    const url = `${window.location.host}/join/${this.gameService.id}`;
+    copy(url);
   }
 
   ngOnInit(): void {}
