@@ -153,10 +153,10 @@ export class ServerWebsockets {
         }
       );
 
-      socket.on("gameFinished", async (data: { gameId: string }) => {
+      socket.on("stopGame", async (data: { gameId: string }) => {
         const { gameId } = data;
-        console.log(`Game ${gameId} finished`);
-        this.io.to(gameId).emit("gameFinished", true);
+        console.log(`Game ${gameId} stopped`);
+        this.io.to(gameId).emit("stopGame", true);
       });
 
       socket.on(
