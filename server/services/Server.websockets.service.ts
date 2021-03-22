@@ -153,8 +153,14 @@ export class ServerWebsockets {
         }
       );
 
+      socket.on("gameFinished", async (data: { gameId: string }) => {
+        const { gameId } = data;
+        console.log(`Game ${gameId} finished`);
+        this.io.to(gameId).emit("gameFinished", true);
+      });
+
       socket.on(
-        "gameFinished",
+        "updateResults",
         async (data: { gameId: string; gameResults: Array<boolean> }) => {
           const { gameId, gameResults } = data;
           const playerId: string = socket.id;
