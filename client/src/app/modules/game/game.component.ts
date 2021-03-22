@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { ConnectionService } from 'src/app/core/connection/connection.service';
 import { ConnectionSocketService } from 'src/app/core/connection/connection.socket.service';
 import { Player } from 'src/app/core/models/player.model';
 import { GameService } from 'src/app/core/services/game.service';
 import { NewGameService } from 'src/app/core/services/new-game.service';
 import { PlayerService } from 'src/app/core/services/player.service';
-import { GameDataModel } from '../../core/models/gameData.model';
-import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
-import { ResultComponent } from '../../modules/game/result/result.component';
-import { MatDialog } from '@angular/material/dialog';
 import copy from 'copy-text-to-clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -25,13 +20,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class GameComponent {
-  //isGameFinished = false;
   action: string = '';
   isActualPlayerReady = false;
-
-  //subscription: Subscription;
-  //allPlayers: Player[] = [];
-  //gameData: GameDataModel = gameDataModelFactory();
   resultsDialogRef: any;
 
   constructor(
@@ -40,7 +30,6 @@ export class GameComponent {
     private newGameService: NewGameService,
     public gameService: GameService,
     private playerService: PlayerService,
-    public resultsDialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
     if (this.newGameService.playerName == '' || this.newGameService.id == '') {
@@ -74,25 +63,6 @@ export class GameComponent {
     } else if (action === 'join') {
       this.gameService.joinGame(this.newGameService.id);
     }
-
-    /*this.subscription = this.gameService.allPlayersByGameId.subscribe(
-      (allPlayers) => {
-        this.allPlayers = allPlayers;
-        if (this.isGameFinished && this.resultsDialogRef) {
-          this.resultsDialogRef.componentInstance.data = {
-            allPlayers: this.allPlayers,
-          };
-        }
-      }
-    );*/
-
-    /*this.subscription = this.gameService.gameFinishedObserver.subscribe(() => {
-      this.resultsDialogRef = this.resultsDialog.open(ResultComponent, {
-        disableClose: true,
-        data: { allPlayers: this.gameService.allPlayers },
-        width: '50vw',
-      });
-    });*/
   }
 
   onReady() {
@@ -123,6 +93,5 @@ export class GameComponent {
 
   ngOnDestroy() {
     console.log('ondestroy Game');
-    //this.subscription.unsubscribe();
   }
 }

@@ -42,10 +42,6 @@
   <!--Results Dialog-->
   <ng-template [ngIf]="gameService.isGameFinished">
     <h2 class="mb-5">Results</h2>
-    <div class="row">
-      <div class="col">
-        <app-result [allPlayers]="gameService.allPlayers"></app-result>
-      </div>
-    </div>
+    <app-result [allPlayers]="gameService.allPlayers"></app-result>
   </ng-template>
 </div>
