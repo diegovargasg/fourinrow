@@ -1,6 +1,8 @@
 import { Inject } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { GameService } from 'src/app/core/services/game.service';
+
 import { Player } from '../../../core/models/player.model';
 import { Router } from '@angular/router';
 
@@ -10,16 +12,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent implements OnInit {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { allPlayers: Player[] },
-    public resultsDialog: MatDialog,
-    public router: Router
-  ) {}
+  private _allPlayers: Player[] = [];
+
+  @Input()
+  get allPlayers(): Player[] {
+    return this._allPlayers;
+  }
+  set allPlayers(allPlayers: Player[]) {
+    this._allPlayers = allPlayers;
+  }
+
+  constructor(public router: Router, public gameService: GameService) {}
 
   ngOnInit(): void {}
 
   goToHome() {
     this.router.navigate(['/']);
-    this.resultsDialog.closeAll();
   }
 }

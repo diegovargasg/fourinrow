@@ -1,9 +1,12 @@
 <div class="container">
-  <ng-template [ngIf]="!isGameStarted">
+  <!--Waiting List-->
+  <ng-template
+    [ngIf]="!gameService.isGameStarted && !gameService.isGameFinished"
+  >
     <h2 class="mb-5">Waiting for other players to join</h2>
     <div class="row">
       <div class="col-12">
-        <app-waiting [allPlayers]="allPlayers"></app-waiting>
+        <app-waiting [allPlayers]="gameService.allPlayers"></app-waiting>
       </div>
       <div class="col-12 actions mt-4">
         <button
@@ -26,10 +29,22 @@
       </div>
     </div>
   </ng-template>
-  <ng-template [ngIf]="isGameStarted">
+  <!--Game Board-->
+  <ng-template
+    [ngIf]="gameService.isGameStarted && !gameService.isGameFinished"
+  >
     <div class="row">
       <div class="col">
-        <app-board [gameData]="gameData"></app-board>
+        <app-board [gameData]="gameService.gameData"></app-board>
+      </div>
+    </div>
+  </ng-template>
+  <!--Results Dialog-->
+  <ng-template [ngIf]="gameService.isGameFinished">
+    <h2 class="mb-5">Results</h2>
+    <div class="row">
+      <div class="col">
+        <app-result [allPlayers]="gameService.allPlayers"></app-result>
       </div>
     </div>
   </ng-template>

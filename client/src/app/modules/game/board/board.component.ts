@@ -17,7 +17,7 @@ export class BoardComponent implements OnInit {
   roundsIndex = 0;
   isInputDisabled = false;
   progressBarInterval: any = null;
-  roundsResults = new Array(this.gameService.maxRounds);
+  roundsResults: Array<boolean> = [];
 
   @Input()
   get gameData(): GameDataModel {
@@ -60,7 +60,7 @@ export class BoardComponent implements OnInit {
     if (this.gameService.isGameEnded()) {
       this.isInputDisabled = true;
       this.stopProgressBarTimer();
-      this.gameService.gameFinished(this.roundsResults);
+      this.gameService.stopGame();
     } else {
       this.isInputDisabled = false;
       this.roundsIndex = this.roundsIndex + 1;
@@ -83,8 +83,10 @@ export class BoardComponent implements OnInit {
 
   updateResults(correct: boolean) {
     if (correct) {
+      this.gameService.roundsResults[this.roundsIndex] = true;
       this.roundsResults[this.roundsIndex] = true;
     } else {
+      this.gameService.roundsResults[this.roundsIndex] = false;
       this.roundsResults[this.roundsIndex] = false;
     }
   }
@@ -102,7 +104,7 @@ export class BoardComponent implements OnInit {
     let panelClass = null;
 
     if (result.value == this.challengeResult) {
-      this.gameService.forceOtherPlayersToNextRound();
+      this.gameService.stopActualRound = true;
       resultMessage = 'Good job!';
       panelClass = ['mat-toolbar', 'mat-primary'];
       this.updateResults(true);

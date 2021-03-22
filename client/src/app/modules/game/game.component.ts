@@ -25,22 +25,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class GameComponent {
-  isGameStarted = false;
-  isGameInProgress = false;
-  isGameFinished = false;
+  //isGameFinished = false;
   action: string = '';
   isActualPlayerReady = false;
 
-  subscription: Subscription;
-  allPlayers: Player[] = [];
-  gameData: GameDataModel = gameDataModelFactory();
+  //subscription: Subscription;
+  //allPlayers: Player[] = [];
+  //gameData: GameDataModel = gameDataModelFactory();
   resultsDialogRef: any;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private newGameService: NewGameService,
-    private gameService: GameService,
+    public gameService: GameService,
     private playerService: PlayerService,
     public resultsDialog: MatDialog,
     private snackBar: MatSnackBar
@@ -60,7 +58,7 @@ export class GameComponent {
         this.newGameService.id,
         this.newGameService.data
       );
-      this.gameData = this.newGameService.data;
+      this.gameService.gameData = this.newGameService.data;
       const selfPlayer: Player = {
         _id: '',
         _data: {
@@ -72,12 +70,12 @@ export class GameComponent {
       };
       //We do not emit allPlayersByGameId when the user is creating the game.
       //Is not necessary as the only player is the creator and we waste one message
-      this.allPlayers.push(selfPlayer);
+      this.gameService.allPlayers.push(selfPlayer);
     } else if (action === 'join') {
       this.gameService.joinGame(this.newGameService.id);
     }
 
-    this.subscription = this.gameService.allPlayersByGameId.subscribe(
+    /*this.subscription = this.gameService.allPlayersByGameId.subscribe(
       (allPlayers) => {
         this.allPlayers = allPlayers;
         if (this.isGameFinished && this.resultsDialogRef) {
@@ -86,31 +84,15 @@ export class GameComponent {
           };
         }
       }
-    );
+    );*/
 
-    this.subscription = this.gameService.isGameStarted.subscribe(
-      (isStarted) => {
-        this.isGameStarted = isStarted;
-      }
-    );
-
-    this.subscription = this.gameService.gameData.subscribe(
-      (gameData: GameDataModel) => {
-        this.gameData = gameData;
-        this.gameService.maxRounds = this.gameData.rounds;
-      }
-    );
-
-    this.subscription = this.gameService.isGameFinished.subscribe(
-      (isGameFinished: boolean) => {
-        this.isGameFinished = isGameFinished;
-        this.resultsDialogRef = this.resultsDialog.open(ResultComponent, {
-          disableClose: true,
-          data: { allPlayers: this.allPlayers },
-          width: '50vw',
-        });
-      }
-    );
+    /*this.subscription = this.gameService.gameFinishedObserver.subscribe(() => {
+      this.resultsDialogRef = this.resultsDialog.open(ResultComponent, {
+        disableClose: true,
+        data: { allPlayers: this.gameService.allPlayers },
+        width: '50vw',
+      });
+    });*/
   }
 
   onReady() {
@@ -141,6 +123,6 @@ export class GameComponent {
 
   ngOnDestroy() {
     console.log('ondestroy Game');
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 }
