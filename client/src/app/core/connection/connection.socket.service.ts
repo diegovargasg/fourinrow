@@ -24,8 +24,8 @@ export class ConnectionSocketService implements ConnectionSocket {
   gameDataSubject = new Subject<{}>();
   gameData = this.gameDataSubject.asObservable();
 
-  stopActualRoundSubject = new Subject<boolean>();
-  stopActualRound = this.stopActualRoundSubject.asObservable();
+  isGameFinishedSubject = new Subject<boolean>();
+  isGameFinished = this.isGameFinishedSubject.asObservable();
 
   constructor() {
     this.connect();
@@ -37,7 +37,7 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.listenerAllPlayers();
     this.listenerStartGame();
     this.listenerGameData();
-    this.listenerGoToNextRound();
+    this.listenStopGame();
   }
 
   createGame(gameId: string, gameData: {}) {
@@ -53,11 +53,6 @@ export class ConnectionSocketService implements ConnectionSocket {
   joinGame(gameId: string) {
     this.socket.emit('joinGame', { gameId });
     return true;
-  }
-
-  goToNextRound(gameId: string) {
-    console.log('emits goToNextRound');
-    this.socket.emit('goToNextRound', { gameId });
   }
 
   listenerConnected() {
@@ -84,10 +79,10 @@ export class ConnectionSocketService implements ConnectionSocket {
     });
   }
 
-  listenerGoToNextRound() {
-    this.socket.on('goToNextRound', (goToNextRound: boolean) => {
-      console.log('someone went to the next round');
-      this.stopActualRoundSubject.next(goToNextRound);
+  listenStopGame() {
+    this.socket.on('stopGame', (isGameFinished: boolean) => {
+      console.log('Stop game instruction received');
+      this.isGameFinishedSubject.next(isGameFinished);
     });
   }
 
@@ -101,8 +96,13 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.socket.emit('setPlayerReady', { playerId, gameId, ready });
   }
 
-  gameFinished(gameId: string, gameResults: Array<boolean>) {
-    this.socket.emit('gameFinished', { gameId, gameResults });
+  stopGame(gameId: string) {
+    this.socket.emit('stopGame', { gameId });
+  }
+
+  sendGameResults(gameId: string, gameResults: Array<boolean>) {
+    console.log('game results sent');
+    this.socket.emit('updateResults', { gameId, gameResults });
   }
 
   disconnect() {

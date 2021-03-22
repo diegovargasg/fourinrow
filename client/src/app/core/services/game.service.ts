@@ -3,52 +3,55 @@ import { Subject, Subscription } from 'rxjs';
 import { ConnectionService } from '../connection/connection.service';
 import { GameDataModel } from '../models/gameData.model';
 import { Player } from '../models/player.model';
+import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 
 @Injectable()
 export class GameService {
   id: string = '';
   subscription: Subscription;
-  allPlayersByGameIdSubject = new Subject<Player[]>();
-  allPlayersByGameId = this.allPlayersByGameIdSubject.asObservable();
+  //allPlayersByGameIdSubject = new Subject<Player[]>();
+  //allPlayersByGameId = this.allPlayersByGameIdSubject.asObservable();
+  allPlayers: Player[] = [];
+  isGameStarted = false;
+  isGameFinished = false;
 
-  isGameStartedSubject = new Subject<boolean>();
-  isGameStarted = this.isGameStartedSubject.asObservable();
-
-  gameDataSubject = new Subject<GameDataModel>();
-  gameData = this.gameDataSubject.asObservable();
+  //gameDataSubject = new Subject<GameDataModel>();
+  gameData: GameDataModel = gameDataModelFactory();
 
   stopActualRound = false;
 
   maxRounds = 5;
   actualRound = 1;
+  roundsResults = new Array(this.maxRounds);
 
-  isGameFinishedSubject = new Subject<boolean>();
-  isGameFinished = this.isGameFinishedSubject.asObservable();
+  gameFinishedObserverSubject = new Subject<boolean>();
+  gameFinishedObserver = this.gameFinishedObserverSubject.asObservable();
 
   constructor(private connectionService: ConnectionService) {
     this.subscription = connectionService.allPlayersByGameId.subscribe(
       (allPlayers: Player[]) => {
-        console.log('from name subscription');
-        console.log(allPlayers);
-        this.allPlayersByGameIdSubject.next(allPlayers);
+        this.allPlayers = allPlayers;
       }
     );
 
     this.subscription = connectionService.isGameStarted.subscribe(
       (isStarted: boolean) => {
-        this.isGameStartedSubject.next(isStarted);
+        this.isGameStarted = isStarted;
       }
     );
 
     this.subscription = connectionService.gameData.subscribe(
       (gameData: GameDataModel) => {
-        this.gameDataSubject.next(gameData);
+        this.gameData = gameData;
+        this.maxRounds = gameData.rounds;
       }
     );
 
-    this.subscription = connectionService.stopActualRound.subscribe(
-      (stop: boolean) => {
-        this.stopActualRound = stop;
+    this.subscription = connectionService.isGameFinished.subscribe(
+      (isGameFinished: boolean) => {
+        this.isGameFinished = isGameFinished;
+        //this.gameFinishedObserverSubject.next(isGameFinished);
+        this.sendResults();
       }
     );
   }
@@ -80,15 +83,18 @@ export class GameService {
     this.actualRound = this.actualRound + 1;
   }
 
-  forceOtherPlayersToNextRound() {
-    console.log('ID sent to other players move to next round ', this.id);
-    this.connectionService.goToNextRound(this.id);
-    this.stopActualRound = false;
+  sendResults() {
+    console.log(`send results ${this.roundsResults}`);
+    this.connectionService.sendGameResults(this.id, this.roundsResults);
   }
 
-  gameFinished(gameResults: Array<boolean>) {
-    this.connectionService.gameFinished(this.id, gameResults);
-    this.isGameFinishedSubject.next(true);
+  // gameFinished() {
+  //   this.connectionService.gameFinished(this.id);
+  //   this.isGameFinishedSubject.next(true);
+  // }
+
+  stopGame() {
+    this.connectionService.stopGame(this.id);
   }
 
   ngOnDestroy() {

@@ -19,11 +19,11 @@ export class ConnectionService implements Connection {
   setPlayerReady(playerId: string, gameId: string, ready: boolean): void {}
   joinGame(gameId: string): void {}
   getAllPlayersByGameId(gameId: string): void {}
-  goToNextRound(gameId: string): void {}
-  gameFinished(gameId: string, gameResults: Array<boolean>): void {}
+  stopGame(gameId: string): void {}
+  sendGameResults(gameId: string, gameResults: Array<boolean>): void {}
   allPlayersByGameId: any;
-  stopActualRound: any;
   isGameStarted: any;
+  isGameFinished: any;
   gameData: any;
   id: string = '';
 }
