@@ -1,18 +1,41 @@
-<div class="container">
-  <!--Waiting List-->
-  <ng-template
-    [ngIf]="!gameService.isGameStarted && !gameService.isGameFinished"
-  >
-    <app-waiting [allPlayers]="gameService.allPlayers"></app-waiting>
-  </ng-template>
-  <!--Board Game -->
-  <ng-template
-    [ngIf]="gameService.isGameStarted && !gameService.isGameFinished"
-  >
-    <app-board [gameData]="gameService.gameData"></app-board>
-  </ng-template>
-  <!--Results Dialog-->
-  <ng-template [ngIf]="!gameService.isGameFinished">
-    <app-result [allPlayers]="gameService.allPlayers"></app-result>
-  </ng-template>
-</div>
+<!--Waiting List-->
+<ng-template [ngIf]="!gameService.isGameStarted && !gameService.isGameFinished">
+  <app-waiting [allPlayers]="gameService.allPlayers"></app-waiting>
+</ng-template>
+<!--Board Game -->
+<ng-template [ngIf]="gameService.isGameStarted && !gameService.isGameFinished">
+  <app-board [gameData]="gameService.gameData"></app-board>
+</ng-template>
+<!--Results Dialog-->
+<ng-template [ngIf]="gameService.isGameFinished">
+  <app-result [allPlayers]="gameService.allPlayers"></app-result>
+</ng-template>
+<!--h2 class="mb-5">Results</h2>
+  <div class="row">
+    <div class="col-3">
+      <span class="player"> Diego:</span>
+    </div>
+    <div class="col-9">
+      <div class="d-flex">
+        <div class="flex-fill result">
+          <mat-icon class="success">check_circle_outline</mat-icon>
+          <mat-icon class="success">check_circle_outline</mat-icon>
+          <mat-icon class="success">check_circle_outline</mat-icon>
+          <mat-icon class="error">highlight_off</mat-icon>
+          <mat-icon class="error">highlight_off</mat-icon>
+          <mat-icon class="error">highlight_off</mat-icon>
+          <mat-icon class="error">highlight_off</mat-icon>
+          <mat-icon class="success">check_circle_outline</mat-icon>
+          <mat-icon class="success">check_circle_outline</mat-icon>
+          <mat-icon class="success">check_circle_outline</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col actions">
+      <button mat-raised-button color="primary" (click)="goToHome()">
+        Home
+      </button>
+    </div>
+  </div-->
