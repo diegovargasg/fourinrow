@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { ConnectionService } from '../connection/connection.service';
 import { GameDataModel } from '../models/gameData.model';
@@ -12,15 +12,12 @@ export class GameService {
   allPlayers: Player[] = [];
   isGameStarted = false;
   isGameFinished = false;
-
+  private _allRoundsPlayed = false;
   gameData: GameDataModel = gameDataModelFactory();
-
-  stopActualRound = false;
-
+  loadNextRound = false;
   maxRounds = 5;
   actualRound = 1;
   roundsResults = new Array(this.maxRounds);
-
   gameFinishedObserverSubject = new Subject<boolean>();
   gameFinishedObserver = this.gameFinishedObserverSubject.asObservable();
 
@@ -71,8 +68,12 @@ export class GameService {
     this.connectionService.getAllPlayersByGameId(id);
   }
 
-  isGameEnded(): boolean {
+  @Input()
+  get allRoundsPlayed(): boolean {
     return this.actualRound > this.maxRounds ? true : false;
+  }
+  set allRoundsPlayed(allRoundsPlayed: boolean) {
+    this.allRoundsPlayed = allRoundsPlayed;
   }
 
   goToNextRound() {
@@ -83,11 +84,6 @@ export class GameService {
     console.log(`send results ${this.roundsResults}`);
     this.connectionService.sendGameResults(this.id, this.roundsResults);
   }
-
-  // gameFinished() {
-  //   this.connectionService.gameFinished(this.id);
-  //   this.isGameFinishedSubject.next(true);
-  // }
 
   stopGame() {
     this.connectionService.stopGame(this.id);

@@ -51,13 +51,13 @@ export class BoardComponent implements OnInit {
 
   loadNewRound() {
     this.gameService.goToNextRound();
-    this.gameService.stopActualRound = false;
+    this.gameService.loadNextRound = false;
 
     if (this.gameService.isGameFinished) {
       this.isInputDisabled = true;
       this.stopProgressBarTimer();
       this.gameService.sendResults();
-    } else if (this.gameService.isGameEnded()) {
+    } else if (this.gameService.allRoundsPlayed) {
       this.isInputDisabled = true;
       this.stopProgressBarTimer();
       this.gameService.stopGame();
@@ -71,11 +71,18 @@ export class BoardComponent implements OnInit {
 
   startProgressBarTimer() {
     this.progressBarInterval = setInterval(() => {
-      if (this.progressBarValue > 0 && !this.gameService.stopActualRound) {
+      if (
+        this.progressBarValue > 0 &&
+        !this.gameService.loadNextRound &&
+        !this.gameService.isGameFinished
+      ) {
         this.progressBarValue = this.progressBarValue - 2;
       } else {
         this.updateResults(false);
-        this.showResulMessage('Too slow!', ['mat-toolbar', 'mat-warn']);
+        this.showResulMessage(
+          `Too slow! the result was ${this.challengeResult}`,
+          ['mat-toolbar', 'mat-warn']
+        );
         this.loadNewRound();
       }
     }, 200);
@@ -84,16 +91,14 @@ export class BoardComponent implements OnInit {
   updateResults(correct: boolean) {
     if (correct) {
       this.gameService.roundsResults[this.roundsIndex] = true;
-      //this.roundsResults[this.roundsIndex] = true;
     } else {
       this.gameService.roundsResults[this.roundsIndex] = false;
-      //this.roundsResults[this.roundsIndex] = false;
     }
   }
 
   showResulMessage(resultMessage: string, panelClass: string[]) {
     this.snackBar.open(resultMessage, '', {
-      duration: 600,
+      duration: 1000,
       panelClass: panelClass,
     });
   }
@@ -104,13 +109,13 @@ export class BoardComponent implements OnInit {
     let panelClass = null;
 
     if (result.value == this.challengeResult) {
-      this.gameService.stopActualRound = true;
+      this.gameService.loadNextRound = true;
       resultMessage = 'Good job!';
       panelClass = ['mat-toolbar', 'mat-primary'];
       this.updateResults(true);
       this.loadNewRound();
     } else {
-      resultMessage = 'Wrong!';
+      resultMessage = `wrong! the result was: ${this.challengeResult}`;
       panelClass = ['mat-toolbar', 'mat-warn'];
       this.updateResults(false);
     }
