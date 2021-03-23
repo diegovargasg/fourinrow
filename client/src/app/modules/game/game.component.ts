@@ -6,8 +6,6 @@ import { Player } from 'src/app/core/models/player.model';
 import { GameService } from 'src/app/core/services/game.service';
 import { NewGameService } from 'src/app/core/services/new-game.service';
 import { PlayerService } from 'src/app/core/services/player.service';
-import copy from 'copy-text-to-clipboard';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-game',
@@ -21,16 +19,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class GameComponent {
   action: string = '';
-  isActualPlayerReady = false;
-  resultsDialogRef: any;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private newGameService: NewGameService,
     public gameService: GameService,
-    private playerService: PlayerService,
-    private snackBar: MatSnackBar
+    private playerService: PlayerService
   ) {
     if (this.newGameService.playerName == '' || this.newGameService.id == '') {
       this.router.navigate(['/']);
@@ -65,29 +60,29 @@ export class GameComponent {
     }
   }
 
-  onReady() {
-    this.playerService.setPlayerReady();
-    this.isActualPlayerReady = this.playerService.ready;
-  }
+  // onReady() {
+  //   this.playerService.setPlayerReady();
+  //   this.isActualPlayerReady = this.playerService.ready;
+  // }
 
-  onCopy() {
-    const url = `${window.location.host}/join/${this.gameService.id}`;
-    let message = '';
-    let panelClass: Array<string> = [];
+  // onCopy() {
+  //   const url = `${window.location.host}/join/${this.gameService.id}`;
+  //   let message = '';
+  //   let panelClass: Array<string> = [];
 
-    if (copy(url)) {
-      message = 'Invite link copied';
-      panelClass = ['mat-toolbar', 'mat-primary'];
-    } else {
-      message = 'Invite could not be copied';
-      panelClass = ['mat-toolbar', 'mat-warn'];
-    }
+  //   if (copy(url)) {
+  //     message = 'Invite link copied';
+  //     panelClass = ['mat-toolbar', 'mat-primary'];
+  //   } else {
+  //     message = 'Invite could not be copied';
+  //     panelClass = ['mat-toolbar', 'mat-warn'];
+  //   }
 
-    this.snackBar.open(message, '', {
-      duration: 2000,
-      panelClass: panelClass,
-    });
-  }
+  //   this.snackBar.open(message, '', {
+  //     duration: 2000,
+  //     panelClass: panelClass,
+  //   });
+  // }
 
   ngOnInit(): void {}
 

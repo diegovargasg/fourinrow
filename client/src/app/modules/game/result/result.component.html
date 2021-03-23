@@ -1,4 +1,5 @@
-<div *ngFor="let player of gameService.allPlayers" class="row">
+<h2 class="mb-5">Results</h2>
+<div class="row" *ngFor="let player of gameService.allPlayers">
   <div class="col-3">
     <span class="player"> {{ player._data.name }}:</span>
   </div>
