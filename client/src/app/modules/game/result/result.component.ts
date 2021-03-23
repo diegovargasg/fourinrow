@@ -1,8 +1,5 @@
-import { Inject } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { GameService } from 'src/app/core/services/game.service';
-
 import { Player } from '../../../core/models/player.model';
 import { Router } from '@angular/router';
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConnectionService } from 'src/app/core/connection/connection.service';
 import { ConnectionSocketService } from 'src/app/core/connection/connection.socket.service';
@@ -59,30 +59,6 @@ export class GameComponent {
       this.gameService.joinGame(this.newGameService.id);
     }
   }
-
-  // onReady() {
-  //   this.playerService.setPlayerReady();
-  //   this.isActualPlayerReady = this.playerService.ready;
-  // }
-
-  // onCopy() {
-  //   const url = `${window.location.host}/join/${this.gameService.id}`;
-  //   let message = '';
-  //   let panelClass: Array<string> = [];
-
-  //   if (copy(url)) {
-  //     message = 'Invite link copied';
-  //     panelClass = ['mat-toolbar', 'mat-primary'];
-  //   } else {
-  //     message = 'Invite could not be copied';
-  //     panelClass = ['mat-toolbar', 'mat-warn'];
-  //   }
-
-  //   this.snackBar.open(message, '', {
-  //     duration: 2000,
-  //     panelClass: panelClass,
-  //   });
-  // }
 
   ngOnInit(): void {}
 
