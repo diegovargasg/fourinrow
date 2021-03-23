@@ -3,7 +3,10 @@
     <div class="col-12">
       <h2 class="">Rounds:</h2>
       <div class="d-flex">
-        <div class="flex-fill result" *ngFor="let roundResult of roundsResults">
+        <div
+          class="flex-fill result"
+          *ngFor="let roundResult of gameService.roundsResults"
+        >
           <ng-template [ngIf]="roundResult === true">
             <mat-icon class="success">check_circle_outline</mat-icon>
           </ng-template>

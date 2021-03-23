@@ -14,11 +14,14 @@
         <ng-template [ngIf]="roundResult === false">
           <mat-icon class="error">highlight_off</mat-icon>
         </ng-template>
+        <ng-template [ngIf]="roundResult === null">
+          <mat-icon class="error">highlight_off</mat-icon>
+        </ng-template>
       </div>
     </div>
   </div>
 </div>
-<div class="row mb-1">
+<div class="row mt-5">
   <div class="col actions">
     <button mat-raised-button color="primary" (click)="goToHome()">Home</button>
   </div>

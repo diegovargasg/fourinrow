@@ -9,13 +9,10 @@ import { gameDataModelFactory } from '../../core/models/gameDataFactory.model';
 export class GameService {
   id: string = '';
   subscription: Subscription;
-  //allPlayersByGameIdSubject = new Subject<Player[]>();
-  //allPlayersByGameId = this.allPlayersByGameIdSubject.asObservable();
   allPlayers: Player[] = [];
   isGameStarted = false;
   isGameFinished = false;
 
-  //gameDataSubject = new Subject<GameDataModel>();
   gameData: GameDataModel = gameDataModelFactory();
 
   stopActualRound = false;
@@ -50,7 +47,6 @@ export class GameService {
     this.subscription = connectionService.isGameFinished.subscribe(
       (isGameFinished: boolean) => {
         this.isGameFinished = isGameFinished;
-        //this.gameFinishedObserverSubject.next(isGameFinished);
         this.sendResults();
       }
     );
