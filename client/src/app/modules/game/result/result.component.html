@@ -1,19 +1,29 @@
 <div class="container">
   <h2 class="mb-5">Results</h2>
-  <table>
-    <tr>
-      <td></td>
-      <td><mat-icon class="success">check_circle_outline</mat-icon></td>
-      <td><mat-icon class="error">highlight_off</mat-icon></td>
-      <td></td>
-    </tr>
-    <tr *ngFor="let player of finalResults | keyvalue">
-      <td>{{ player.key }}</td>
-      <td>{{ finalResults[player.key].correct }}</td>
-      <td>{{ finalResults[player.key].wrong }}</td>
-      <td>{{ finalResults[player.key].winner }}</td>
-    </tr>
-  </table>
+  <div class="row">
+    <div class="col-12">
+      <table class="results__table">
+        <tr>
+          <th>Player</th>
+          <th class="results__result">
+            <mat-icon class="success">check_circle_outline</mat-icon>
+          </th>
+          <th class="results__result">
+            <mat-icon class="error">highlight_off</mat-icon>
+          </th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let player of finalResults | keyvalue">
+          <td class="results__player">{{ player.key }}</td>
+          <td class="results__result">
+            {{ finalResults[player.key].correct }}
+          </td>
+          <td class="results__result">{{ finalResults[player.key].wrong }}</td>
+          <td class="results__status">{{ finalResults[player.key].winner }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
   <div class="row mt-5">
     <div class="col actions">
       <button mat-raised-button color="primary" (click)="goToHome()">

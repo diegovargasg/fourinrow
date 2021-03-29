@@ -46,9 +46,17 @@ body {
   padding-right: 0;
   width: 100%;
 }
-table {
+.results__table {
   width: 100%;
+  min-width: 90vw;
 }
+.results__result {
+  text-align: center;
+}
+.results__status {
+  text-align: right;
+}
+
 @include media-breakpoint-down(xs) {
   .material-icons {
     font-size: 18px;
