@@ -46,6 +46,9 @@ body {
   padding-right: 0;
   width: 100%;
 }
+table {
+  width: 100%;
+}
 @include media-breakpoint-down(xs) {
   .material-icons {
     font-size: 18px;

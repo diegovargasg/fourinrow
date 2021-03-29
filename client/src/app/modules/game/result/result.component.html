@@ -1,28 +1,19 @@
 <div class="container">
   <h2 class="mb-5">Results</h2>
-  <div class="row" *ngFor="let player of gameService.allPlayers">
-    <div class="col-3">
-      <span class="player"> {{ player._data.name }}:</span>
-    </div>
-    <div class="col-9">
-      <div class="d-flex">
-        <div
-          class="flex-fill result"
-          *ngFor="let roundResult of player._data.results"
-        >
-          <ng-template [ngIf]="roundResult === true">
-            <mat-icon class="success">check_circle_outline</mat-icon>
-          </ng-template>
-          <ng-template [ngIf]="roundResult === false">
-            <mat-icon class="error">highlight_off</mat-icon>
-          </ng-template>
-          <ng-template [ngIf]="roundResult === null">
-            <mat-icon class="error">highlight_off</mat-icon>
-          </ng-template>
-        </div>
-      </div>
-    </div>
-  </div>
+  <table>
+    <tr>
+      <td></td>
+      <td><mat-icon class="success">check_circle_outline</mat-icon></td>
+      <td><mat-icon class="error">highlight_off</mat-icon></td>
+      <td></td>
+    </tr>
+    <tr *ngFor="let player of finalResults | keyvalue">
+      <td>{{ player.key }}</td>
+      <td>{{ finalResults[player.key].correct }}</td>
+      <td>{{ finalResults[player.key].wrong }}</td>
+      <td>{{ finalResults[player.key].winner }}</td>
+    </tr>
+  </table>
   <div class="row mt-5">
     <div class="col actions">
       <button mat-raised-button color="primary" (click)="goToHome()">

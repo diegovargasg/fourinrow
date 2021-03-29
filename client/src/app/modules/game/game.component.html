@@ -10,38 +10,3 @@
 <ng-template [ngIf]="gameService.isGameFinished">
   <app-result [allPlayers]="gameService.allPlayers"></app-result>
 </ng-template>
-<div class="container">
-  <h2 class="mb-5">Results</h2>
-  <div class="row">
-    <div class="col-3">
-      <span class="player"> Diego:</span>
-    </div>
-    <!--div class="col-9">
-      <div class="d-flex">
-        <div class="flex-fill result"-->
-    <div class="col-9 result">
-      <mat-icon class="success result__icon">check_circle_outline</mat-icon>
-      <mat-icon class="success result__icon">check_circle_outline</mat-icon>
-      <mat-icon class="success result__icon">check_circle_outline</mat-icon>
-      <mat-icon class="error result__icon">highlight_off</mat-icon>
-      <mat-icon class="error result__icon">highlight_off</mat-icon>
-      <mat-icon class="error result__icon">highlight_off</mat-icon>
-      <mat-icon class="error result__icon">highlight_off</mat-icon>
-      <mat-icon class="success result__icon">check_circle_outline</mat-icon>
-      <mat-icon class="success result__icon">check_circle_outline</mat-icon>
-      <mat-icon class="success result__icon">check_circle_outline</mat-icon>
-    </div>
-    <!--/div>
-    </div-->
-  </div>
-  <div class="row">
-    <p>Hola</p>
-  </div>
-  <div class="row mt-5">
-    <div class="col actions">
-      <button mat-raised-button color="primary" (click)="goToHome()">
-        Home
-      </button>
-    </div>
-  </div>
-</div>
