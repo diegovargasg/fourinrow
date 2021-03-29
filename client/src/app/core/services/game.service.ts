@@ -38,6 +38,7 @@ export class GameService {
       (gameData: GameDataModel) => {
         this.gameData = gameData;
         this.maxRounds = gameData.rounds;
+        this.roundsResults = new Array(this.maxRounds);
       }
     );
 

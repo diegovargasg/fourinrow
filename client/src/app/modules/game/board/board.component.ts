@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GameService } from 'src/app/core/services/game.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GameDataModel } from '../../../../app/core/models/gameData.model';
 import { gameDataModelFactory } from 'src/app/core/models/gameDataFactory.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -17,6 +18,7 @@ export class BoardComponent implements OnInit {
   roundsIndex = 0;
   isInputDisabled = false;
   progressBarInterval: any = null;
+  boardForm: FormGroup;
 
   @Input()
   get gameData(): GameDataModel {
@@ -26,7 +28,15 @@ export class BoardComponent implements OnInit {
     this._gameData = gameData;
   }
 
-  constructor(public gameService: GameService, private snackBar: MatSnackBar) {}
+  constructor(
+    public gameService: GameService,
+    private snackBar: MatSnackBar,
+    private formBuilder: FormBuilder
+  ) {
+    this.boardForm = this.formBuilder.group({
+      answer: ['', Validators.required],
+    });
+  }
 
   getRoundInfo() {
     const challengeObj = this.gameData.config[this.roundsIndex];
@@ -55,14 +65,17 @@ export class BoardComponent implements OnInit {
 
     if (this.gameService.isGameFinished) {
       this.isInputDisabled = true;
+      this.boardForm.get('answer')?.disable();
       this.stopProgressBarTimer();
       this.gameService.sendResults();
     } else if (this.gameService.allRoundsPlayed) {
       this.isInputDisabled = true;
+      this.boardForm.get('answer')?.disable();
       this.stopProgressBarTimer();
       this.gameService.stopGame();
     } else {
       this.isInputDisabled = false;
+      this.boardForm.get('answer')?.enable();
       this.roundsIndex = this.roundsIndex + 1;
       this.getRoundInfo();
       this.resetProgressBarTimer();
@@ -103,24 +116,30 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  sendResult(result: HTMLInputElement) {
-    this.isInputDisabled = true;
+  onSubmit() {
+    if (this.boardForm.controls.answer.invalid) {
+      return;
+    }
+
     let resultMessage = '';
     let panelClass = null;
-
-    if (result.value == this.challengeResult) {
+    if (this.boardForm.value.answer == this.challengeResult) {
       this.gameService.loadNextRound = true;
       resultMessage = 'Good job!';
       panelClass = ['mat-toolbar', 'mat-primary'];
       this.updateResults(true);
       this.loadNewRound();
+      this.boardForm.get('answer')?.enable();
+      this.isInputDisabled = false;
     } else {
+      this.isInputDisabled = true;
+      this.boardForm.get('answer')?.disable();
       resultMessage = `wrong! the result was: ${this.challengeResult}`;
       panelClass = ['mat-toolbar', 'mat-warn'];
       this.updateResults(false);
     }
 
-    result.value = '';
+    this.boardForm.reset();
     this.showResulMessage(resultMessage, panelClass);
   }
 }

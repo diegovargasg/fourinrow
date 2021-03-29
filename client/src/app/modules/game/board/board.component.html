@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <form [formGroup]="boardForm" (ngSubmit)="onSubmit()" class="row">
     <div class="col-12">
       <h2 class="">Rounds:</h2>
       <div class="d-flex">
@@ -28,15 +28,21 @@
     </div>
     <div class="col-12 mb-5">
       <mat-form-field class="input">
-        <mat-label>Result</mat-label>
+        <mat-label>Answer</mat-label>
         <input
           matInput
           type="number"
-          #result
+          formControlName="answer"
           autocomplete="off"
           maxlength="5"
-          [disabled]="isInputDisabled"
         />
+        <b
+          *ngIf="
+            boardForm.controls.answer.touched &&
+            boardForm.controls.answer.invalid
+          "
+          >Input your answer</b
+        >
       </mat-form-field>
     </div>
     <div class="col-12 actions">
@@ -44,11 +50,10 @@
         mat-raised-button
         class="mr-2"
         color="primary"
-        (click)="sendResult(result)"
         [disabled]="isInputDisabled"
       >
         OK
       </button>
     </div>
-  </div>
+  </form>
 </div>
