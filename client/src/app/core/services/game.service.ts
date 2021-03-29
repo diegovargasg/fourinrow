@@ -17,7 +17,7 @@ export class GameService {
   loadNextRound = false;
   maxRounds = 5;
   actualRound = 1;
-  roundsResults = new Array(this.maxRounds);
+  roundsResults: Array<boolean> = new Array();
   gameFinishedObserverSubject = new Subject<boolean>();
   gameFinishedObserver = this.gameFinishedObserverSubject.asObservable();
 
