@@ -36,7 +36,7 @@ export class WaitingComponent implements OnInit {
   }
 
   onCopy() {
-    const url = `${window.location.host}/join/${this.gameService.id}`;
+    const url = `${window.location.protocol}//${window.location.host}/join/${this.gameService.id}`;
     let message = '';
     let panelClass: Array<string> = [];
 
