@@ -1,0 +1,147 @@
+@import "~@angular/material/theming";
+
+// Plus imports for other components in your app.
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$default-app-primary: mat-palette($mat-indigo);
+$default-app-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$default-app-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$default-app-theme: mat-light-theme(
+  (
+    color: (
+      primary: $default-app-primary,
+      accent: $default-app-accent,
+      warn: $default-app-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($default-app-theme);
+
+//Additional themes
+$yellow-palette: (
+  50: #fef6e9,
+  100: #fbe7c7,
+  200: #f9d8a2,
+  300: #f7c87d,
+  400: #f5bc61,
+  500: #f3b045,
+  600: #f1a93e,
+  700: #efa036,
+  800: #ed972e,
+  900: #ea871f,
+  A100: #ffffff,
+  A200: #fff6ed,
+  A400: #ffdbba,
+  A700: #ffcea1,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+$yellow-primary: mat-palette($yellow-palette, 900);
+$yellow-accent: mat-palette($yellow-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$yellow-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$yellow-theme: mat-light-theme(
+  (
+    color: (
+      primary: $yellow-primary,
+      accent: $yellow-accent,
+      warn: $yellow-warn,
+    ),
+  )
+);
+
+.yellow-theme {
+  background: mat-color($yellow-palette, 500);
+  color: mat-contrast($yellow-palette, 500);
+  @include angular-material-color($yellow-theme);
+}
+
+$blue-palette: (
+  50: #e6eff6,
+  100: #c1d7e9,
+  200: #98bcda,
+  300: #6ea1cb,
+  400: #4f8cbf,
+  500: #3078b4,
+  600: #2b70ad,
+  700: #2465a4,
+  800: #1e5b9c,
+  900: #13488c,
+  A100: #c0d9ff,
+  A200: #8dbaff,
+  A400: #5a9cff,
+  A700: #418cff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$blue-primary: mat-palette($blue-palette, 900);
+$blue-accent: mat-palette($blue-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$blue-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$blue-theme: mat-light-theme(
+  (
+    color: (
+      primary: $blue-primary,
+      accent: $blue-accent,
+      warn: $blue-warn,
+    ),
+  )
+);
+
+.blue-theme {
+  background: mat-color($blue-palette, 500);
+  color: mat-contrast($blue-palette, 500);
+  @include angular-material-color($blue-theme);
+}
