@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const colors = environment.theme_colors;
+    const i = Math.floor(Math.random() * colors.length);
+    this.document.body.classList.add(`${colors[i]}-theme`);
+  }
 }

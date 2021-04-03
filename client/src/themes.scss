@@ -145,3 +145,402 @@ $blue-theme: mat-light-theme(
   color: mat-contrast($blue-palette, 500);
   @include angular-material-color($blue-theme);
 }
+
+$amethyst-palette: (
+  50: #f2edf5,
+  100: #dfd2e5,
+  200: #c9b4d4,
+  300: #b396c2,
+  400: #a380b5,
+  500: #9369a8,
+  600: #8b61a0,
+  700: #805697,
+  800: #764c8d,
+  900: #643b7d,
+  A100: #eccfff,
+  A200: #d89cff,
+  A400: #c569ff,
+  A700: #bb4fff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$amethyst-primary: mat-palette($amethyst-palette, 900);
+$amethyst-accent: mat-palette($amethyst-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$amethyst-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$amethyst-theme: mat-light-theme(
+  (
+    color: (
+      primary: $amethyst-primary,
+      accent: $amethyst-accent,
+      warn: $amethyst-warn,
+    ),
+  )
+);
+
+.amethyst-theme {
+  background: mat-color($amethyst-palette, 500);
+  color: mat-contrast($amethyst-palette, 500);
+  @include angular-material-color($amethyst-theme);
+}
+
+$raspberry-palette: (
+  50: #f9e9ef,
+  100: #f0c9d6,
+  200: #e6a5bb,
+  300: #dc80a0,
+  400: #d5658b,
+  500: #cd4a77,
+  600: #c8436f,
+  700: #c13a64,
+  800: #ba325a,
+  900: #ae2247,
+  A100: #ffeaef,
+  A200: #ffb7c8,
+  A400: #ff84a1,
+  A700: #ff6a8e,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$raspberry-primary: mat-palette($raspberry-palette, 900);
+$raspberry-accent: mat-palette($raspberry-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$raspberry-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$raspberry-theme: mat-light-theme(
+  (
+    color: (
+      primary: $raspberry-primary,
+      accent: $raspberry-accent,
+      warn: $raspberry-warn,
+    ),
+  )
+);
+
+.raspberry-theme {
+  background: mat-color($raspberry-palette, 500);
+  color: mat-contrast($raspberry-palette, 500);
+  @include angular-material-color($raspberry-theme);
+}
+
+$dark-palette: (
+  50: #e8e9ea,
+  100: #c7c8cb,
+  200: #a1a4a9,
+  300: #7b7f86,
+  400: #5f636c,
+  500: #434852,
+  600: #3d414b,
+  700: #343841,
+  800: #2c3038,
+  900: #1e2128,
+  A100: #71a0ff,
+  A200: #3e7eff,
+  A400: #0b5cff,
+  A700: #0050f1,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+$dark-primary: mat-palette($dark-palette, 900);
+$dark-accent: mat-palette($dark-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$dark-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$dark-theme: mat-light-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
+  )
+);
+
+.dark-theme {
+  background: mat-color($dark-palette, 500);
+  color: mat-contrast($dark-palette, 500);
+  @include angular-material-color($dark-theme);
+}
+
+$mint-palette: (
+  50: #e0f4ef,
+  100: #b3e5d7,
+  200: #80d3bc,
+  300: #4dc1a1,
+  400: #26b48d,
+  500: #00a779,
+  600: #009f71,
+  700: #009666,
+  800: #008c5c,
+  900: #007c49,
+  A100: #a9ffd6,
+  A200: #76ffbe,
+  A400: #43ffa5,
+  A700: #2aff99,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$mint-primary: mat-palette($mint-palette, 900);
+$mint-accent: mat-palette($mint-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$mint-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$mint-theme: mat-light-theme(
+  (
+    color: (
+      primary: $mint-primary,
+      accent: $mint-accent,
+      warn: $mint-warn,
+    ),
+  )
+);
+
+.mint-theme {
+  background: mat-color($mint-palette, 500);
+  color: mat-contrast($mint-palette, 500);
+  @include angular-material-color($mint-theme);
+}
+
+$cerulean-palette: (
+  50: #f3f6f9,
+  100: #e0e8f1,
+  200: #ccd9e8,
+  300: #b7c9df,
+  400: #a7bed8,
+  500: #98b2d1,
+  600: #90abcc,
+  700: #85a2c6,
+  800: #7b99c0,
+  900: #6a8ab5,
+  A100: #ffffff,
+  A200: #f7fbff,
+  A400: #c4ddff,
+  A700: #abceff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$cerulean-primary: mat-palette($cerulean-palette, 900);
+$cerulean-accent: mat-palette($cerulean-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$cerulean-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$cerulean-theme: mat-light-theme(
+  (
+    color: (
+      primary: $cerulean-primary,
+      accent: $cerulean-accent,
+      warn: $cerulean-warn,
+    ),
+  )
+);
+
+.cerulean-theme {
+  background: mat-color($cerulean-palette, 500);
+  color: mat-contrast($cerulean-palette, 500);
+  @include angular-material-color($cerulean-theme);
+}
+
+$rust-palette: (
+  50: #f6ece9,
+  100: #e8cfc7,
+  200: #d9afa2,
+  300: #ca8f7c,
+  400: #be7760,
+  500: #b35f44,
+  600: #ac573e,
+  700: #a34d35,
+  800: #9a432d,
+  900: #8b321f,
+  A100: #ffcfc6,
+  A200: #ffa493,
+  A400: #ff7960,
+  A700: #ff6447,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$rust-primary: mat-palette($rust-palette, 900);
+$rust-accent: mat-palette($rust-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$rust-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$rust-theme: mat-light-theme(
+  (
+    color: (
+      primary: $rust-primary,
+      accent: $rust-accent,
+      warn: $rust-warn,
+    ),
+  )
+);
+
+.rust-theme {
+  background: mat-color($rust-palette, 500);
+  color: mat-contrast($rust-palette, 500);
+  @include angular-material-color($rust-theme);
+}
+
+$green-palette: (
+  50: #f3fbf5,
+  100: #e2f4e6,
+  200: #cfedd6,
+  300: #bce6c6,
+  400: #ade0b9,
+  500: #9fdbad,
+  600: #97d7a6,
+  700: #8dd29c,
+  800: #83cd93,
+  900: #72c483,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #daffe2,
+  A700: #c1ffcd,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$green-primary: mat-palette($green-palette, 900);
+$green-accent: mat-palette($green-palette, 100);
+
+// The warn palette is optional (defaults to red).
+$green-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$green-theme: mat-light-theme(
+  (
+    color: (
+      primary: $green-primary,
+      accent: $green-accent,
+      warn: $green-warn,
+    ),
+  )
+);
+
+.green-theme {
+  background: mat-color($green-palette, 500);
+  color: mat-contrast($green-palette, 500);
+  @include angular-material-color($green-theme);
+}
