@@ -13,6 +13,7 @@ import { PlayerService } from 'src/app/core/services/player.service';
 export class WaitingComponent implements OnInit {
   private _allPlayers: Player[] = [];
   isActualPlayerReady = false;
+  isReadyBtnDisabled = true;
 
   constructor(
     public gameService: GameService,
@@ -28,6 +29,11 @@ export class WaitingComponent implements OnInit {
   }
   set allPlayers(allPlayers: Player[]) {
     this._allPlayers = allPlayers;
+    if (this._allPlayers.length > 1) {
+      this.isReadyBtnDisabled = false;
+    } else {
+      this.isReadyBtnDisabled = true;
+    }
   }
 
   onReady() {
