@@ -6,17 +6,7 @@ export const environment = {
   production: false,
   socket_host: 'http://localhost',
   socket_port: ':5000',
-  theme_colors: [
-    'yellow',
-    'blue',
-    'amethyst',
-    'raspberry',
-    'dark',
-    'mint',
-    'cerulean',
-    'rust',
-    'green',
-  ],
+  theme_colors: ['yellow', 'blue', 'amethyst', 'dark', 'rust', 'green'],
 };
 
 /*
