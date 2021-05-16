@@ -9,3 +9,9 @@ Work in progress....
 # Architecture
 
 ![Alt text](https://github.com/diegovargasg/fourinrow/blob/master/diagram.jpg?raw=true "architecture")
+
+# Deployment to Heroku
+
+`heroku container:push web`
+
+`heroku container:release web`
