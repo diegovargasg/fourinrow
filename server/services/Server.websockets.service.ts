@@ -7,6 +7,7 @@ import { Server, Socket } from "socket.io";
 import { DAOInterface } from "../interfaces/Dao.interface";
 import { Player } from "../models/Player";
 import { Game } from "../models/Game";
+import { DaoConstInterface } from "../interfaces/Dao.const.interface";
 
 const socketOptions = {
   cors: {
@@ -32,7 +33,7 @@ export class ServerWebsockets {
     this.io = new Server(this.httpServer, socketOptions);
   }
 
-  init(dao: DAOInterface) {
+  init(dao: DAOInterface, daoConst: DaoConstInterface) {
     this.dao = dao;
 
     //Run when client connects
@@ -64,7 +65,11 @@ export class ServerWebsockets {
           console.log(`Game before player Pushed ${JSON.stringify(newGame)}`);
           newGame.data.players.push(playerId);
           console.log(`Game before saved ${JSON.stringify(newGame)}`);
-          this.dao.createGame(newGame);
+          const isGameCreated = await this.dao.createGame(newGame);
+          console.log("isGameCreated", isGameCreated);
+          if (isGameCreated === daoConst.true) {
+            socket.emit("gameCreated", true);
+          }
         }
       );
 

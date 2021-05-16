@@ -24,6 +24,7 @@ export class ConnectionService implements Connection {
   allPlayersByGameId: any;
   isGameStarted: any;
   isGameFinished: any;
+  isGameCreated: any;
   gameData: any;
   id: string = '';
 }

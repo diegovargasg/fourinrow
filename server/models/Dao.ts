@@ -48,7 +48,7 @@ export class DAO implements DAOInterface {
   }
 
   init(): void {}
-  createGame(game: Game) {
+  createGame(game: Game): string | Promise<string | null> {
     throw new Error("Method not implemented.");
   }
   createPlayer(player: Player) {

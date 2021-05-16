@@ -12,6 +12,7 @@ export class GameService {
   allPlayers: Player[] = [];
   isGameStarted = false;
   isGameFinished = false;
+  isGameCreated = false;
   private _allRoundsPlayed = false;
   gameData: GameDataModel = gameDataModelFactory();
   loadNextRound = false;
@@ -46,6 +47,12 @@ export class GameService {
       (isGameFinished: boolean) => {
         this.isGameFinished = isGameFinished;
         this.sendResults();
+      }
+    );
+
+    this.subscription = connectionService.isGameCreated.subscribe(
+      (isGameCreated: boolean) => {
+        this.isGameCreated = isGameCreated;
       }
     );
   }

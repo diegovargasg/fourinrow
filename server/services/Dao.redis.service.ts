@@ -90,7 +90,7 @@ export class DAORedis implements DAOInterface {
     return JSON.parse(await this.redisAsyncGet(gameId));
   }
 
-  async createGame(game: Game) {
+  async createGame(game: Game): Promise<string | null> {
     console.log(`Game saved ${JSON.stringify(game)}`);
     const gameData = JSON.stringify(game.data);
     return await this.redisAsyncSet(game.id, gameData);

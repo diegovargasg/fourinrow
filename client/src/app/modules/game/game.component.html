@@ -1,5 +1,15 @@
+<!--Waiting for game to be created-->
+<ng-template [ngIf]="!gameService.isGameCreated">
+  <mat-spinner></mat-spinner>
+</ng-template>
 <!--Waiting List-->
-<ng-template [ngIf]="!gameService.isGameStarted && !gameService.isGameFinished">
+<ng-template
+  [ngIf]="
+    !gameService.isGameStarted &&
+    !gameService.isGameFinished &&
+    gameService.isGameCreated
+  "
+>
   <app-waiting [allPlayers]="gameService.allPlayers"></app-waiting>
 </ng-template>
 <!--Board Game -->

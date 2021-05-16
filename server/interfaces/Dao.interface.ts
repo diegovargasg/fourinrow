@@ -3,7 +3,7 @@ import { Player } from "../models/Player";
 
 export interface DAOInterface {
   init(): void;
-  createGame(game: Game): void;
+  createGame(game: Game): string | Promise<string | null>;
   createPlayer(player: Player): void;
   joinGame(gameId: string, playerId: string): void;
   deleteGame(gameId: string): void;

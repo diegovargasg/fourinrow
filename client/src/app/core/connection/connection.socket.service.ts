@@ -27,6 +27,9 @@ export class ConnectionSocketService implements ConnectionSocket {
   isGameFinishedSubject = new Subject<boolean>();
   isGameFinished = this.isGameFinishedSubject.asObservable();
 
+  isGameCreatedSubject = new Subject<boolean>();
+  isGameCreated = this.isGameCreatedSubject.asObservable();
+
   constructor() {
     this.connect();
   }
@@ -38,6 +41,7 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.listenerStartGame();
     this.listenerGameData();
     this.listenStopGame();
+    this.listenerGameCreated();
   }
 
   createGame(gameId: string, gameData: {}) {
@@ -83,6 +87,12 @@ export class ConnectionSocketService implements ConnectionSocket {
     this.socket.on('stopGame', (isGameFinished: boolean) => {
       console.log('Stop game instruction received');
       this.isGameFinishedSubject.next(isGameFinished);
+    });
+  }
+
+  listenerGameCreated() {
+    this.socket.on('gameCreated', (isGameCreated: boolean) => {
+      this.isGameCreatedSubject.next(isGameCreated);
     });
   }
 
